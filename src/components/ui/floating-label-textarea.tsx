@@ -1,11 +1,8 @@
 import * as React from 'react'
 
 import { cn } from '@/utils'
-import { Textarea } from '@/components/ui/textarea'
+import { Textarea, type TextareaProps } from '@/components/ui/textarea'
 import { FloatingLabel } from './floating-label-input'
-
-export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
 
 const FloatingTextarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {

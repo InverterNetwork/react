@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { cn } from '@/utils'
 import { type VariantProps, cva } from 'class-variance-authority'
 import * as lucidReact from 'lucide-react'

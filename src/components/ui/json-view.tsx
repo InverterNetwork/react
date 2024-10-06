@@ -1,6 +1,8 @@
+'use client'
+
 import { cn } from '@/utils'
 
-import React from 'react'
+import * as React from 'react'
 import {
   JsonView as JsonViewOrg,
   allExpanded,

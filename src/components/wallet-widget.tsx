@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import * as React from 'react'
 import { useChainSpecs, useIsHydrated } from '@/hooks'
 import utils, { cn } from '@/utils'
 import { Spinner } from './ui/spinner'

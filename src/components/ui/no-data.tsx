@@ -1,5 +1,5 @@
 import { Database } from 'lucide-react'
-import React from 'react'
+import * as React from 'react'
 
 export function NoData({
   inline = false,

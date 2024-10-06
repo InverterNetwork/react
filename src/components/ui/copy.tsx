@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Copy as CopyIcon } from 'lucide-react'
 import { Button, type ButtonProps } from './button'
 
