@@ -2,10 +2,13 @@
 
 import { useMutation } from '@tanstack/react-query'
 import { useInverter } from '..'
-import type { GetUserArgs, RequestedModules } from '@inverter-network/sdk'
-import { useState } from 'react'
+import type {
+  FactoryType,
+  GetUserArgs,
+  RequestedModules,
+} from '@inverter-network/sdk'
 import { useAccount } from 'wagmi'
-import { useOrchestratorState } from '../zustand'
+import { useOrchestratorState, usePrepDeployState } from '../store'
 
 export type UsePrepDeployResult = ReturnType<typeof usePrepDeploy>
 
@@ -29,18 +32,25 @@ export const usePrepDeploy = ({
 
   const inverter = useInverter().data
 
-  const [requestedModules, setRequestedModules] = useState(
-    {} as RequestedModules
-  )
-
-  const [step, setStep] = useState<'Prepare' | 'Deploy'>('Prepare')
+  const {
+    requestedModules,
+    resetRequestedModules,
+    addRequestedModule,
+    setStep,
+    factoryType,
+    step,
+    setFactoryType,
+  } = usePrepDeployState()
 
   const prep = useMutation({
     mutationFn: async () => {
       if (
-        !requestedModules?.authorizer ||
-        !requestedModules?.fundingManager ||
-        !requestedModules?.paymentProcessor
+        !('authorizer' in requestedModules) ||
+        !('fundingManager' in requestedModules) ||
+        !('paymentProcessor' in requestedModules) ||
+        (factoryType !== 'default' &&
+          (!('issuanceToken' in requestedModules) ||
+            !('initialPurchaseAmount' in requestedModules)))
       )
         throw new Error(
           'Authorizer, Funding Manager and Payment Processor are required'
@@ -48,7 +58,10 @@ export const usePrepDeploy = ({
 
       if (!inverter) throw new Error('Inverter instance not found')
 
-      const { run, inputs } = await inverter.getDeploy({ requestedModules })
+      const { run, inputs } = await inverter.getDeploy({
+        requestedModules,
+        factoryType,
+      })
 
       setStep('Deploy')
 
@@ -60,7 +73,9 @@ export const usePrepDeploy = ({
   })
 
   const deploy = useMutation({
-    mutationFn: async (userArgs: GetUserArgs) => {
+    mutationFn: async (
+      userArgs: GetUserArgs<RequestedModules, FactoryType>
+    ) => {
       if (!prep.data) throw new Error('No deploy data found')
 
       return await prep.data.run(userArgs, {
@@ -76,23 +91,11 @@ export const usePrepDeploy = ({
     },
   })
 
-  const addRequestedModule = (moduleType: string, module: any) => {
-    setRequestedModules((prev) => {
-      return {
-        ...prev,
-        [moduleType]: module,
-      }
-    })
-  }
-
-  const resetRequestedModules = () => {
-    setRequestedModules({} as RequestedModules)
-  }
-
   return {
     isConnected,
     requestedModules,
     addRequestedModule,
+    setFactoryType,
     prep,
     deploy,
     step,

@@ -1,16 +1,10 @@
 'use client'
 
-import type { GetUserArgs, RequestedModules } from '@inverter-network/sdk'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { type UsePrepDeployReturn } from './use-prep-deploy'
 import { useAccount } from 'wagmi'
-
-export type DeployFormSteps = keyof RequestedModules | 'orchestrator'
-
-type InitialUserArgs = GetUserArgs & {
-  // this is hear because as of now paymentProcessor doesn't have any inputs
-  paymentProcessor: any
-}
+import { useEffectAfterMount } from '..'
+import { isDeployForm, useDeployFormState, type DeployFormStep } from '../store'
 
 export const useDeployForm = ({
   prepResult: {
@@ -26,96 +20,60 @@ export const useDeployForm = ({
 }) => {
   const chainId = useAccount().chainId
   const prevChainId = useRef(chainId)
-  const [formStep, setFormStep] = useState<DeployFormSteps>('orchestrator')
 
-  const [userArgs, setUserArgs] = useState({} as InitialUserArgs)
-
-  const handleSetUserArgs = (
-    type: DeployFormSteps,
-    name: string,
-    value: any,
-    optName?: string
-  ) => {
-    setUserArgs((prev) => {
-      const prevTypeVal = prev?.[type] || {}
-      const prevTypeValObj = prevTypeVal?.[name]
-      let typeVal
-
-      if (type === 'optionalModules')
-        typeVal = {
-          ...prevTypeVal,
-          [optName!]: {
-            ...(prevTypeVal?.[optName!] || {}),
-            [name]: value,
-          },
-        }
-      else if (typeof prevTypeValObj === 'object')
-        typeVal = {
-          ...prevTypeVal,
-          [name]: {
-            ...prevTypeValObj,
-            ...value,
-          },
-        }
-      else
-        typeVal = {
-          ...prevTypeVal,
-          [name]: value,
-        }
-
-      return {
-        ...prev,
-        [type]: typeVal,
-      }
-    })
-  }
+  const {
+    deployFormState,
+    deployFormStep,
+    resetDeployForm,
+    setDeployFormArg,
+    setDeployFormStep,
+  } = useDeployFormState()
 
   // Available Form Steps based on data inputs length not being 0
   const availableFormSteps = !data
     ? []
-    : (Object.keys(data.inputs) as DeployFormSteps[]).filter((key) => {
+    : (Object.keys(data.inputs) as DeployFormStep[]).filter((key) => {
         const { optionalModules, ...rest } = data.inputs
         if (key === 'optionalModules')
           return optionalModules.some((optItem) => !!optItem.inputs.length)
+        if (key === 'initialPurchaseAmount') return true
         return !!rest[key]?.inputs?.length
       })
 
   // Get the current form step index
-  const currentStepIndex = availableFormSteps.indexOf(formStep)
+  const currentStepIndex = availableFormSteps.indexOf(deployFormStep)
   // Construct a next step function that increments the current step index until it reaches the last step
   const isLastStep = currentStepIndex === availableFormSteps.length - 1
 
   const nextStep = () => {
-    // if (!userArgs.orchestrator?.independentUpdates)
-    //   userArgs.orchestrator = undefined
-    console.log('userArgs', userArgs)
-    if (isLastStep) return deploy.mutate(userArgs)
-    setFormStep(availableFormSteps[currentStepIndex + 1])
+    if (isLastStep && isDeployForm(deployFormState))
+      return deploy.mutate(deployFormState)
+    setDeployFormStep(availableFormSteps[currentStepIndex + 1])
   }
 
-  const resetDeployForm = (full?: boolean) => {
+  const handleResetDeployForm = (full?: boolean) => {
     deploy.reset()
     if (full) setStep('Prepare')
-    setFormStep('orchestrator')
-    setUserArgs({} as InitialUserArgs)
+    setDeployFormStep('orchestrator')
+    resetDeployForm()
   }
 
   // Construct a previous step function that decrements the current step index until it reaches the first step
   const prevStep = () => {
     if (currentStepIndex === 0) {
-      resetDeployForm(true)
+      handleResetDeployForm(true)
       return
     }
-    setFormStep(availableFormSteps[currentStepIndex - 1])
+    setDeployFormStep(availableFormSteps[currentStepIndex - 1])
   }
 
-  useEffect(() => {
+  useEffectAfterMount(() => {
     if (
       step === 'Deploy' &&
       chainId !== undefined &&
       prevChainId.current !== chainId
     ) {
-      resetDeployForm(true)
+      handleResetDeployForm(true)
       prevChainId.current = chainId
 
       onNetworkChangeWarning?.()
@@ -123,10 +81,9 @@ export const useDeployForm = ({
   }, [chainId])
 
   return {
-    setRawUserArgs: setUserArgs,
-    formStep,
-    userArgs,
-    handleSetUserArgs,
+    setDeployFormArg,
+    deployFormStep,
+    deployFormState,
     nextStep,
     prevStep,
     isLastStep,

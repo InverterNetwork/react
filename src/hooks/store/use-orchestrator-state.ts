@@ -1,6 +1,7 @@
 import { isAddress } from 'viem'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { immer } from 'zustand/middleware/immer'
 
 type Orchestrator = {
   address: `0x${string}`
@@ -16,7 +17,7 @@ type OrchestratorState = {
 
 export const useOrchestratorState = create<OrchestratorState>()(
   persist(
-    (set, get) => ({
+    immer((set, get) => ({
       orchestrators: [],
       editing: false,
       add: (orchestratorAddress) => {
@@ -30,22 +31,25 @@ export const useOrchestratorState = create<OrchestratorState>()(
           (a) => a.address === orchestratorAddress
         )
 
-        if (existingIndex !== -1) {
-          // Update the date if the address already exists
-          previousOrchestrators[existingIndex].date = new Date()
-        } else {
-          // Add new orchestrator
-          previousOrchestrators.unshift({
-            address: orchestratorAddress,
-            date: new Date(),
-          })
-        }
-
-        set({ orchestrators: previousOrchestrators })
-        set({ editing: false })
+        set((state) => {
+          if (existingIndex !== -1) {
+            // Update the date if the address already exists
+            state.orchestrators[existingIndex].date = new Date()
+          } else {
+            // Add new orchestrator
+            state.orchestrators.unshift({
+              address: orchestratorAddress,
+              date: new Date(),
+            })
+          }
+          state.editing = false
+        })
       },
-      edit: () => set((state) => ({ editing: !state.editing })),
-    }),
+      edit: () =>
+        set((state) => {
+          state.editing = !state.editing
+        }),
+    })),
     {
       name: 'orchestrators-storage',
     }
