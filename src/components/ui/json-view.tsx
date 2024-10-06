@@ -8,7 +8,6 @@ import {
   allExpanded,
   defaultStyles,
 } from 'react-json-view-lite'
-import './styles.css'
 
 export const JsonView = ({
   json,
