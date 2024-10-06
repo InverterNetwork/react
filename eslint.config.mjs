@@ -27,5 +27,10 @@ export default tseslint.config({
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'prettier/prettier': 'error',
+    '@eslint-react/no-nested-components': 'off',
+    '@eslint-react/no-children-map': 'off',
+    '@eslint-react/no-clone-element': 'off',
+    '@eslint-react/dom/no-missing-button-type': 'off',
+    '@eslint-react/no-unstable-context-values': 'off',
   },
 })
