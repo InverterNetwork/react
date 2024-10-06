@@ -1,11 +1,11 @@
-import { HTTPError } from '.'
+import utils from '.'
 
 export function authorized<T>(
   value: T | undefined | null,
   message?: string
 ): asserts value is T {
   if (!value)
-    throw new HTTPError(
+    throw new utils.error.HTTPError(
       !!message ? `Unauthorized: ${message}` : 'Unauthorized',
       401
     )
@@ -16,7 +16,7 @@ export function isNotEmpty<T>(
   message?: string
 ): asserts value is T {
   if (!value)
-    throw new HTTPError(
+    throw new utils.error.HTTPError(
       !!message ? `No Data Found: ${message}` : 'No Data Found',
       404
     )

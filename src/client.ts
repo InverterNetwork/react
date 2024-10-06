@@ -1,3 +1,4 @@
+// UI Components
 export * from './components/ui/accordion'
 export * from './components/ui/calendar'
 export * from './components/ui/chart'
@@ -21,3 +22,7 @@ export * from './components/ui/switch'
 export * from './components/ui/tabs'
 export * from './components/ui/three-d-card'
 export * from './components/ui/tooltip'
+// Widgets
+export * from './components/wallet-widget'
+// Hooks
+export * from './hooks'
