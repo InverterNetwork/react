@@ -56,15 +56,17 @@
     ]
   },
   "peerDependencies": {
+    "lodash": "^4.17.0",
     "typescript": "^5.6.2",
-    "wagmi": "^2.11.00",
-    "@tanstack/react-query": "^5.51.0",
-    "react": ">=18",
-    "react-dom": ">=18"
+    "viem": "^2.7.6",
+    "wagmi": "^2.5.7",
+    "@tanstack/react-query": "^5.59.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
-    "@inverter-network/sdk": "0.3.0-alpha.2",
+    "@inverter-network/sdk": "0.3.0-alpha.3",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.1.2",
@@ -89,9 +91,9 @@
     "immer": "^10.1.1",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.447.0",
-    "react": ">=18",
+    "react": "^18.0.0",
     "react-day-picker": "8.10.1",
-    "react-dom": ">=18",
+    "react-dom": "^18.0.0",
     "react-hook-form": "^7.53.0",
     "react-json-view-lite": "^1.5.0",
     "recharts": "^2.12.7",
