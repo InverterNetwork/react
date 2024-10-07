@@ -19,7 +19,7 @@ export const useDeploy = ({
   onNetworkChangeWarning?: () => void
   onSuccess?: UseDeployOnSuccess
   onError?: (error: Error) => void
-}) => {
+} = {}) => {
   // Get the current chainId and previous chainId
   const { didChainIdChange } = useChainSpecs()
 
@@ -46,7 +46,7 @@ export const useDeploy = ({
   const inverter = useInverter().data
 
   // Prep the deployment
-  const prep = useMutation({
+  const prepDeployment = useMutation({
     mutationFn: async () => {
       if (
         !('authorizer' in requestedModules) ||
@@ -77,13 +77,13 @@ export const useDeploy = ({
   })
 
   // Deploy the workflow
-  const deploy = useMutation({
+  const runDeployment = useMutation({
     mutationFn: async (
       deployFormUserArgs: NonEmptyObject<DeployFormUserArgs>
     ) => {
-      if (!prep.data) throw new Error('No deploy data found')
+      if (!prepDeployment.data) throw new Error('No deploy data found')
 
-      return await prep.data.run(deployFormUserArgs, {
+      return await prepDeployment.data.run(deployFormUserArgs, {
         confirmations: 1,
       })
     },
@@ -98,17 +98,17 @@ export const useDeploy = ({
 
   // Available Form Steps based on data inputs length not being 0
   const availableFormSteps = (() => {
-    if (!prep?.data) return []
-    const { optionalModules, ...rest } = prep.data.inputs
+    if (!prepDeployment?.data) return []
+    const { optionalModules, ...rest } = prepDeployment.data.inputs
 
-    const result = (Object.keys(prep.data.inputs) as DeployFormStep[]).filter(
-      (key) => {
-        if (key === 'optionalModules')
-          return optionalModules.some((optItem) => !!optItem.inputs.length)
-        if (key === 'initialPurchaseAmount') return true
-        return !!rest[key]?.inputs?.length
-      }
-    )
+    const result = (
+      Object.keys(prepDeployment.data.inputs) as DeployFormStep[]
+    ).filter((key) => {
+      if (key === 'optionalModules')
+        return optionalModules.some((optItem) => !!optItem.inputs.length)
+      if (key === 'initialPurchaseAmount') return true
+      return !!rest[key]?.inputs?.length
+    })
 
     return result
   })()
@@ -130,12 +130,12 @@ export const useDeploy = ({
 
   const nextFormStep = () => {
     if (isLastFormStep && isDeployForm(deployFormUserArgs))
-      return deploy.mutate(deployFormUserArgs)
+      return runDeployment.mutate(deployFormUserArgs)
     setDeployFormStep(availableFormSteps[currentStepIndex + 1])
   }
 
   const handleResetDeployForm = (full?: boolean) => {
-    deploy.reset()
+    runDeployment.reset()
     if (full) setPrepDeployStep('Prepare')
     setDeployFormStep('orchestrator')
     resetDeployForm()
@@ -149,10 +149,13 @@ export const useDeploy = ({
   }, [didChainIdChange])
 
   return {
+    requestedModules,
+    deployFormUserArgs,
     setDeployFormUserArg,
     setFactoryType,
     resetRequestedModules,
     deployFormStep,
+    prepDeployStep,
     addRequestedModule,
     nextFormStep,
     prevFormStep,
@@ -160,6 +163,9 @@ export const useDeploy = ({
     availableFormSteps,
     setDeployFormStep,
     setPrepDeployStep,
+    prepDeployment,
+    runDeployment,
+    factoryType,
   }
 }
 
