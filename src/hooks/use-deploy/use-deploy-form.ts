@@ -1,6 +1,7 @@
 'use client'
 
-import { useRef } from 'react'
+import * as React from 'react'
+
 import { type UsePrepDeployReturn } from './use-prep-deploy'
 import { useAccount } from 'wagmi'
 import { useEffectAfterMount } from '..'
@@ -19,7 +20,7 @@ export const useDeployForm = ({
   prepResult: UsePrepDeployReturn
 }) => {
   const chainId = useAccount().chainId
-  const prevChainId = useRef(chainId)
+  const prevChainId = React.useRef(chainId)
 
   const {
     deployFormState,

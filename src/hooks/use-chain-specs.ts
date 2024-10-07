@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import * as React from 'react'
 import { useAccount, useChains } from 'wagmi'
 
 export const getIconSrc = (chainId?: number) => {
@@ -45,7 +45,7 @@ export const useChainSpecs = () => {
   const showWalletWidget = !isConnected || isUnsupportedChain
 
   // Ref to store the previous chainId
-  const prevChainId = useRef(chainId)
+  const prevChainId = React.useRef(chainId)
   const didChainIdChange =
     chainId !== undefined &&
     prevChainId.current !== undefined &&
@@ -55,7 +55,7 @@ export const useChainSpecs = () => {
   const explorerUrl = evmNetwork?.blockExplorers?.[0]?.url
 
   // Update the previous chainId when the chainId changes
-  useEffect(() => {
+  React.useEffect(() => {
     if (didChainIdChange) prevChainId.current = chainId
   }, [chainId])
 

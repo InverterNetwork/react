@@ -26,3 +26,5 @@ export * from './components/ui/tooltip'
 export * from './components/wallet-widget'
 // Hooks
 export * from './hooks'
+// Providers
+export * from './provider'

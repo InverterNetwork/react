@@ -1,19 +1,14 @@
 'use client'
 
-import {
-  type DependencyList,
-  type EffectCallback,
-  useEffect,
-  useRef,
-} from 'react'
+import * as React from 'react'
 
 export const useEffectAfterMount = (
-  cb: EffectCallback,
-  dependencies: DependencyList | undefined
+  cb: React.EffectCallback,
+  dependencies: React.DependencyList | undefined
 ) => {
-  const mounted = useRef(true)
+  const mounted = React.useRef(true)
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!mounted.current) {
       return cb()
     }

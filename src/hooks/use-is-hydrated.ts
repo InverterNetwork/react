@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import * as React from 'react'
 
 export function useIsHydrated() {
-  const [isHydrated, setIsHydrated] = useState(false)
+  const [isHydrated, setIsHydrated] = React.useState(false)
 
-  useEffect(() => {
+  React.useEffect(() => {
     setIsHydrated(true)
   }, [])
 
