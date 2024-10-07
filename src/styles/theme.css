@@ -53,9 +53,9 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply in--border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply in--bg-background in--text-foreground;
   }
 }

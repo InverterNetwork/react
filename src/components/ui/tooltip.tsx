@@ -19,7 +19,7 @@ const TooltipContent = React.forwardRef<
     ref={ref}
     sideOffset={sideOffset}
     className={cn(
-      'z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+      'in--z-50 in--overflow-hidden in--rounded-md in--border in--bg-popover in--px-3 in--py-1.5 in--text-sm in--text-popover-foreground in--shadow-md in--animate-in in--fade-in-0 in--zoom-in-95 data-[state=closed]:in--animate-out data-[state=closed]:in--fade-out-0 data-[state=closed]:in--zoom-out-95 data-[side=bottom]:in--slide-in-from-top-2 data-[side=left]:in--slide-in-from-right-2 data-[side=right]:in--slide-in-from-left-2 data-[side=top]:in--slide-in-from-bottom-2',
       className
     )}
     {...props}
@@ -27,10 +27,4 @@ const TooltipContent = React.forwardRef<
 ))
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
-const Combined = Object.assign(Tooltip, {
-  Trigger: TooltipTrigger,
-  Content: TooltipContent,
-  Provider: TooltipProvider,
-})
-
-export { Combined as Tooltip }
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }

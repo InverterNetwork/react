@@ -19,7 +19,7 @@ const BreadcrumbList = React.forwardRef<
   <ol
     ref={ref}
     className={cn(
-      'flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5',
+      'in--flex in--flex-wrap in--items-center in--gap-1.5 in--break-words in--text-sm in--text-muted-foreground sm:in--gap-2.5',
       className
     )}
     {...props}
@@ -33,7 +33,7 @@ const BreadcrumbItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <li
     ref={ref}
-    className={cn('inline-flex items-center gap-1.5', className)}
+    className={cn('in--inline-flex in--items-center in--gap-1.5', className)}
     {...props}
   />
 ))
@@ -50,7 +50,10 @@ const BreadcrumbLink = React.forwardRef<
   return (
     <Comp
       ref={ref}
-      className={cn('transition-colors hover:text-foreground', className)}
+      className={cn(
+        'in--transition-colors hover:in--text-foreground',
+        className
+      )}
       {...props}
     />
   )
@@ -66,7 +69,7 @@ const BreadcrumbPage = React.forwardRef<
     role="link"
     aria-disabled="true"
     aria-current="page"
-    className={cn('font-normal text-foreground', className)}
+    className={cn('in--font-normal in--text-foreground', className)}
     {...props}
   />
 ))
@@ -80,7 +83,7 @@ const BreadcrumbSeparator = ({
   <li
     role="presentation"
     aria-hidden="true"
-    className={cn('[&>svg]:size-3.5', className)}
+    className={cn('[&>svg]:in--size-3.5', className)}
     {...props}
   >
     {children ?? <ChevronRight />}
@@ -95,22 +98,24 @@ const BreadcrumbEllipsis = ({
   <span
     role="presentation"
     aria-hidden="true"
-    className={cn('flex h-9 w-9 items-center justify-center', className)}
+    className={cn(
+      'in--flex in--h-9 in--w-9 in--items-center in--justify-center',
+      className
+    )}
     {...props}
   >
-    <MoreHorizontal className="h-4 w-4" />
-    <span className="sr-only">More</span>
+    <MoreHorizontal className="in--h-4 in--w-4" />
+    <span className="in--sr-only">More</span>
   </span>
 )
 BreadcrumbEllipsis.displayName = 'BreadcrumbElipssis'
 
-const Compined = Object.assign(Breadcrumb, {
-  List: BreadcrumbList,
-  Item: BreadcrumbItem,
-  Link: BreadcrumbLink,
-  Page: BreadcrumbPage,
-  Separator: BreadcrumbSeparator,
-  Ellipsis: BreadcrumbEllipsis,
-})
-
-export { Compined as Breadcrumb }
+export {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+}

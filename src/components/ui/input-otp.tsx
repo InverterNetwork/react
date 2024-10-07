@@ -13,10 +13,10 @@ const InputOTP = React.forwardRef<
   <OTPInput
     ref={ref}
     containerClassName={cn(
-      'flex items-center gap-2 has-[:disabled]:opacity-50',
+      'in--flex in--items-center in--gap-2 has-[:disabled]:in--opacity-50',
       containerClassName
     )}
-    className={cn('disabled:cursor-not-allowed', className)}
+    className={cn('disabled:in--cursor-not-allowed', className)}
     {...props}
   />
 ))
@@ -26,7 +26,11 @@ const InputOTPGroup = React.forwardRef<
   React.ElementRef<'div'>,
   React.ComponentPropsWithoutRef<'div'>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('flex items-center', className)} {...props} />
+  <div
+    ref={ref}
+    className={cn('in--flex in--items-center', className)}
+    {...props}
+  />
 ))
 InputOTPGroup.displayName = 'InputOTPGroup'
 
@@ -41,16 +45,18 @@ const InputOTPSlot = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        'relative flex h-10 w-10 items-center justify-center border-y border-r border-input text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md',
-        isActive && 'z-10 ring-2 ring-ring ring-offset-background',
+        'in--relative in--flex in--h-10 in--w-10 in--items-center in--justify-center in--border-y in--border-r in--border-input in--text-sm in--transition-all first:in--rounded-l-md first:in--border-l last:in--rounded-r-md',
+        isActive &&
+          'in--z-10 in--ring-2 in--ring-ring in--ring-offset-background',
         className
       )}
       {...props}
     >
       {char}
       {hasFakeCaret && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+        <div className="in--pointer-events-none in--absolute in--inset-0 in--flex in--items-center in--justify-center">
+          {/* in--animate-caret-blink - is not found TODO: add it */}
+          <div className="in--h-4 in--w-px in--bg-foreground in--duration-1000" />
         </div>
       )}
     </div>
@@ -68,10 +74,4 @@ const InputOTPSeparator = React.forwardRef<
 ))
 InputOTPSeparator.displayName = 'InputOTPSeparator'
 
-const Combined = Object.assign(InputOTP, {
-  Group: InputOTPGroup,
-  Slot: InputOTPSlot,
-  Separator: InputOTPSeparator,
-})
-
-export { Combined as InputOTP }
+export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }

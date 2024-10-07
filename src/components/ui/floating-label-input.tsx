@@ -9,7 +9,7 @@ const FloatingInput = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <Input
         placeholder=" "
-        className={cn('peer', className)}
+        className={cn('in--peer', className)}
         ref={ref}
         {...props}
       />
@@ -25,7 +25,7 @@ const FloatingLabel = React.forwardRef<
   return (
     <Label
       className={cn(
-        'peer-focus:secondary peer-focus:dark:secondary absolute start-2 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-background px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 dark:bg-background rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4',
+        'peer-focus:in--secondary peer-focus:dark:in--secondary in--absolute in--start-2 in--top-2 in--z-10 in--origin-[0] in---translate-y-4 in--scale-75 in--transform in--bg-background in--px-2 in--text-sm in--text-gray-500 in--duration-300 peer-placeholder-shown:in--top-1/2 peer-placeholder-shown:in---translate-y-1/2 peer-placeholder-shown:in--scale-100 peer-focus:in--top-2 peer-focus:in---translate-y-4 peer-focus:in--scale-75 peer-focus:in--px-2 dark:in--bg-background rtl:peer-focus:in--left-auto rtl:peer-focus:in--translate-x-1/4',
         className
       )}
       ref={ref}
@@ -42,7 +42,7 @@ const FloatingLabelInput = React.forwardRef<
   React.PropsWithoutRef<FloatingLabelInputProps>
 >(({ id, label, ...props }, ref) => {
   return (
-    <div className="relative">
+    <div className="in--relative">
       <FloatingInput ref={ref} id={id} {...props} />
       <FloatingLabel htmlFor={id}>{label}</FloatingLabel>
     </div>

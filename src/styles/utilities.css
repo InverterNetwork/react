@@ -9,6 +9,6 @@
   }
 
   .shadow-global {
-    @apply shadow-[-8px_8px_0px_1px] shadow-base-content/20;
+    @apply in--shadow-[-8px_8px_0px_1px] in--shadow-base-content/20;
   }
 }

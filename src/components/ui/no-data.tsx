@@ -10,16 +10,16 @@ export function NoData({
 }) {
   if (inline)
     return (
-      <div className="flex justify-center items-center gap-3 m-auto">
+      <div className="in--flex in--justify-center in--items-center in--gap-3 in--m-auto">
         <Database size={20} />
         <p>{text}</p>
       </div>
     )
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center gap-3 p-5 m-auto">
-      <Database size={50} className="min-w-max" />
-      <h3 className="text-center md:text-right">{text}</h3>
+    <div className="in--flex in--flex-col md:in--flex-row in--justify-center in--items-center in--gap-3 in--p-5 in--m-auto">
+      <Database size={50} className="in--min-w-max" />
+      <h3 className="in--text-center md:in--text-right">{text}</h3>
     </div>
   )
 }

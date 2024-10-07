@@ -5,25 +5,26 @@ import { cn } from '@/utils'
 import { loaders } from './spinner'
 
 const buttonVariants = cva(
-  'animate-pop active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'in--animate-pop active:in--scale-95 in--inline-flex in--items-center in--justify-center in--rounded-md in--text-sm in--font-medium in--ring-offset-background in--transition-colors focus-visible:in--outline-none focus-visible:in--ring-2 focus-visible:in--ring-ring focus-visible:in--ring-offset-2 disabled:in--pointer-events-none disabled:in--opacity-50',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        default:
+          'in--bg-primary in--text-primary-foreground hover:in--bg-primary/90',
         destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+          'in--bg-destructive in--text-destructive-foreground hover:in--bg-destructive/90',
         outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+          'in--border in--border-input in--bg-background hover:in--bg-accent hover:in--text-accent-foreground',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+          'in--bg-secondary in--text-secondary-foreground hover:in--bg-secondary/80',
+        ghost: 'hover:in--bg-accent hover:in--text-accent-foreground',
+        link: 'in--text-primary in--underline-offset-4 hover:in--underline',
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-9 rounded-md px-3',
-        lg: 'h-11 rounded-md px-8',
-        icon: 'h-10 w-10',
+        default: 'in--h-10 in--px-4 in--py-2',
+        sm: 'in--h-9 in--rounded-md in--px-3',
+        lg: 'in--h-11 in--rounded-md in--px-8',
+        icon: 'in--h-10 in--w-10',
       },
     },
     defaultVariants: {
@@ -73,21 +74,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                   children: (
                     <>
                       {startIcon && (
-                        <span className={cn(!!children && 'mr-2')}>
+                        <span className={cn(!!children && 'in--mr-2')}>
                           {startIcon}
                         </span>
                       )}
                       {loading && (
                         <Loader
                           className={cn(
-                            'h-4 w-4 animate-spin',
-                            !!children && 'mr-2'
+                            'in--h-4 in--w-4 in--animate-spin',
+                            !!children && 'in--mr-2'
                           )}
                         />
                       )}
                       {child.props.children}
                       {endIcon && (
-                        <span className={cn(!!children && 'ml-2')}>
+                        <span className={cn(!!children && 'in--ml-2')}>
                           {endIcon}
                         </span>
                       )}
@@ -110,16 +111,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         <>
           {startIcon && (
-            <span className={cn(!!children && 'mr-2')}>{startIcon}</span>
+            <span className={cn(!!children && 'in--mr-2')}>{startIcon}</span>
           )}
           {loading && (
             <Loader
-              className={cn('h-4 w-4 animate-spin', !!children && 'mr-2')}
+              className={cn(
+                'in--h-4 in--w-4 in--animate-spin',
+                !!children && 'in--mr-2'
+              )}
             />
           )}
           {children}
           {endIcon && (
-            <span className={cn(!!children && 'ml-2')}>{endIcon}</span>
+            <span className={cn(!!children && 'in--ml-2')}>{endIcon}</span>
           )}
         </>
       </button>

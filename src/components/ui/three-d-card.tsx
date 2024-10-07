@@ -59,7 +59,7 @@ const Container = ({
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           className={cn(
-            'flex items-center justify-center relative transition-all duration-200 ease-linear dark:hover:shadow-2xl dark:hover:shadow-primary/[0.1]',
+            'in--flex in--items-center in--justify-center in--relative in--transition-all in--duration-200 in--ease-linear dark:hover:in--shadow-2xl dark:hover:in--shadow-primary/[0.1]',
             className
           )}
           style={{
@@ -83,7 +83,7 @@ const Body = ({
   return (
     <Frame
       className={cn(
-        'h-max [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d]',
+        'in--h-max [transform-style:in--preserve-3d]  [&>*]:[transform-style:in--preserve-3d]',
         className
       )}
     >
@@ -134,7 +134,10 @@ const Item = ({
   return (
     <Tag
       ref={ref}
-      className={cn('w-fit transition duration-200 ease-linear', className)}
+      className={cn(
+        'in--w-fit in--transition in--duration-200 in--ease-linear',
+        className
+      )}
       {...rest}
     >
       {children}

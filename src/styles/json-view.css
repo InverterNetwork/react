@@ -46,7 +46,7 @@
 }
 
 ._2IvMF {
-  @apply bg-background rounded-sm border-input border;
+  @apply in--bg-background in--rounded-sm in--border-input in--border;
 }
 
 ._2bkNM {
@@ -62,11 +62,11 @@
 ._oLqym,
 ._2KJWg,
 ._2AXVT {
-  @apply text-foreground;
+  @apply in--text-foreground;
 }
 
 ._1xvuR {
-  @apply text-foreground/60;
+  @apply in--text-foreground/60;
 }
 
 ._1MGIk {
@@ -76,13 +76,13 @@
 
 ._1Gho6,
 ._2T6PJ {
-  @apply text-destructive;
+  @apply in--text-destructive;
 }
 
 ._1bQdo {
-  @apply text-primary;
+  @apply in--text-primary;
 }
 
 ._3zQKs {
-  @apply text-secondary;
+  @apply in--text-secondary;
 }

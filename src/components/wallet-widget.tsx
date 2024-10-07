@@ -21,7 +21,7 @@ export function WalletWidget(
 
   if (!isHydrated || (isConnected && !address))
     return (
-      <Spinner className={cn('m-auto', applyClassToLoading && className)} />
+      <Spinner className={cn('in--m-auto', applyClassToLoading && className)} />
     )
 
   const getStartIcon = () => {
@@ -34,7 +34,7 @@ export function WalletWidget(
           alt="icon"
           width={20}
           height={20}
-          className="max-h-full rounded-full"
+          className="in--max-h-full in--rounded-full"
         />
       )
 
@@ -66,7 +66,7 @@ export function WalletWidget(
       })}
       startIcon={getStartIcon()}
       endIcon={getEndIcon()}
-      className={cn(className, 'leading-[unset]')}
+      className={cn(className, 'in--leading-[unset]')}
       type="button"
       size={!size ? 'sm' : size}
       onClick={() => {

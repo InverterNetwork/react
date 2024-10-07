@@ -9,7 +9,7 @@ const FloatingTextarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <Textarea
         placeholder=" "
-        className={cn('peer', className)}
+        className={cn('in--peer', className)}
         ref={ref}
         {...props}
       />
@@ -25,7 +25,7 @@ const FloatingLabelTextarea = React.forwardRef<
   React.PropsWithoutRef<FloatingLabelTextareaProps>
 >(({ id, label, ...props }, ref) => {
   return (
-    <div className="relative">
+    <div className="in--relative">
       <FloatingTextarea ref={ref} id={id} {...props} />
       <FloatingLabel htmlFor={id}>{label}</FloatingLabel>
     </div>

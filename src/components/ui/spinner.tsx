@@ -11,24 +11,27 @@ export const loaders = {
   Icon: lucidReact.LoaderIcon,
 }
 
-const spinnerVariants = cva('flex-col items-center justify-center', {
-  variants: {
-    show: {
-      true: 'flex',
-      false: 'hidden',
+const spinnerVariants = cva(
+  'in--flex-col in--items-center in--justify-center',
+  {
+    variants: {
+      show: {
+        true: 'in--flex',
+        false: 'in--hidden',
+      },
     },
-  },
-  defaultVariants: {
-    show: true,
-  },
-})
+    defaultVariants: {
+      show: true,
+    },
+  }
+)
 
-const loaderVariants = cva('animate-spin text-primary', {
+const loaderVariants = cva('in--animate-spin in--text-primary', {
   variants: {
     size: {
-      small: 'size-6',
-      medium: 'size-8',
-      large: 'size-12',
+      small: 'in--size-6',
+      medium: 'in--size-8',
+      large: 'in--size-12',
     },
   },
   defaultVariants: {
