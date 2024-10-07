@@ -1,2 +1,2 @@
-bun pre-commit
 bun tools/replace-exports.ts
+bun pre-commit
