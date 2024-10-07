@@ -1,61 +1,58 @@
 @layer base {
   :root,
   .dark {
-    --primary: 200 100% 60%;
-    --primary-foreground: 0 0% 98%;
+    --in--primary: 200 100% 60%;
+    --in--primary-foreground: 0 0% 98%;
 
-    --accent: 200 80% 70%;
-    --accent-foreground: 0 0% 98%;
+    --in--accent: 200 80% 70%;
+    --in--accent-foreground: 0 0% 98%;
 
-    --destructive: 0 80% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --in--destructive: 0 80% 60%;
+    --in--destructive-foreground: 0 0% 98%;
 
-    --chart-1: 200 100% 60%;
-    --chart-2: 140 60% 40%;
-    --chart-3: 16 100% 66%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 0 80% 60%;
+    --in--chart-1: 200 100% 60%;
+    --in--chart-2: 140 60% 40%;
+    --in--chart-3: 16 100% 66%;
+    --in--chart-4: 280 65% 60%;
+    --in--chart-5: 0 80% 60%;
   }
 
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --in--background: 0 0% 100%;
+    --in--foreground: 0 0% 3.9%;
+    --in--card: 0 0% 100%;
+    --in--card-foreground: 0 0% 3.9%;
+    --in--popover: 0 0% 100%;
+    --in--popover-foreground: 0 0% 3.9%;
+    --in--secondary: 0 0% 96.1%;
+    --in--secondary-foreground: 0 0% 9%;
+    --in--muted: 0 0% 96.1%;
+    --in--muted-foreground: 0 0% 45.1%;
+    --in--border: 0 0% 89.8%;
+    --in--input: 0 0% 89.8%;
+    --in--ring: 0 0% 3.9%;
 
-    --radius: 0.5rem;
+    --in--radius: 0.5rem;
   }
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --in--background: 0 0% 3.9%;
+    --in--foreground: 0 0% 98%;
+    --in--card: 0 0% 3.9%;
+    --in--card-foreground: 0 0% 98%;
+    --in--popover: 0 0% 3.9%;
+    --in--popover-foreground: 0 0% 98%;
+    --in--secondary: 0 0% 14.9%;
+    --in--secondary-foreground: 0 0% 98%;
+    --in--muted: 0 0% 14.9%;
+    --in--muted-foreground: 0 0% 63.9%;
+    --in--border: 0 0% 14.9%;
+    --in--input: 0 0% 14.9%;
+    --in--ring: 0 0% 83.1%;
   }
 }
 
 @layer base {
   * {
     @apply in--border-border;
-  }
-  body {
-    @apply in--bg-background in--text-foreground;
   }
 }
