@@ -3,7 +3,7 @@ import type {
   GetUserArgs,
   RequestedModules,
 } from '@inverter-network/sdk'
-import type { ValueOf } from 'type-fest-4'
+import type { ValueOf, PartialDeep } from 'type-fest-4'
 
 // ===========STORE==============
 export type PrepDeployStep = 'Prepare' | 'Deploy'
@@ -14,12 +14,9 @@ export type DeployFormStep =
   | 'issuanceToken'
   | 'initialPurchaseAmount'
 
-export type DeployFormUserArgs =
-  | GetUserArgs<
-      RequestedModules,
-      'default' | 'immutable-pim' | 'restricted-pim'
-    >
-  | {}
+export type DeployFormUserArgs = PartialDeep<
+  GetUserArgs<RequestedModules, 'default' | 'immutable-pim' | 'restricted-pim'>
+>
 
 export type DeployStore = {
   // Prep Deploy Store

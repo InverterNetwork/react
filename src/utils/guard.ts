@@ -1,10 +1,10 @@
 import type { DeployFormUserArgs } from '@/types'
 import { HTTPError } from './error'
-import type { NonEmptyObject } from 'type-fest-4'
+import type { RequiredDeep } from 'type-fest-4'
 
 export function isDeployForm(
   deployFormUserArgs: DeployFormUserArgs
-): deployFormUserArgs is NonEmptyObject<DeployFormUserArgs> {
+): deployFormUserArgs is RequiredDeep<DeployFormUserArgs> {
   return Object.keys(deployFormUserArgs).length > 0
 }
 

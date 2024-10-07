@@ -7,14 +7,14 @@ import { Spinner } from './ui/spinner'
 import { Button, type ButtonProps } from './ui/button'
 import { CircleAlert, Pointer, Wallet } from 'lucide-react'
 
-export function WalletWidget(
-  props: Omit<ButtonProps, 'color' | 'onClick'> & {
-    text?: string
-    applyClassToLoading?: boolean
-    showWalletWidget: () => void
-    closeWalletWidget: () => void
-  }
-) {
+export type WalletWidgetProps = Omit<ButtonProps, 'color' | 'onClick'> & {
+  text?: string
+  applyClassToLoading?: boolean
+  showWalletWidget: () => void
+  closeWalletWidget: () => void
+}
+
+export function WalletWidget(props: WalletWidgetProps) {
   const { size, className, text, applyClassToLoading = true, ...rest } = props
   const isHydrated = useIsHydrated()
   const { isConnected, address, iconSrc, isUnsupportedChain } = useChainSpecs()

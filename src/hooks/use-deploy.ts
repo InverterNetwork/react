@@ -9,7 +9,7 @@ import type {
 } from '@/types'
 import { isDeployForm } from '@/utils'
 import { useMutation } from '@tanstack/react-query'
-import type { NonEmptyObject } from 'type-fest-4'
+import type { RequiredDeep } from 'type-fest-4'
 
 export const useDeploy = ({
   onNetworkChangeWarning,
@@ -79,7 +79,7 @@ export const useDeploy = ({
   // Deploy the workflow
   const runDeployment = useMutation({
     mutationFn: async (
-      deployFormUserArgs: NonEmptyObject<DeployFormUserArgs>
+      deployFormUserArgs: RequiredDeep<DeployFormUserArgs>
     ) => {
       if (!prepDeployment.data) throw new Error('No deploy data found')
 

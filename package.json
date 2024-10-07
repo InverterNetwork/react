@@ -4,14 +4,10 @@
   "version": "0.0.0",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/cjs/index.js"
+      "import": "./src/index"
     },
     "./client": {
-      "types": "./dist/types/client.d.ts",
-      "import": "./dist/esm/client.js",
-      "default": "./dist/cjs/client.js"
+      "import": "./src/client.js"
     },
     "./package.json": "./package.json"
   },
