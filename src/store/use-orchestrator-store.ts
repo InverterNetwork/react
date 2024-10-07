@@ -1,26 +1,15 @@
+import type { OrchestratorStore } from '@/types'
 import { isAddress } from 'viem'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-type Orchestrator = {
-  address: `0x${string}`
-  date: Date
-}
-
-type OrchestratorState = {
-  orchestrators: Orchestrator[]
-  editing: boolean
-  edit: () => void
-  add: (orchestratorAddress: `0x${string}` | null | undefined) => void
-}
-
-export const useOrchestratorState = create<OrchestratorState>()(
+export const useOrchestratorStore = create<OrchestratorStore>()(
   persist(
     immer((set, get) => ({
       orchestrators: [],
-      editing: false,
-      add: (orchestratorAddress) => {
+      editingOrchestrators: false,
+      addOrchestrator: (orchestratorAddress) => {
         if (!orchestratorAddress) return
         if (!isAddress(orchestratorAddress)) return
 
@@ -42,12 +31,12 @@ export const useOrchestratorState = create<OrchestratorState>()(
               date: new Date(),
             })
           }
-          state.editing = false
+          state.editingOrchestrators = false
         })
       },
-      edit: () =>
+      editOrchestrators: () =>
         set((state) => {
-          state.editing = !state.editing
+          state.editingOrchestrators = !state.editingOrchestrators
         }),
     })),
     {

@@ -1,51 +1,20 @@
-import type { GetUserArgs, RequestedModules } from '@inverter-network/sdk'
+import type { DeployStore } from '@/types'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-export type DeployFormStep =
-  | keyof RequestedModules
-  | 'orchestrator'
-  | 'issuanceToken'
-  | 'initialPurchaseAmount'
-
-type Args = GetUserArgs<
-  RequestedModules,
-  'default' | 'immutable-pim' | 'restricted-pim'
->
-
-type DeployForm = Args | {}
-
-type FormState = {
-  deployFormState: DeployForm
-  deployFormStep: DeployFormStep
-  setDeployFormStep: (step: DeployFormStep) => void
-  setDeployFormArg: (
-    type: DeployFormStep,
-    name: string,
-    value: any,
-    optName?: string
-  ) => void
-  resetDeployForm: () => void
-}
-
-export function isDeployForm(
-  deployFormState: DeployForm
-): deployFormState is Args {
-  return Object.keys(deployFormState).length > 0
-}
-
-export const useDeployFormState = create<FormState>()(
+export const useDeployStore = create<DeployStore>()(
   immer((set) => ({
-    deployFormState: {},
+    // Deploy Form State
+    deployFormUserArgs: {},
     deployFormStep: 'orchestrator',
     setDeployFormStep: (step) => {
       set((state) => {
         state.deployFormStep = step
       })
     },
-    setDeployFormArg: (type, name, value, optName) => {
+    setDeployFormUserArg: (type, name, value, optName) => {
       set((state) => {
-        const prev = state.deployFormState
+        const prev = state.deployFormUserArgs
         // @ts-expect-error - conditionally setting state
         const prevTypeVal = prev?.[type] || {}
         const prevTypeValObj = prevTypeVal?.[name]
@@ -81,7 +50,7 @@ export const useDeployFormState = create<FormState>()(
             break
         }
 
-        state.deployFormState = {
+        state.deployFormUserArgs = {
           ...prev,
           [type]: typeVal,
         }
@@ -89,7 +58,35 @@ export const useDeployFormState = create<FormState>()(
     },
     resetDeployForm: () => {
       set((state) => {
-        state.deployFormState = {}
+        state.deployFormUserArgs = {}
+      })
+    },
+
+    // Prep State
+    factoryType: 'default',
+    prepDeployStep: 'Prepare',
+    requestedModules: {},
+    setPrepDeployStep: (step) => {
+      set((state) => {
+        state.prepDeployStep = step
+      })
+    },
+    setFactoryType: (factoryType) => {
+      set((state) => {
+        state.factoryType = factoryType
+      })
+    },
+    addRequestedModule: (moduleType, module) => {
+      set((state) => {
+        state.requestedModules = {
+          ...state.requestedModules,
+          [moduleType]: module,
+        }
+      })
+    },
+    resetRequestedModules: () => {
+      set((state) => {
+        state.requestedModules = {}
       })
     },
   }))

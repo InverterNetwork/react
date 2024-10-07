@@ -16,4 +16,4 @@ export * from './components/ui/spinner'
 export * from './components/ui/table'
 export * from './components/ui/textarea'
 // Utils
-export { default as utils } from './utils'
+export * from './utils'

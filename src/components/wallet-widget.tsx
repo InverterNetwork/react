@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { useChainSpecs, useIsHydrated } from '@/hooks'
-import utils, { cn } from '@/utils'
+import { cn, compressAddress } from '@/utils'
 import { Spinner } from './ui/spinner'
 import { Button, type ButtonProps } from './ui/button'
 import { CircleAlert, Pointer, Wallet } from 'lucide-react'
@@ -55,7 +55,7 @@ export function WalletWidget(
 
     if (!!text) return text
 
-    return utils.format.compressAddress(address)
+    return compressAddress(address)
   }
 
   return (
