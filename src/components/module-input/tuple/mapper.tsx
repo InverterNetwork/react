@@ -1,6 +1,5 @@
 import * as React from 'react'
 
-import { setInputPropsForForm } from '..'
 import { Basic } from '../basic'
 import type { TupleModuleInputMapperProps } from '@/types'
 
@@ -11,9 +10,8 @@ export const Mapper = ({
   arg,
   input,
   inputProps,
+  containerProps,
 }: TupleModuleInputMapperProps) => {
-  inputProps = setInputPropsForForm(inputProps)
-
   return input.components.map((i, idx) => {
     if ('components' in i)
       return (
@@ -48,6 +46,7 @@ export const Mapper = ({
 
     return (
       <Basic
+        containerProps={containerProps}
         inputProps={inputProps}
         key={name}
         input={i}

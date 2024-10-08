@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { firstLetterToUpperCase, prettyName } from '@/utils'
+import { cn, firstLetterToUpperCase, prettyName } from '@/utils'
 import { JsonView } from '@/components/ui/json-view'
 import { Label } from '@/components/ui/label'
 import { Description } from '@/components/ui/description'
@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogClose,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { CircleX } from 'lucide-react'
@@ -22,6 +23,7 @@ type FormPropsBase = {
   name?: string
   description?: string
   children: React.ReactNode
+  containerProps?: React.HTMLAttributes<HTMLDivElement>
 }
 
 type FormProps = FormPropsBase &
@@ -46,18 +48,21 @@ const Form = ({
   isArray,
   uids,
   setUids,
+  containerProps,
 }: FormProps) => {
   const fName = prettyName(name)
 
+  const { className, ...rest } = containerProps ?? {}
+
   return (
     <>
-      <div className="in--grid in--w-full in--max-w-sm in--items-center in--gap-1.5">
+      <div {...rest} className={cn('in--grid in--gap-1.5', className)}>
         <Label>{fName}</Label>
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline">Edit Profile</Button>
           </DialogTrigger>
-          <DialogContent className="sm:in--max-w-[425px]">
+          <DialogContent className="sm:in--max-w-[425px] in--max-h-[80vh] in--overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{fName}</DialogTitle>
               <DialogDescription>{description}</DialogDescription>
@@ -90,7 +95,9 @@ const Form = ({
             </div>
 
             <DialogFooter>
-              <Button>Save changes</Button>
+              <DialogClose asChild>
+                <Button>Save changes</Button>
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>

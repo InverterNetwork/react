@@ -17,6 +17,7 @@ export type BaseProps = {
   updateArg: UpdateModuleArg
   argIndex: number
   inputProps?: InputProps
+  containerProps?: React.HTMLAttributes<HTMLDivElement>
 }
 
 export type NonTupleModuleInputProps = BaseProps & {

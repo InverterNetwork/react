@@ -13,6 +13,7 @@ export const Tuple = ({
   updateArg,
   arg,
   inputProps,
+  containerProps,
 }: TupleModuleInputProps) => {
   const [uids, setUids] = React.useState([
     (crypto.randomUUID() as string) ?? Math.floor(Math.random() * 10000),
@@ -49,6 +50,7 @@ export const Tuple = ({
           )}
           {/* Run the Mapper for each member */}
           <Mapper
+            containerProps={containerProps}
             inputProps={inputProps}
             tupleIndex={tupleIndex}
             updateArg={updateArg}

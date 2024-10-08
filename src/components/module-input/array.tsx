@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { ModuleInput, setInputPropsForForm } from '.'
+import { ModuleInput } from '.'
 import { remove } from 'lodash'
 import Form from './form'
 import type { NonTupleArrayModuleInputProps } from '@/types'
@@ -34,8 +34,6 @@ export const Array = ({
     updateArg(argIndex, newArg)
   }
 
-  inputProps = setInputPropsForForm(inputProps)
-
   return (
     <Form
       isArray
@@ -43,6 +41,7 @@ export const Array = ({
       setUids={setUids}
       name={props.input.name}
       description={props.input.description}
+      containerProps={props.containerProps}
       arg={props.arg}
     >
       {uids.map((uid, arrayIndex) => (
@@ -53,6 +52,7 @@ export const Array = ({
             name={props.input.name}
           />
           <ModuleInput.Basic
+            containerProps={props.containerProps}
             inputProps={inputProps}
             pruneArrayName
             input={props.input}

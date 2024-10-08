@@ -3,7 +3,6 @@ import * as React from 'react'
 import { Basic } from './basic'
 import { Tuple } from './tuple'
 import { Array } from './array'
-import type { InputProps } from '../ui/input'
 import type { ModuleInputProps } from '@/types'
 
 const Base = ({
@@ -12,10 +11,12 @@ const Base = ({
   updateArg,
   argIndex,
   inputProps,
+  containerProps,
 }: ModuleInputProps) => {
   if ('components' in input)
     return (
       <Tuple
+        containerProps={containerProps}
         inputProps={inputProps}
         input={input}
         arg={arg}
@@ -27,6 +28,7 @@ const Base = ({
   if (input.type.includes('[]'))
     return (
       <Array
+        containerProps={containerProps}
         inputProps={inputProps}
         input={input}
         arg={arg}
@@ -37,6 +39,7 @@ const Base = ({
 
   return (
     <Basic
+      containerProps={containerProps}
       inputProps={inputProps}
       input={input}
       updateArg={updateArg}
@@ -44,23 +47,6 @@ const Base = ({
       arg={arg ?? ''}
     />
   )
-}
-
-export const setInputPropsForForm = (props?: InputProps) => {
-  let newProps: InputProps | undefined
-
-  if (!!props) {
-    const { className, ...restInputProps } = props
-
-    const newClassName = className?.replace(/bg-\w+-\d+/g, '!bg-base-100')
-
-    newProps = {
-      className: newClassName,
-      ...restInputProps,
-    }
-  }
-
-  return newProps
 }
 
 export const ModuleInput = Object.assign(Base, {

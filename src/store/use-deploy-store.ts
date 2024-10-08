@@ -20,18 +20,6 @@ export const useDeployStore = create<DeployStore>()(
         const prevTypeVal = (prev as any)?.[type] || {}
         const prevTypeValObj = (prevTypeVal as any)?.[name ?? '']
 
-        const setState = () => {
-          state.deployFormUserArgs = {
-            ...prev,
-            [type]: typeVal,
-          }
-        }
-
-        if (name === null) {
-          typeVal = value
-          return setState()
-        }
-
         switch (type) {
           case 'optionalModules':
             typeVal = {
@@ -57,12 +45,15 @@ export const useDeployStore = create<DeployStore>()(
             else
               typeVal = {
                 ...prevTypeVal,
-                [name]: value,
+                [name as string]: value,
               }
             break
         }
 
-        setState()
+        state.deployFormUserArgs = {
+          ...prev,
+          [type]: typeVal,
+        }
       })
     },
     resetDeployForm: () => {
