@@ -15,5 +15,8 @@ export * from './components/ui/skeleton'
 export * from './components/ui/spinner'
 export * from './components/ui/table'
 export * from './components/ui/textarea'
+export * from './components/ui/description'
 // Utils
 export * from './utils'
+// Widgets
+export * from './components/module-input'
