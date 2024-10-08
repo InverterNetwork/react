@@ -4,6 +4,8 @@ import { Inverter } from '@inverter-network/sdk'
 import { useQuery } from '@tanstack/react-query'
 import { usePublicClient, useWalletClient } from 'wagmi'
 
+export type UseInverterReturnType = ReturnType<typeof useInverter>
+
 export const useInverter = () => {
   const publicClient = usePublicClient(),
     walletClient = useWalletClient(),

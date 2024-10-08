@@ -2,6 +2,8 @@
 
 import * as React from 'react'
 import '../styles/global.css'
+import type { ThemeProviderProps } from 'next-themes/dist/types'
+import { ThemeProvider } from 'next-themes'
 
 /**
  * InverterProviderProps
@@ -11,20 +13,31 @@ import '../styles/global.css'
  */
 type InverterProviderProps = {
   children: React.ReactNode
-  theme?: 'light' | 'dark'
+  themeConfig?: ThemeProviderProps
 }
 
 export function InverterProvider({
   children,
-  theme = 'light',
+  themeConfig = {} as ThemeProviderProps,
 }: InverterProviderProps) {
-  React.useEffect(() => {
-    if (theme === 'dark') {
-      document.body.classList.add('dark')
-    } else {
-      document.body.classList.remove('dark')
-    }
-  }, [theme])
-
-  return <>{children}</>
+  const {
+    attribute = 'class',
+    defaultTheme = 'system',
+    enableSystem = true,
+    disableTransitionOnChange = true,
+    ...restThemeConfig
+  } = themeConfig
+  return (
+    <ThemeProvider
+      {...{
+        attribute,
+        defaultTheme,
+        enableSystem,
+        disableTransitionOnChange,
+        ...restThemeConfig,
+      }}
+    >
+      {children}
+    </ThemeProvider>
+  )
 }

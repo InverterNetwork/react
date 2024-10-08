@@ -3,20 +3,15 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query'
 import { useInverter } from '.'
 import type {
+  FactoryType,
   PopWalletClient,
   RequestedModules,
   Workflow,
 } from '@inverter-network/sdk'
 
-export type UseWorkFlowResult = ReturnType<typeof useWorkflow>
+export type UseWorkFlowReturnType = ReturnType<typeof useWorkflow>
 
-export function useWorkflow<
-  T extends
-    | RequestedModules<'default'>
-    | RequestedModules<'immutable-pim'>
-    | RequestedModules<'restricted-pim'>
-    | undefined,
->({
+export function useWorkflow<T extends RequestedModules<FactoryType>>({
   orchestratorAddress,
   requestedModules,
 }: {

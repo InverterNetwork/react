@@ -10,6 +10,8 @@ import { CircleAlert, Pointer, Wallet } from 'lucide-react'
 export interface WalletWidgetProps extends ButtonProps {
   text?: string
   applyClassToLoading?: boolean
+  size?: ButtonProps['size']
+  variant?: ButtonProps['variant']
   showWalletWidget: () => void
   closeWalletWidget: () => void
 }

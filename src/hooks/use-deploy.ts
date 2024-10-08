@@ -11,6 +11,8 @@ import { isDeployForm } from '@/utils'
 import { useMutation } from '@tanstack/react-query'
 import type { RequiredDeep } from 'type-fest-4'
 
+export type UseDeployReturnType = ReturnType<typeof useDeploy>
+
 export const useDeploy = ({
   onNetworkChangeWarning,
   onSuccess,
@@ -168,5 +170,3 @@ export const useDeploy = ({
     factoryType,
   }
 }
-
-export type UseDeployReturnType = ReturnType<typeof useDeploy>

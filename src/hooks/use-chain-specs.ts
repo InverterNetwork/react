@@ -27,6 +27,8 @@ export const getIconSrc = (chainId?: number) => {
   return fallback
 }
 
+export type UseChainSpecsReturnType = ReturnType<typeof useChainSpecs>
+
 export const useChainSpecs = () => {
   const { address, isConnected, chain } = useAccount() // Wagmi's useAccount for wallet address and connection status
   const chains = useChains() // Wagmi's useNetwork for network details

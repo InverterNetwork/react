@@ -33,6 +33,7 @@
   "scripts": {
     "dev": "nodemon",
     "watch": "tsc -w",
+    "type-check": "tsc-files --pretty --project ./tsconfig.build.json --noEmit --module ESNext --declaration",
     "build": "bun clean && bun build:cjs && bun build:esm && bun build:types && bun build:css",
     "build:css": "postcss src/styles/global.css -o dist/cjs/styles/global.css && cp -r dist/cjs/styles dist/esm",
     "build:cjs": "tsc --project ./tsconfig.build.json --module commonjs --outDir ./dist/cjs --removeComments --verbatimModuleSyntax false && printf '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json && tsc-alias --outDir ./dist/cjs && ts-add-js-extension --dir=dist/cjs --showchanges=false",
@@ -50,6 +51,7 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
+      "bun type-check",
       "eslint --fix",
       "prettier --write"
     ]
@@ -68,7 +70,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
-    "@inverter-network/sdk": "0.3.0-alpha.3",
+    "@inverter-network/sdk": "0.3.0-alpha.5",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.1.2",
@@ -93,6 +95,7 @@
     "immer": "^10.1.1",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.447.0",
+    "next-themes": "^0.3.0",
     "react": "^18.0.0",
     "react-day-picker": "8.10.1",
     "react-dom": "^18.0.0",
@@ -101,6 +104,7 @@
     "recharts": "^2.12.7",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "tsc-files": "^1.1.4",
     "vaul": "^1.0.0",
     "zod": "^3.23.8",
     "zustand": "^5.0.0-rc.2"

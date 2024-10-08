@@ -40,7 +40,7 @@ export const useOrchestratorStore = create<OrchestratorStore>()(
         }),
     })),
     {
-      name: 'orchestrators-storage',
+      name: 'orchestrator-storage',
     }
   )
 )
