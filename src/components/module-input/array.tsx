@@ -18,7 +18,7 @@ export const Array = ({
   ])
 
   const handleRemove = (arrayIndex: number, uid: string) => {
-    setUids(remove(uids, (u) => u !== uid))
+    setUids(remove(uids, (u: any) => u !== uid))
 
     if (!props.arg?.length) return
 

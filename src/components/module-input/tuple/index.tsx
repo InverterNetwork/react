@@ -20,7 +20,7 @@ export const Tuple = ({
   ])
 
   const handleRemove = (tupleIndex: number, uid: string) => {
-    setUids(remove(uids, (u) => u !== uid))
+    setUids(remove(uids, (u: any) => u !== uid))
     if (!arg?.length) return
     updateArg(
       argIndex,
