@@ -4,10 +4,14 @@
   "version": "0.0.0",
   "exports": {
     ".": {
-      "import": "./src/index"
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
     },
     "./client": {
-      "import": "./src/client.js"
+      "types": "./dist/types/client.d.ts",
+      "import": "./dist/esm/client.js",
+      "default": "./dist/cjs/client.js"
     },
     "./package.json": "./package.json"
   },
@@ -27,6 +31,7 @@
     "access": "public"
   },
   "scripts": {
+    "dev": "nodemon",
     "watch": "tsc -w",
     "build": "bun clean && bun build:cjs && bun build:esm && bun build:types && bun build:css",
     "build:css": "postcss src/styles/global.css -o dist/cjs/styles/global.css && cp -r dist/cjs/styles dist/esm/styles",
@@ -117,6 +122,7 @@
     "eslint-plugin-tailwindcss": "^3.17.4",
     "husky": "^9.1.5",
     "lint-staged": "^15.2.10",
+    "nodemon": "^3.1.7",
     "pinst": "^3.0.0",
     "postcss": "^8.4.47",
     "postcss-cli": "^11.0.0",
