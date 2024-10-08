@@ -7,7 +7,7 @@ import { Spinner } from './ui/spinner'
 import { Button, type ButtonProps } from './ui/button'
 import { CircleAlert, Pointer, Wallet } from 'lucide-react'
 
-export type WalletWidgetProps = Omit<ButtonProps, 'color' | 'onClick'> & {
+export interface WalletWidgetProps extends ButtonProps {
   text?: string
   applyClassToLoading?: boolean
   showWalletWidget: () => void

@@ -9,7 +9,7 @@ import type { ValueOf, PartialDeep } from 'type-fest-4'
 export type PrepDeployStep = 'Prepare' | 'Deploy'
 
 export type DeployFormStep =
-  | keyof RequestedModules
+  | Exclude<keyof RequestedModules, 'paymentProcessor'>
   | 'orchestrator'
   | 'issuanceToken'
   | 'initialPurchaseAmount'
@@ -35,8 +35,8 @@ export type DeployStore = {
   deployFormStep: DeployFormStep
   setDeployFormStep: (step: DeployFormStep) => void
   setDeployFormUserArg: (
-    type: DeployFormStep,
-    name: string,
+    type: string,
+    name: string | null,
     value: any,
     optName?: string
   ) => void

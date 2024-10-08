@@ -14,11 +14,23 @@ export const useDeployStore = create<DeployStore>()(
     },
     setDeployFormUserArg: (type, name, value, optName) => {
       set((state) => {
-        const prev = state.deployFormUserArgs
-        // @ts-expect-error - conditionally setting state
-        const prevTypeVal = prev?.[type] || {}
-        const prevTypeValObj = prevTypeVal?.[name]
         let typeVal: any
+
+        const prev = state.deployFormUserArgs
+        const prevTypeVal = (prev as any)?.[type] || {}
+        const prevTypeValObj = (prevTypeVal as any)?.[name ?? '']
+
+        const setState = () => {
+          state.deployFormUserArgs = {
+            ...prev,
+            [type]: typeVal,
+          }
+        }
+
+        if (name === null) {
+          typeVal = value
+          return setState()
+        }
 
         switch (type) {
           case 'optionalModules':
@@ -26,7 +38,7 @@ export const useDeployStore = create<DeployStore>()(
               ...prevTypeVal,
               [optName!]: {
                 ...(prevTypeVal?.[optName!] || {}),
-                [name]: value,
+                [name as string]: value,
               },
             }
             break
@@ -37,7 +49,7 @@ export const useDeployStore = create<DeployStore>()(
             if (typeof prevTypeValObj === 'object')
               typeVal = {
                 ...prevTypeVal,
-                [name]: {
+                [name as string]: {
                   ...prevTypeValObj,
                   ...value,
                 },
@@ -50,10 +62,7 @@ export const useDeployStore = create<DeployStore>()(
             break
         }
 
-        state.deployFormUserArgs = {
-          ...prev,
-          [type]: typeVal,
-        }
+        setState()
       })
     },
     resetDeployForm: () => {
