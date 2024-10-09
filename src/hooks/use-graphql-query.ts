@@ -9,8 +9,9 @@ import type {
   GQLWorkflowModule,
   GQLWorkflowModuleType,
 } from '@inverter-network/sdk'
-import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
-import { type Except } from 'type-fest-4'
+import { useQuery } from '@tanstack/react-query'
+import type { UseQueryOptions } from '@tanstack/react-query'
+import type { Except } from 'type-fest-4'
 
 export type UseBondingCurveQueryParams = {
   project: Array<keyof GQLBondingCurve>

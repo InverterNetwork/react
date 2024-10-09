@@ -1,4 +1,4 @@
-import { StatusCodes } from './status-code'
+import type { StatusCodes } from './status-code'
 
 export class HTTPError extends Error {
   statusCode: StatusCodes // Add a statusCode property

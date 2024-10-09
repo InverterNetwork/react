@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Copy as CopyIcon } from 'lucide-react'
-import { Button, type ButtonProps } from './button'
+import { Button } from './button'
+import type { ButtonProps } from './button'
 
 export function Copy({
   data,

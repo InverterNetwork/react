@@ -56,6 +56,9 @@
       "prettier --write"
     ]
   },
+  "resolutions": {
+    "type-fest-4": "^4.26.0"
+  },
   "peerDependencies": {
     "lodash": "^4.17.0",
     "typescript": "^5.6.2",
@@ -66,7 +69,6 @@
     "react-dom": "^18.0.0"
   },
   "dependencies": {
-    "type-fest-4": "npm:type-fest@^4.26.0",
     "@hookform/resolvers": "^3.9.0",
     "@inverter-network/sdk": "0.3.0-alpha.5",
     "@radix-ui/react-accordion": "^1.2.1",
@@ -117,6 +119,7 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.20",
+    "eslint-plugin-import-x": "^4.3.1",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-tailwindcss": "^3.17.4",
     "husky": "^9.1.5",
@@ -131,7 +134,7 @@
     "tailwindcss": "^3.4.13",
     "ts-add-js-extension": "^1.6.4",
     "tsc-alias": "^1.8.10",
-    "typescript-eslint": "^8.6.0"
+    "typescript-eslint": "^8.8.1"
   },
   "license": "LGPL-3.0",
   "homepage": "https://inverter.network",

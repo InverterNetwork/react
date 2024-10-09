@@ -4,7 +4,8 @@ import * as React from 'react'
 import { useChainSpecs, useIsHydrated } from '@/hooks'
 import { cn, compressAddress } from '@/utils'
 import { Spinner } from './ui/spinner'
-import { Button, type ButtonProps } from './ui/button'
+import { Button } from './ui/button'
+import type { ButtonProps } from './ui/button'
 import { CircleAlert, Pointer, Wallet } from 'lucide-react'
 
 export interface WalletWidgetProps extends ButtonProps {

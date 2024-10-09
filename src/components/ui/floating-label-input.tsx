@@ -1,7 +1,8 @@
 import * as React from 'react'
 
 import { cn } from '@/utils'
-import { Input, type InputProps } from '@/components/ui/input'
+import { Input } from '@/components/ui/input'
+import type { InputProps } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 const FloatingInput = React.forwardRef<HTMLInputElement, InputProps>(
