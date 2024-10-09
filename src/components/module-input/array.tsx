@@ -7,7 +7,7 @@ import { remove } from 'lodash'
 import Form from './form'
 import type { NonTupleArrayModuleInputProps } from '@/types'
 
-export const Array = ({
+export const ArrayInput = ({
   argIndex,
   updateArg,
   inputProps,

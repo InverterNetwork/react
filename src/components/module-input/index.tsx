@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { Basic } from './basic'
 import { Tuple } from './tuple'
-import { Array } from './array'
+import { ArrayInput } from './array'
 import type { ModuleInputProps } from '@/types'
 
 const Base = ({
@@ -27,7 +27,7 @@ const Base = ({
 
   if (input.type.includes('[]'))
     return (
-      <Array
+      <ArrayInput
         containerProps={containerProps}
         inputProps={inputProps}
         input={input}
