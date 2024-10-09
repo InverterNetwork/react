@@ -1,3 +1,5 @@
+'use client'
+
 import { useInverter } from './use-inverter'
 import type {
   FormattedGraphQLParams,

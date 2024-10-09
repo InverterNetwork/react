@@ -38,12 +38,24 @@ export const compressAddress = (address?: string) =>
 export const firstLetterToUpperCase = (text?: string) =>
   !text ? '...' : text.charAt(0).toUpperCase() + text.slice(1)
 
-export const unixTimeToDisplay = (date: number) =>
-  new Intl.DateTimeFormat('en-CA', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(date * 1000)
+export const unixTimeToDisplay = (date: number | Date) => {
+  let timestamp: number
+
+  try {
+    if (date instanceof Date) timestamp = date.getTime()
+    else timestamp = date * 1000
+
+    return new Intl.DateTimeFormat('en-CA', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(timestamp)
+  } catch {
+    return '...'
+  }
+}
 
 export function prettyName(text?: string): string {
   const prefixes = ['FM', 'BC', 'LM', 'PC', 'AUT', 'EXT', 'PP']

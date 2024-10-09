@@ -1,3 +1,5 @@
+'use client'
+
 import type { OrchestratorStore } from '@/types'
 import { isAddress } from 'viem'
 import { create } from 'zustand'

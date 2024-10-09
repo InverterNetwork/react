@@ -1,3 +1,5 @@
+'use client'
+
 import type { DeployStore } from '@/types'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
