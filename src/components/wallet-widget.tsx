@@ -11,14 +11,18 @@ import { CircleAlert, Pointer, Wallet } from 'lucide-react'
 export interface WalletWidgetProps extends ButtonProps {
   text?: string
   applyClassToLoading?: boolean
-  size?: ButtonProps['size']
-  variant?: ButtonProps['variant']
-  showWalletWidget: () => void
-  closeWalletWidget: () => void
+  setShowWalletWidget: () => void
 }
 
 export function WalletWidget(props: WalletWidgetProps) {
-  const { size, className, text, applyClassToLoading = true, ...rest } = props
+  const {
+    size,
+    className,
+    text,
+    applyClassToLoading = true,
+    setShowWalletWidget,
+    ...rest
+  } = props
   const isHydrated = useIsHydrated()
   const { isConnected, address, iconSrc, isUnsupportedChain } = useChainSpecs()
 
@@ -72,11 +76,7 @@ export function WalletWidget(props: WalletWidgetProps) {
       className={cn(className, 'in--leading-[unset]')}
       type="button"
       size={!size ? 'sm' : size}
-      onClick={() => {
-        if (!isConnected) props.showWalletWidget()
-        else props.closeWalletWidget()
-        return
-      }}
+      onClick={setShowWalletWidget}
     >
       {getChildren()}
     </Button>

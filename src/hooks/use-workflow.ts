@@ -1,7 +1,7 @@
 'use-client'
 
 import { useQuery } from '@tanstack/react-query'
-import type { UseQueryResult } from '@tanstack/react-query'
+import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import { useInverter } from '.'
 import type {
   FactoryType,
@@ -9,16 +9,25 @@ import type {
   RequestedModules,
   Workflow,
 } from '@inverter-network/sdk'
+import type { Except } from 'type-fest-4'
 
-export type UseWorkFlowReturnType = ReturnType<typeof useWorkflow>
+export type UseWorkFlowParams<T extends RequestedModules<FactoryType>> = {
+  orchestratorAddress?: `0x${string}`
+  requestedModules?: T
+  options?: Except<
+    UseQueryOptions<Workflow<PopWalletClient, T> | undefined, Error>,
+    'queryKey' | 'queryFn' | 'enabled'
+  >
+}
+
+export type UseWorkFlowReturnType<T extends RequestedModules<FactoryType>> =
+  ReturnType<typeof useWorkflow<T>>
 
 export function useWorkflow<T extends RequestedModules<FactoryType>>({
   orchestratorAddress,
   requestedModules,
-}: {
-  orchestratorAddress?: `0x${string}`
-  requestedModules?: T
-}): UseQueryResult<Workflow<PopWalletClient, T>> {
+  options,
+}: UseWorkFlowParams<T>): UseQueryResult<Workflow<PopWalletClient, T>> {
   const inverter = useInverter()
 
   const enabled = !!inverter.data && !!orchestratorAddress
@@ -29,9 +38,10 @@ export function useWorkflow<T extends RequestedModules<FactoryType>>({
       inverter.data!.getWorkflow({
         orchestratorAddress: orchestratorAddress!,
         requestedModules,
-      }),
+      }) as any,
     enabled,
     refetchOnWindowFocus: false,
+    ...options,
   })
 
   return query as any

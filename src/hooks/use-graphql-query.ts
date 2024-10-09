@@ -19,7 +19,9 @@ export type UseGraphQLQueryParams<T extends GraphQLQueryArgs> = {
   >
 }
 
-export type UseGraphQLQueryReturnType = ReturnType<typeof useGraphQLQuery>
+export type UseGraphQLQueryReturnType<
+  T extends GraphQLQueryArgs = GraphQLQueryArgs,
+> = ReturnType<typeof useGraphQLQuery<T>>
 
 export const useGraphQLQuery = <T extends GraphQLQueryArgs>({
   fields,

@@ -2,19 +2,22 @@
 
 import * as React from 'react'
 import { useInverter } from './use-inverter'
-import type { GraphQLSubscriptionArgs } from '@inverter-network/sdk'
+import type {
+  GraphQLSubscriptionArgs,
+  GraphQLSubscriptionResult,
+} from '@inverter-network/sdk'
 
-export type UseGraphQLSubscriptionParams = {
-  fields: GraphQLSubscriptionArgs
+export type UseGraphQLSubscriptionParams<T extends GraphQLSubscriptionArgs> = {
+  fields: T
 }
 
-export type UseBondingCurveSubscriptionReturnType = ReturnType<
-  typeof useGraphQLSubscription
->
+export type UseBondingCurveSubscriptionReturnType<
+  T extends GraphQLSubscriptionArgs,
+> = ReturnType<typeof useGraphQLSubscription<T>>
 
-export const useGraphQLSubscription = ({
+export const useGraphQLSubscription = <T extends GraphQLSubscriptionArgs>({
   fields,
-}: UseGraphQLSubscriptionParams) => {
+}: UseGraphQLSubscriptionParams<T>): GraphQLSubscriptionResult<T> | null => {
   const inverter = useInverter()
 
   const memo = React.useMemo(() => {
@@ -22,5 +25,22 @@ export const useGraphQLSubscription = ({
     return inverter.data!.graphql.subscription(fields)
   }, [inverter.data, fields])
 
-  return memo
+  const [data, setData] = React.useState<Awaited<typeof memo> | null>(null)
+
+  React.useEffect(() => {
+    if (!memo) return
+
+    const fetchData = async () => {
+      try {
+        const result = await memo
+        setData(result)
+      } catch (error) {
+        console.error('Error in GraphQL subscription:', error)
+      }
+    }
+
+    fetchData()
+  }, [memo])
+
+  return data
 }

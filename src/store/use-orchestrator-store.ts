@@ -23,16 +23,15 @@ export const useOrchestratorStore = create<OrchestratorStore>()(
         )
 
         set((state) => {
-          if (existingIndex !== -1) {
-            // Update the date if the address already exists
-            state.orchestrators[existingIndex].date = new Date()
-          } else {
-            // Add new orchestrator
-            state.orchestrators.unshift({
-              address: orchestratorAddress,
-              date: new Date(),
-            })
-          }
+          // remove the existing index
+          if (existingIndex !== -1) state.orchestrators.splice(existingIndex, 1)
+
+          // Add new orchestrator
+          state.orchestrators.unshift({
+            address: orchestratorAddress,
+            date: new Date(),
+          })
+
           state.editingOrchestrators = false
         })
       },
