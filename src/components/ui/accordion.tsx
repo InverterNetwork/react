@@ -55,10 +55,4 @@ const AccordionContent = React.forwardRef<
 
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
-const Compined = Object.assign(Accordion, {
-  Item: AccordionItem,
-  Trigger: AccordionTrigger,
-  Content: AccordionContent,
-})
-
-export { Compined as Accordion }
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
