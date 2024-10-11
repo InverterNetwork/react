@@ -20,3 +20,5 @@ export * from './components/ui/description'
 export * from './utils'
 // Widgets
 export * from './components/module-input'
+// Types
+export * from './types'

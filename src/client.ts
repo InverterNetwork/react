@@ -24,6 +24,7 @@ export * from './components/ui/three-d-card'
 export * from './components/ui/tooltip'
 // Widgets
 export * from './components/wallet-widget'
+export * from './components/orchestrator-selector'
 // Stores
 export * from './store'
 // Hooks
