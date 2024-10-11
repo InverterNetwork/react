@@ -1,7 +1,7 @@
 'use client'
 
 import { useChainSpecs, useEffectAfterMount, useInverter } from '@/hooks'
-import { useDeployStore, useOrchestratorStore } from '@/store'
+import { useSelectorStore, useDeployStore } from '@/store'
 import type {
   DeployFormStep,
   DeployFormUserArgs,
@@ -26,7 +26,7 @@ export const useDeploy = ({
   const { didChainIdChange } = useChainSpecs()
 
   // Get the orchestrator state store
-  const { addOrchestrator } = useOrchestratorStore()
+  const { addAddress } = useSelectorStore()
 
   // Get the deploy store
   const {
@@ -90,7 +90,7 @@ export const useDeploy = ({
       })
     },
     onSuccess: (params) => {
-      addOrchestrator(params.orchestratorAddress)
+      addAddress({ address: params.orchestratorAddress, type: 'orchestrator' })
       onSuccess?.(params)
     },
     onError: (error) => {

@@ -1,3 +1,3 @@
 export * from './deploy'
-export * from './orchestrator'
+export * from './address-selector'
 export * from './module-interaction'

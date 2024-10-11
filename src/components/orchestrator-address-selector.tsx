@@ -2,22 +2,22 @@
 
 import * as React from 'react'
 
-import { useOrchestratorStore } from '@/store'
+import { useSelectorStore } from '@/store'
 import { unixTimeToDisplay, compressAddress, cn } from '@/utils'
 import { useId } from 'react'
 import CreatableSelect from 'react-select/creatable'
 
-export const OrchestratorSelector = ({
+export const OrchestratorAddressSelector = ({
   className,
   menuPlacement,
 }: {
   className?: string
   menuPlacement?: 'auto' | 'bottom' | 'top'
 }) => {
-  const { orchestrators, addOrchestrator } = useOrchestratorStore()
+  const { orchestratorAddresses, addAddress } = useSelectorStore()
   const selectId = useId()
 
-  const options = orchestrators.map((i) => ({
+  const options = orchestratorAddresses.map((i) => ({
     value: i.address,
     label: `${compressAddress(i.address)}, ${unixTimeToDisplay(new Date(i.date))}`,
   }))
@@ -31,10 +31,10 @@ export const OrchestratorSelector = ({
       options={options}
       value={options[0]}
       onCreateOption={(e) => {
-        addOrchestrator(e as `0x${string}`)
+        addAddress({ address: e as `0x${string}`, type: 'orchestrator' })
       }}
       onChange={(e) => {
-        addOrchestrator(e?.value)
+        addAddress({ address: e?.value, type: 'orchestrator' })
       }}
       placeholder="Select or create an orchestrator"
       instanceId={selectId}
