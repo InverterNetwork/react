@@ -11,7 +11,9 @@ import type {
 } from '@inverter-network/sdk'
 import type { Except } from 'type-fest-4'
 
-export type UseWorkFlowParams<T extends RequestedModules<FactoryType>> = {
+export type UseWorkFlowParams<
+  T extends RequestedModules<FactoryType> | undefined = undefined,
+> = {
   orchestratorAddress?: `0x${string}`
   requestedModules?: T
   options?: Except<
@@ -20,10 +22,13 @@ export type UseWorkFlowParams<T extends RequestedModules<FactoryType>> = {
   >
 }
 
-export type UseWorkFlowReturnType<T extends RequestedModules<FactoryType>> =
-  ReturnType<typeof useWorkflow<T>>
+export type UseWorkFlowReturnType<
+  T extends RequestedModules<FactoryType> | undefined = undefined,
+> = ReturnType<typeof useWorkflow<T>>
 
-export function useWorkflow<T extends RequestedModules<FactoryType>>({
+export function useWorkflow<
+  T extends RequestedModules<FactoryType> | undefined = undefined,
+>({
   orchestratorAddress,
   requestedModules,
   options,

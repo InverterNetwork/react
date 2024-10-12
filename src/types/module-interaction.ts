@@ -7,28 +7,28 @@ import type {
 
 export type UpdateModuleArgValue = string | number | boolean | object | any[]
 
-export type UpdateModuleArg = (
+export type UpdateModuleMethodArg = (
   argIndex: number,
   argValue: UpdateModuleArgValue
 ) => void
 
-export type BaseProps = {
+export type ModuleInputBaseProps = {
   arg: any
-  updateArg: UpdateModuleArg
+  updateArg: UpdateModuleMethodArg
   argIndex: number
   inputProps?: InputProps
   containerProps?: React.HTMLAttributes<HTMLDivElement>
 }
 
-export type NonTupleModuleInputProps = BaseProps & {
+export type NonTupleModuleInputProps = ModuleInputBaseProps & {
   input: NonTupleExtendedAbiParameter
 }
 
-export type NonTupleArrayModuleInputProps = BaseProps & {
+export type NonTupleArrayModuleInputProps = ModuleInputBaseProps & {
   input: NonTupleExtendedAbiParameter
 }
 
-export type TupleModuleInputProps = BaseProps & {
+export type TupleModuleInputProps = ModuleInputBaseProps & {
   input: TupleExtendedAbiParameter
 }
 
@@ -36,6 +36,54 @@ export type TupleModuleInputMapperProps = TupleModuleInputProps & {
   tupleIndex: number
 }
 
-export type ModuleInputProps = BaseProps & {
+export type ModuleInputProps = ModuleInputBaseProps & {
   input: ExtendedAbiParameter
+}
+
+// Store
+import type { UserFacingModuleType } from '@inverter-network/abis'
+
+export type SelectedModuleType =
+  | UserFacingModuleType
+  | 'fundingToken.module'
+  | 'issuanceToken.module'
+
+export type ModuleInteractionMode = 'read' | 'write'
+
+export type UpdateModuleMethodBase = {
+  moduleName: string
+  methodName: string
+}
+
+export type UpdateModuleMethodArgParams = UpdateModuleMethodBase & {
+  argIndex: number
+  argValue: UpdateModuleArgValue
+  argsLength: number
+}
+
+export type UpdateModuleMethodResponseParams = UpdateModuleMethodBase & {
+  response: any
+}
+
+export type ModuleInteractionMethodState = {
+  methodName?: string
+  args?: any[]
+  response?: any
+}
+
+export type ModuleInteractionState = ModuleInteractionMethodState[]
+
+export type ModuleState = Record<string, ModuleInteractionState | undefined>
+
+export interface ModuleInteractionStore {
+  moduleInteractionState: ModuleState
+  selectedModuleType: SelectedModuleType
+  selectedOptionalModuleIndex: number
+  moduleInteractionMode: ModuleInteractionMode
+  setModuleInteractionMode: (mode: ModuleInteractionMode) => void
+  setSelectedModuleType: (moduleType: SelectedModuleType) => void
+  setSelectedOptionalModuleIndex: (index: number) => void
+  updateModuleMethodArg: (params: UpdateModuleMethodArgParams) => void
+  updateModuleMethodResponse: (params: UpdateModuleMethodResponseParams) => void
+  resetModuleInteractionState: () => void
 }

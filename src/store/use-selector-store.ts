@@ -12,9 +12,9 @@ export const useSelectorStore = create<SelectorStore>()(
       orchestratorAddresses: [],
       moduleAddresses: [],
       isEditing: false,
-      setIsEditing: () => {
+      setIsEditing: (editing) => {
         set((state) => {
-          state.isEditing = !state.isEditing
+          state.isEditing = editing ?? !state.isEditing
         })
       },
       addAddress: ({ address, type }) => {

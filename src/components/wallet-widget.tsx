@@ -3,7 +3,6 @@
 import * as React from 'react'
 import { useChainSpecs, useIsHydrated } from '@/hooks'
 import { cn, compressAddress } from '@/utils'
-import { Spinner } from './ui/spinner'
 import { Button } from './ui/button'
 import type { ButtonProps } from './ui/button'
 import { CircleAlert, Pointer, Wallet } from 'lucide-react'
@@ -28,7 +27,11 @@ export function WalletWidget(props: WalletWidgetProps) {
 
   if (!isHydrated || (isConnected && !address))
     return (
-      <Spinner className={cn('in--m-auto', applyClassToLoading && className)} />
+      <Button
+        loader={props.loader}
+        loading
+        className={cn(applyClassToLoading && className)}
+      />
     )
 
   const getStartIcon = () => {
@@ -77,6 +80,7 @@ export function WalletWidget(props: WalletWidgetProps) {
       type="button"
       size={!size ? 'sm' : size}
       onClick={setShowWalletWidget}
+      {...(isConnected && { variant: 'outline' })}
     >
       {getChildren()}
     </Button>

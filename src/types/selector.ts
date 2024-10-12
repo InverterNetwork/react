@@ -10,7 +10,7 @@ export type SelectorStore = {
   orchestratorAddresses: SelectorStoreAddressItem[]
   moduleAddresses: SelectorStoreAddressItem[]
   isEditing: boolean
-  setIsEditing: () => void
+  setIsEditing: (editing?: boolean) => void
   addAddress: ({
     address,
     type,
