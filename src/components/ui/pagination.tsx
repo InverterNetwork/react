@@ -25,7 +25,7 @@ const PaginationContent = React.forwardRef<
   <ul
     ref={ref}
     className={cn(
-      'in--flex in--flex-row in--items-center in--gap-1',
+      'in--list-none in--flex in--flex-row in--items-center in--gap-1',
       className
     )}
     {...props}
