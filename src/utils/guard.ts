@@ -1,11 +1,11 @@
-import type { DeployFormUserArgs } from '@/types'
+import type { GetDeployFormUserArgs } from '@/types'
 import { HTTPError } from './error'
 import type { RequiredDeep } from 'type-fest-4'
 
 export function isDeployForm(
-  deployFormUserArgs: DeployFormUserArgs
-): deployFormUserArgs is RequiredDeep<DeployFormUserArgs> {
-  return Object.keys(deployFormUserArgs).length > 0
+  getDeployFormUserArgs: GetDeployFormUserArgs
+): getDeployFormUserArgs is RequiredDeep<GetDeployFormUserArgs> {
+  return Object.keys(getDeployFormUserArgs).length > 0
 }
 
 export function authorized<T>(

@@ -10,7 +10,7 @@ export const delay = (seconds: number) =>
  * @param date Optional date to convert to unix time
  * @returns Compact Unix time ( devided by 1000 ) in seconds
  * */
-export const unixTime = (date?: Date) =>
+export const dateToUnixTime = (date?: Date) =>
   Math.floor((date ?? new Date()).getTime() / 1000)
 
 export const getTimeDiff = (date?: Date) => {

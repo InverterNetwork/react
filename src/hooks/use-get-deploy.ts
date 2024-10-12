@@ -1,25 +1,25 @@
 'use client'
 
 import { useChainSpecs, useEffectAfterMount, useInverter } from '@/hooks'
-import { useSelectorStore, useDeployStore } from '@/store'
+import { useSelectorStore, useGetDeployStore } from '@/store'
 import type {
-  DeployFormStep,
-  DeployFormUserArgs,
-  UseDeployOnSuccess,
+  GetDeployFormStep,
+  GetDeployFormUserArgs,
+  UseGetDeployOnSuccess,
 } from '@/types'
 import { isDeployForm } from '@/utils'
 import { useMutation } from '@tanstack/react-query'
 import type { RequiredDeep } from 'type-fest-4'
 
-export type UseDeployReturnType = ReturnType<typeof useDeploy>
+export type UseGetDeployReturnType = ReturnType<typeof useGetDeploy>
 
-export const useDeploy = ({
+export const useGetDeploy = ({
   onNetworkChangeWarning,
   onSuccess,
   onError,
 }: {
   onNetworkChangeWarning?: () => void
-  onSuccess?: UseDeployOnSuccess
+  onSuccess?: UseGetDeployOnSuccess
   onError?: (error: Error) => void
 } = {}) => {
   // Get the current chainId and previous chainId
@@ -31,18 +31,18 @@ export const useDeploy = ({
   // Get the deploy store
   const {
     addRequestedModule,
-    deployFormStep,
-    deployFormUserArgs,
-    resetDeployForm,
+    getDeployFormStep,
+    getDeployFormUserArgs,
+    resetGetDeployForm,
     factoryType,
-    prepDeployStep,
+    prepGetDeployStep,
     requestedModules,
     resetRequestedModules,
-    setDeployFormStep,
+    setGetDeployFormStep,
     setFactoryType,
-    setPrepDeployStep,
-    setDeployFormUserArg,
-  } = useDeployStore()
+    setPrepGetDeployStep,
+    setGetDeployFormUserArg,
+  } = useGetDeployStore()
 
   // Get the inverter instance
   const inverter = useInverter().data
@@ -69,7 +69,7 @@ export const useDeploy = ({
         factoryType,
       })
 
-      setPrepDeployStep('Deploy')
+      setPrepGetDeployStep('Deploy')
 
       return { run, inputs }
     },
@@ -81,11 +81,11 @@ export const useDeploy = ({
   // Deploy the workflow
   const runDeployment = useMutation({
     mutationFn: async (
-      deployFormUserArgs: RequiredDeep<DeployFormUserArgs>
+      getDeployFormUserArgs: RequiredDeep<GetDeployFormUserArgs>
     ) => {
       if (!prepDeployment.data) throw new Error('No deploy data found')
 
-      return await prepDeployment.data.run(deployFormUserArgs, {
+      return await prepDeployment.data.run(getDeployFormUserArgs, {
         confirmations: 1,
       })
     },
@@ -104,7 +104,7 @@ export const useDeploy = ({
     const { optionalModules, ...rest } = prepDeployment.data.inputs
 
     const result = (
-      Object.keys(prepDeployment.data.inputs) as DeployFormStep[]
+      Object.keys(prepDeployment.data.inputs) as GetDeployFormStep[]
     ).filter((key) => {
       if (key === 'optionalModules')
         return optionalModules.some((optItem) => !!optItem.inputs.length)
@@ -116,7 +116,7 @@ export const useDeploy = ({
   })()
 
   // Get the current form step index
-  const currentStepIndex = availableFormSteps.indexOf(deployFormStep)
+  const currentStepIndex = availableFormSteps.indexOf(getDeployFormStep)
 
   // Construct a next step function that increments the current step index until it reaches the last step
   const isLastFormStep = currentStepIndex === availableFormSteps.length - 1
@@ -127,24 +127,24 @@ export const useDeploy = ({
       handleResetDeployForm(true)
       return
     }
-    setDeployFormStep(availableFormSteps[currentStepIndex - 1])
+    setGetDeployFormStep(availableFormSteps[currentStepIndex - 1])
   }
 
   const nextFormStep = () => {
-    if (isLastFormStep && isDeployForm(deployFormUserArgs))
-      return runDeployment.mutate(deployFormUserArgs)
-    setDeployFormStep(availableFormSteps[currentStepIndex + 1])
+    if (isLastFormStep && isDeployForm(getDeployFormUserArgs))
+      return runDeployment.mutate(getDeployFormUserArgs)
+    setGetDeployFormStep(availableFormSteps[currentStepIndex + 1])
   }
 
   const handleResetDeployForm = (full?: boolean) => {
     runDeployment.reset()
-    if (full) setPrepDeployStep('Prepare')
-    setDeployFormStep('orchestrator')
-    resetDeployForm()
+    if (full) setPrepGetDeployStep('Prepare')
+    setGetDeployFormStep('orchestrator')
+    resetGetDeployForm()
   }
 
   useEffectAfterMount(() => {
-    if (prepDeployStep === 'Deploy' && didChainIdChange) {
+    if (prepGetDeployStep === 'Deploy' && didChainIdChange) {
       handleResetDeployForm(true)
       onNetworkChangeWarning?.()
     }
@@ -152,19 +152,19 @@ export const useDeploy = ({
 
   return {
     requestedModules,
-    deployFormUserArgs,
-    setDeployFormUserArg,
+    getDeployFormUserArgs,
+    setGetDeployFormUserArg,
     setFactoryType,
     resetRequestedModules,
-    deployFormStep,
-    prepDeployStep,
+    getDeployFormStep,
+    prepGetDeployStep,
     addRequestedModule,
     nextFormStep,
     prevFormStep,
     isLastFormStep,
     availableFormSteps,
-    setDeployFormStep,
-    setPrepDeployStep,
+    setGetDeployFormStep,
+    setPrepGetDeployStep,
     prepDeployment,
     runDeployment,
     factoryType,

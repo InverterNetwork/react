@@ -1,24 +1,24 @@
 'use client'
 
-import type { DeployStore } from '@/types'
+import type { GetDeployStore } from '@/types'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-export const useDeployStore = create<DeployStore>()(
+export const useGetDeployStore = create<GetDeployStore>()(
   immer((set) => ({
     // Deploy Form State
-    deployFormUserArgs: {},
-    deployFormStep: 'orchestrator',
-    setDeployFormStep: (step) => {
+    getDeployFormUserArgs: {},
+    getDeployFormStep: 'orchestrator',
+    setGetDeployFormStep: (step) => {
       set((state) => {
-        state.deployFormStep = step
+        state.getDeployFormStep = step
       })
     },
-    setDeployFormUserArg: (type, name, value, optName) => {
+    setGetDeployFormUserArg: (type, name, value, optName) => {
       set((state) => {
         let typeVal: any
 
-        const prev = state.deployFormUserArgs
+        const prev = state.getDeployFormUserArgs
         const prevTypeVal = (prev as any)?.[type] || {}
         const prevTypeValObj = (prevTypeVal as any)?.[name ?? '']
 
@@ -52,25 +52,25 @@ export const useDeployStore = create<DeployStore>()(
             break
         }
 
-        state.deployFormUserArgs = {
+        state.getDeployFormUserArgs = {
           ...prev,
           [type]: typeVal,
         }
       })
     },
-    resetDeployForm: () => {
+    resetGetDeployForm: () => {
       set((state) => {
-        state.deployFormUserArgs = {}
+        state.getDeployFormUserArgs = {}
       })
     },
 
     // Prep State
     factoryType: 'default',
-    prepDeployStep: 'Prepare',
+    prepGetDeployStep: 'Prepare',
     requestedModules: {},
-    setPrepDeployStep: (step) => {
+    setPrepGetDeployStep: (step) => {
       set((state) => {
-        state.prepDeployStep = step
+        state.prepGetDeployStep = step
       })
     },
     setFactoryType: (factoryType) => {

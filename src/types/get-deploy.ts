@@ -6,24 +6,24 @@ import type {
 import type { ValueOf, PartialDeep } from 'type-fest-4'
 
 // ===========STORE==============
-export type PrepDeployStep = 'Prepare' | 'Deploy'
+export type PrepGetDeployStep = 'Prepare' | 'Deploy'
 
-export type DeployFormStep =
+export type GetDeployFormStep =
   | Exclude<keyof RequestedModules, 'paymentProcessor'>
   | 'orchestrator'
   | 'issuanceToken'
   | 'initialPurchaseAmount'
 
-export type DeployFormUserArgs = PartialDeep<
+export type GetDeployFormUserArgs = PartialDeep<
   GetUserArgs<RequestedModules, 'default' | 'immutable-pim' | 'restricted-pim'>
 >
 
-export type DeployStore = {
+export type GetDeployStore = {
   // Prep Deploy Store
   factoryType: FactoryType
   requestedModules: RequestedModules<FactoryType> | {}
-  prepDeployStep: PrepDeployStep
-  setPrepDeployStep: (step: PrepDeployStep) => void
+  prepGetDeployStep: PrepGetDeployStep
+  setPrepGetDeployStep: (step: PrepGetDeployStep) => void
   setFactoryType: (factoryType: FactoryType) => void
   addRequestedModule: (
     moduleType: keyof RequestedModules<FactoryType>,
@@ -31,20 +31,20 @@ export type DeployStore = {
   ) => void
   resetRequestedModules: () => void
   // Deploy Form Store
-  deployFormUserArgs: DeployFormUserArgs
-  deployFormStep: DeployFormStep
-  setDeployFormStep: (step: DeployFormStep) => void
-  setDeployFormUserArg: (
+  getDeployFormUserArgs: GetDeployFormUserArgs
+  getDeployFormStep: GetDeployFormStep
+  setGetDeployFormStep: (step: GetDeployFormStep) => void
+  setGetDeployFormUserArg: (
     type: string,
     name: string | null,
     value: any,
     optName?: string
   ) => void
-  resetDeployForm: () => void
+  resetGetDeployForm: () => void
 }
 
 // ===========HOOKS==============
-export type UseDeployOnSuccess = ({
+export type UseGetDeployOnSuccess = ({
   transactionHash,
   orchestratorAddress,
 }: {

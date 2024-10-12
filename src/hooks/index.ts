@@ -1,4 +1,4 @@
-export * from './use-deploy'
+export * from './use-get-deploy'
 export * from './use-workflow'
 export * from './use-chain-specs'
 export * from './use-inverter'
