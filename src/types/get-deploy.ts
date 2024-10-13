@@ -13,6 +13,7 @@ export type GetDeployFormStep =
   | 'orchestrator'
   | 'issuanceToken'
   | 'initialPurchaseAmount'
+  | 'beneficiary'
 
 export type GetDeployFormUserArgs = PartialDeep<
   GetUserArgs<RequestedModules, 'default' | 'immutable-pim' | 'restricted-pim'>

@@ -109,6 +109,9 @@ export const useGetDeploy = ({
       if (key === 'optionalModules')
         return optionalModules.some((optItem) => !!optItem.inputs.length)
       if (key === 'initialPurchaseAmount') return true
+      if (key === 'beneficiary') return true
+      if (key === 'issuanceToken') return true
+
       return !!rest[key]?.inputs?.length
     })
 
