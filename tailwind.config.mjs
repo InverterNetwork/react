@@ -3,7 +3,7 @@
 /** @type {import("tailwindcss").Config} */
 export default {
   prefix: 'in--',
-  darkMode: ['class'],
+  darkMode: ['class', '[data-inverter-theme="dark"]'],
   theme: {
     extend: {
       borderRadius: {

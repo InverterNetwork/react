@@ -1,6 +1,5 @@
 @layer base {
-  :root,
-  .dark {
+  :root {
     --in--primary: 200 100% 60%;
     --in--primary-foreground: 0 0% 98%;
 
@@ -15,9 +14,12 @@
     --in--chart-3: 16 100% 66%;
     --in--chart-4: 280 65% 60%;
     --in--chart-5: 0 80% 60%;
+
+    --in--radius: 0.5rem;
   }
 
-  :root {
+  :root,
+  [data-inverter-theme='light'] {
     --in--background: 0 0% 100%;
     --in--foreground: 0 0% 3.9%;
     --in--card: 0 0% 100%;
@@ -31,10 +33,9 @@
     --in--border: 0 0% 89.8%;
     --in--input: 0 0% 89.8%;
     --in--ring: 0 0% 3.9%;
-
-    --in--radius: 0.5rem;
   }
-  .dark {
+
+  [data-inverter-theme='dark'] {
     --in--background: 0 0% 3.9%;
     --in--foreground: 0 0% 98%;
     --in--card: 0 0% 3.9%;
