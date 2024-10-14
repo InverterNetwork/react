@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://github.com/InverterNetwork/react/compare/v0.3.0-alpha.9...v0.3.1) (2024-10-14)
+
+
+### Bug Fixes
+
+* color theme application ([4065767](https://github.com/InverterNetwork/react/commit/406576780e421a2f235c7078524b40228052894e))
+
 ## [0.3.0](https://github.com/InverterNetwork/react/compare/v0.3.0-alpha.9...v0.3.0) (2024-10-14)
 
 ## 0.3.0-alpha.0 (2024-10-08)
