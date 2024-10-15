@@ -1,11 +1,9 @@
 'use client'
 
 import * as React from 'react'
+import type { InverterThemeConfig } from './theme-provider'
+import { ThemeProvider } from './theme-provider'
 import '../styles/global.css'
-
-export type InverterThemeConfig = {
-  theme?: 'light' | 'dark'
-}
 
 /**
  * InverterProviderProps
@@ -22,13 +20,7 @@ export function InverterProvider({
   children,
   themeConfig,
 }: InverterProviderProps) {
-  React.useEffect(() => {
-    // Set the html attribute
-    document.documentElement.setAttribute(
-      'data-inverter-theme',
-      themeConfig?.theme ?? 'light'
-    )
-  }, [themeConfig])
-
-  return <>{children}</>
+  return <ThemeProvider themeConfig={themeConfig}>{children}</ThemeProvider>
 }
+
+export type { InverterThemeConfig }
