@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/InverterNetwork/react/compare/v0.3.1...v0.3.2) (2024-10-15)
+
+
+### Bug Fixes
+
+* cookie theme ([ac4c3ca](https://github.com/InverterNetwork/react/commit/ac4c3cafe23fb382a60521492f54e3a8011790c3))
+
 ### [0.3.1](https://github.com/InverterNetwork/react/compare/v0.3.0-alpha.9...v0.3.1) (2024-10-14)
 
 
