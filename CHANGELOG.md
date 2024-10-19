@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.4](https://github.com/InverterNetwork/react/compare/v0.3.3...v0.3.4) (2024-10-19)
+
+
+### Bug Fixes
+
+* sdk and dep of prep deploy ([a45da67](https://github.com/InverterNetwork/react/commit/a45da673f5f3e4b99b91af6f99c8a973189bd2f7))
+
 ### [0.3.3](https://github.com/InverterNetwork/react/compare/v0.3.2...v0.3.3) (2024-10-19)
 
 ### [0.3.2](https://github.com/InverterNetwork/react/compare/v0.3.1...v0.3.2) (2024-10-15)
