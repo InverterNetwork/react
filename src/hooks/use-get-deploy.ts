@@ -1,6 +1,6 @@
 'use client'
 
-import { useChainSpecs, useEffectAfterMount, useInverter } from '@/hooks'
+import { useInverter } from '@/hooks'
 import { useSelectorStore, useGetDeployStore } from '@/store'
 import type {
   GetDeployFormStep,
@@ -8,13 +8,12 @@ import type {
   UseGetDeployOnSuccess,
 } from '@/types'
 import { isDeployForm } from '@/utils'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import type { RequiredDeep } from 'type-fest-4'
 
 export type UseGetDeployReturnType = ReturnType<typeof useGetDeploy>
 
 export const useGetDeploy = ({
-  onNetworkChangeWarning,
   onSuccess,
   onError,
 }: {
@@ -22,9 +21,6 @@ export const useGetDeploy = ({
   onSuccess?: UseGetDeployOnSuccess
   onError?: (error: Error) => void
 } = {}) => {
-  // Get the current chainId and previous chainId
-  const { didChainIdChange } = useChainSpecs()
-
   // Get the orchestrator state store
   const { addAddress } = useSelectorStore()
 
@@ -48,15 +44,13 @@ export const useGetDeploy = ({
   const inverter = useInverter().data
 
   // Prep the deployment
-  const prepDeployment = useMutation({
-    mutationFn: async () => {
+  const prepDeployment = useQuery({
+    queryKey: ['prepDeployment', JSON.stringify(requestedModules)],
+    queryFn: async () => {
       if (
         !('authorizer' in requestedModules) ||
         !('fundingManager' in requestedModules) ||
-        !('paymentProcessor' in requestedModules) ||
-        (factoryType !== 'default' &&
-          (!('issuanceToken' in requestedModules) ||
-            !('initialPurchaseAmount' in requestedModules)))
+        !('paymentProcessor' in requestedModules)
       )
         throw new Error(
           'Authorizer, Funding Manager and Payment Processor are required'
@@ -69,13 +63,19 @@ export const useGetDeploy = ({
         factoryType,
       })
 
-      setPrepGetDeployStep('Deploy')
+      resetGetDeployForm()
 
       return { run, inputs }
     },
-    onError: (error) => {
-      onError?.(error)
-    },
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    gcTime: 0,
+    staleTime: Infinity,
+    enabled:
+      'authorizer' in requestedModules &&
+      'fundingManager' in requestedModules &&
+      'paymentProcessor' in requestedModules,
   })
 
   // Deploy the workflow
@@ -85,7 +85,12 @@ export const useGetDeploy = ({
     ) => {
       if (!prepDeployment.data) throw new Error('No deploy data found')
 
-      return await prepDeployment.data.run(getDeployFormUserArgs, {
+      // The object might be frozen if it comes from a state management system
+      // like Redux or Immer, which often freeze objects to enforce immutability.
+      // We use structuredClone to create a deep, mutable copy of the object.
+      const unfrozenArgs = structuredClone(getDeployFormUserArgs)
+
+      return await prepDeployment.data.run(unfrozenArgs, {
         confirmations: 1,
       })
     },
@@ -127,31 +132,18 @@ export const useGetDeploy = ({
   // Construct a previous step function that decrements the current step index until it reaches the first step
   const prevFormStep = () => {
     if (currentStepIndex === 0) {
-      handleResetDeployForm(true)
+      setPrepGetDeployStep('Prepare')
       return
     }
     setGetDeployFormStep(availableFormSteps[currentStepIndex - 1])
   }
 
   const nextFormStep = () => {
-    if (isLastFormStep && isDeployForm(getDeployFormUserArgs))
+    if (isLastFormStep && isDeployForm(getDeployFormUserArgs)) {
       return runDeployment.mutate(getDeployFormUserArgs)
+    }
     setGetDeployFormStep(availableFormSteps[currentStepIndex + 1])
   }
-
-  const handleResetDeployForm = (full?: boolean) => {
-    runDeployment.reset()
-    if (full) setPrepGetDeployStep('Prepare')
-    setGetDeployFormStep('orchestrator')
-    resetGetDeployForm()
-  }
-
-  useEffectAfterMount(() => {
-    if (prepGetDeployStep === 'Deploy' && didChainIdChange) {
-      handleResetDeployForm(true)
-      onNetworkChangeWarning?.()
-    }
-  }, [didChainIdChange])
 
   return {
     requestedModules,

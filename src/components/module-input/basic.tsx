@@ -70,6 +70,7 @@ export const Basic = ({
           {...rest}
           className={cn('in--grid in--items-center in--gap-1.5', className)}
         >
+          <Label>{label}</Label>
           <Switch {...switchProps} />
           <Description>{description}</Description>
         </div>

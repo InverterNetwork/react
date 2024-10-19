@@ -60,7 +60,7 @@ const Form = ({
         <Label>{fName}</Label>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline">Edit Profile</Button>
+            <Button variant="outline">Form</Button>
           </DialogTrigger>
           <DialogContent className="sm:in--max-w-[425px] in--max-h-[80vh] in--overflow-y-auto">
             <DialogHeader>
@@ -72,7 +72,10 @@ const Form = ({
               {!!arg && (
                 <>
                   <h4>Preview</h4>
-                  <JsonView json={arg} />
+                  <JsonView
+                    json={arg}
+                    className="in--max-w-[450px] sm:in--max-w-[350px]"
+                  />
                 </>
               )}
               {/* If Array add the button to add more items */}
