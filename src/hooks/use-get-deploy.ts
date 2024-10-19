@@ -45,7 +45,7 @@ export const useGetDeploy = ({
 
   // Prep the deployment
   const prepDeployment = useQuery({
-    queryKey: ['prepDeployment', JSON.stringify(requestedModules)],
+    queryKey: ['prepDeployment', JSON.stringify(requestedModules), factoryType],
     queryFn: async () => {
       if (
         !('authorizer' in requestedModules) ||
