@@ -14,14 +14,16 @@ export type UseGetModuleParams = {
 
 export type UseGetModuleOptions = Omit<
   UseQueryOptions<any, Error>,
-  'queryKey' | 'queryFn' | 'enabled'
+  'queryKey' | 'queryFn'
 >
 
 export type UseGetModuleReturnType = ReturnType<typeof useGetModule>
 
 export const useGetModule = ({
   params,
-  options,
+  options = {
+    enabled: true,
+  },
 }: {
   params: UseGetModuleParams
   options?: UseGetModuleOptions
@@ -30,6 +32,8 @@ export const useGetModule = ({
   let { decimals } = params
   const inverter = useInverter()
   const zeroXAddress = address as `0x${string}`
+
+  const enabled = !!address && !!inverter.data && options.enabled
 
   const query = useQuery({
     queryKey: [
@@ -103,8 +107,8 @@ export const useGetModule = ({
 
       return data
     },
-    enabled: !!address && !!inverter.data,
     ...options, // Spread the additional options
+    enabled,
   })
 
   return query

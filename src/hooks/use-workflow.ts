@@ -18,7 +18,7 @@ export type UseWorkFlowParams<
   requestedModules?: T
   options?: Except<
     UseQueryOptions<Workflow<PopWalletClient, T> | undefined, Error>,
-    'queryKey' | 'queryFn' | 'enabled'
+    'queryKey' | 'queryFn'
   >
 }
 
@@ -31,11 +31,14 @@ export function useWorkflow<
 >({
   orchestratorAddress,
   requestedModules,
-  options,
+  options = {
+    enabled: true,
+    refetchOnWindowFocus: false,
+  },
 }: UseWorkFlowParams<T>): UseQueryResult<Workflow<PopWalletClient, T>> {
   const inverter = useInverter()
 
-  const enabled = !!inverter.data && !!orchestratorAddress
+  const enabled = !!inverter.data && !!orchestratorAddress && options.enabled
 
   const query = useQuery({
     queryKey: ['workflow', inverter.dataUpdatedAt],
@@ -44,9 +47,8 @@ export function useWorkflow<
         orchestratorAddress: orchestratorAddress!,
         requestedModules,
       }) as any,
-    enabled,
-    refetchOnWindowFocus: false,
     ...options,
+    enabled,
   })
 
   return query as any

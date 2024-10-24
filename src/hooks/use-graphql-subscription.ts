@@ -9,14 +9,12 @@ import type {
 
 export type UseGraphQLSubscriptionParams<T extends GraphQLSubscriptionArgs> = {
   fields: T
+  enabled?: boolean
 }
-
-export type UseBondingCurveSubscriptionReturnType<
-  T extends GraphQLSubscriptionArgs,
-> = ReturnType<typeof useGraphQLSubscription<T>>
 
 export const useGraphQLSubscription = <T extends GraphQLSubscriptionArgs>({
   fields,
+  enabled = true,
 }: UseGraphQLSubscriptionParams<T>): GraphQLSubscriptionResult<T> | null => {
   const inverter = useInverter()
 
@@ -28,7 +26,7 @@ export const useGraphQLSubscription = <T extends GraphQLSubscriptionArgs>({
   const [data, setData] = React.useState<Awaited<typeof memo> | null>(null)
 
   React.useEffect(() => {
-    if (!memo) return
+    if (!memo || !enabled) return
 
     const fetchData = async () => {
       try {
@@ -40,7 +38,7 @@ export const useGraphQLSubscription = <T extends GraphQLSubscriptionArgs>({
     }
 
     fetchData()
-  }, [memo])
+  }, [memo, enabled])
 
   return data
 }
