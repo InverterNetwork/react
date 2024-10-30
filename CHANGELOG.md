@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.7](https://github.com/InverterNetwork/react/compare/v0.3.6...v0.3.7) (2024-10-30)
+
+
+### Features
+
+* charts ([56e7007](https://github.com/InverterNetwork/react/commit/56e700749b27b697c94836502e20757d207d00f3))
+* debaunce and swap sub hooks, market stat ui component ([076c135](https://github.com/InverterNetwork/react/commit/076c1351803f6cc89b2bc2f7a4f8316b58f9ffc0))
+* overwrite theme ([0647ffc](https://github.com/InverterNetwork/react/commit/0647ffcc281c58916e1ccc1b6089891557baa502))
+* upload file hook ([9d5978e](https://github.com/InverterNetwork/react/commit/9d5978e6b27fc0b6a908063fd6f491497571f154))
+
 ### [0.3.6](https://github.com/InverterNetwork/react/compare/v0.3.5...v0.3.6) (2024-10-26)
 
 ### [0.3.5](https://github.com/InverterNetwork/react/compare/v0.3.5-alpha.0...v0.3.5) (2024-10-26)
