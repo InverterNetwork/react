@@ -1,30 +1,13 @@
 'use client'
 
 import * as React from 'react'
-
-export type InverterThemeConfig = {
-  theme?: 'light' | 'dark'
-}
-
-// Add this function outside of the component
-function getThemeFromCookie(): 'light' | 'dark' | undefined {
-  // This check is necessary for SSR
-  if (typeof document !== 'undefined') {
-    return document.cookie.replace(
-      /(?:(?:^|.*;\s*)inverterTheme\s*\=\s*([^;]*).*$)|^.*$/,
-      '$1'
-    ) as 'light' | 'dark' | undefined
-  }
-  return undefined
-}
-
-// Add this script to be inserted into the page
-const themeScript = `
-  (function() {
-    const theme = document.cookie.match(/inverterTheme=(light|dark)/)?.[1] || 'light';
-    document.documentElement.setAttribute('data-inverter-theme', theme);
-  })();
-`
+import {
+  getCssVariables,
+  getThemeFromCookie,
+  getThemeScript,
+} from '@/utils/theme'
+import type { InverterThemeConfig } from '@/types'
+import '../styles/global.css'
 
 /**
  * InverterProviderProps
@@ -32,15 +15,27 @@ const themeScript = `
  * @property {React.ReactNode} children
  * @property {'light' | 'dark'} theme @default 'light'
  */
-export type InverterProviderProps = {
+export type ThemeProviderProps = {
   children: React.ReactNode
   themeConfig?: InverterThemeConfig
 }
 
-export function ThemeProvider({
-  children,
-  themeConfig,
-}: InverterProviderProps) {
+// Create a static style element that will be the same on server and client
+const StyleInjector = ({
+  cssVariables,
+  theme,
+}: {
+  cssVariables: string
+  theme?: 'light' | 'dark'
+}) => (
+  <>
+    <style dangerouslySetInnerHTML={{ __html: cssVariables }} />
+    <script dangerouslySetInnerHTML={{ __html: getThemeScript(theme) }} />
+  </>
+)
+StyleInjector.displayName = 'StyleInjector'
+
+export function ThemeProvider({ children, themeConfig }: ThemeProviderProps) {
   React.useEffect(() => {
     const cookieTheme = getThemeFromCookie()
     const propsTheme = themeConfig?.theme
@@ -54,9 +49,11 @@ export function ThemeProvider({
     document.cookie = `inverterTheme=${getTheme()}; path=/; max-age=31536000; SameSite=Strict`
   }, [themeConfig?.theme])
 
+  const cssVariables = getCssVariables(themeConfig)
+
   return (
     <>
-      <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      <StyleInjector cssVariables={cssVariables} theme={themeConfig?.theme} />
       {children}
     </>
   )

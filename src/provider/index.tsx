@@ -1,9 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import type { InverterThemeConfig } from './theme-provider'
+import type { InverterThemeConfig } from '@/types'
 import { ThemeProvider } from './theme-provider'
-import '../styles/global.css'
 
 /**
  * InverterProviderProps
@@ -20,7 +19,11 @@ export function InverterProvider({
   children,
   themeConfig,
 }: InverterProviderProps) {
-  return <ThemeProvider themeConfig={themeConfig}>{children}</ThemeProvider>
+  return (
+    <>
+      <ThemeProvider themeConfig={themeConfig}>{children}</ThemeProvider>
+    </>
+  )
 }
 
 export type { InverterThemeConfig }
