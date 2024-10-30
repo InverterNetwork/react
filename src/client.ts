@@ -23,6 +23,7 @@ export * from './components/ui/tabs'
 export * from './components/ui/three-d-card'
 export * from './components/ui/tooltip'
 // Widgets
+export * from './components/live-chart'
 export * from './components/wallet-widget'
 export * from './components/orchestrator-address-selector'
 export * from './components/module-selector'
