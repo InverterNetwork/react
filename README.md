@@ -1,8 +1,8 @@
 <div align="center">
 
 [![license](https://img.shields.io/badge/License-LGPL%20v3-blue)](/LICENSE.md)
-[![npm latest package](https://img.shields.io/npm/v/@inverter-network/sdk/latest.svg)](https://www.npmjs.com/package/@inverter-network/sdk)
-[![npm downloads](https://img.shields.io/npm/dm/@inverter-network/sdk.svg)](https://www.npmjs.com/package/@inverter-network/sdk)
+[![npm latest package](https://img.shields.io/npm/v/@inverter-network/sdk/latest.svg)](https://www.npmjs.com/package/@inverter-network/react)
+[![npm downloads](https://img.shields.io/npm/dm/@inverter-network/sdk.svg)](https://www.npmjs.com/package/@inverter-network/react)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/inverternetwork.svg?label=follow+INVERTER)](https://twitter.com/inverternetwork)
 
 </div>
@@ -36,13 +36,7 @@ bun upgrage
 Install dependencies:
 
 ```bash
-bun add @inverter-network/sdk
-```
-
-or
-
-```bash
-npm install @inverter-network/sdk
+bun add @inverter-network/react
 ```
 
 ## How to make a release

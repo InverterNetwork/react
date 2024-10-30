@@ -16,6 +16,7 @@ export * from './components/ui/spinner'
 export * from './components/ui/table'
 export * from './components/ui/textarea'
 export * from './components/ui/description'
+export * from './components/ui/market-stat'
 // Utils
 export * from './utils'
 // Widgets
