@@ -24,9 +24,11 @@ export const useGetModule = ({
   options = {
     enabled: true,
   },
+  dependencies = [],
 }: {
   params: UseGetModuleParams
   options?: UseGetModuleOptions
+  dependencies?: any[]
 }) => {
   const { address, name } = params
   let { decimals } = params
@@ -41,6 +43,7 @@ export const useGetModule = ({
       name,
       address,
       inverter.data?.walletClient?.account?.address,
+      ...dependencies,
     ],
     queryFn: async () => {
       if (!inverter) throw new Error('No inverter')

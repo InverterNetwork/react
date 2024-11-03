@@ -20,6 +20,7 @@ export type UseWorkFlowParams<
     UseQueryOptions<Workflow<PopWalletClient, T> | undefined, Error>,
     'queryKey' | 'queryFn'
   >
+  dependencies?: any[]
 }
 
 export type UseWorkFlowReturnType<
@@ -35,13 +36,14 @@ export function useWorkflow<
     enabled: true,
     refetchOnWindowFocus: false,
   },
+  dependencies = [],
 }: UseWorkFlowParams<T>): UseQueryResult<Workflow<PopWalletClient, T>> {
   const inverter = useInverter()
 
   const enabled = !!inverter.data && !!orchestratorAddress && options.enabled
 
   const query = useQuery({
-    queryKey: ['workflow', inverter.dataUpdatedAt],
+    queryKey: ['workflow', inverter.dataUpdatedAt, ...dependencies],
     queryFn: () =>
       inverter.data!.getWorkflow({
         orchestratorAddress: orchestratorAddress!,

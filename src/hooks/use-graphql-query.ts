@@ -25,7 +25,7 @@ export type UseGraphQLQueryReturnType<
 
 export const useGraphQLQuery = <T extends GraphQLQueryArgs>({
   fields,
-  dependencies,
+  dependencies = [],
   options = {
     enabled: true,
   },
@@ -35,7 +35,7 @@ export const useGraphQLQuery = <T extends GraphQLQueryArgs>({
   const enabled = !!inverter.data && options.enabled
 
   const query = useQuery({
-    queryKey: ['graphql-query', fields, ...(dependencies || [])],
+    queryKey: ['graphql-query', fields, ...dependencies],
     queryFn: () => inverter.data!.graphql.query(fields),
     ...options,
     enabled,
