@@ -1,58 +1,82 @@
 import * as React from 'react'
+import { cva } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
 
 import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react'
 import { Card, CardContent } from './card'
 import { cn, toCompactNumber } from '@/utils'
 
-export interface MarketStatProps extends React.HTMLAttributes<HTMLDivElement> {
+const marketStatVariants = cva('in--overflow-hidden', {
+  variants: {
+    size: {
+      sm: 'in--p-2 in--min-h-[80px]',
+      md: 'in--p-4 in--min-h-[100px]',
+      lg: 'in--p-6 in--min-h-[120px]',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+})
+
+const titleVariants = cva(
+  'in--font-medium in--text-muted-foreground in--truncate',
+  {
+    variants: {
+      size: {
+        sm: 'in--text-xs',
+        md: 'in--text-sm',
+        lg: 'in--text-base',
+      },
+    },
+    defaultVariants: {
+      size: 'md',
+    },
+  }
+)
+
+const valueVariants = cva('in--font-bold in--truncate in--mb-2', {
+  variants: {
+    size: {
+      sm: 'in--text-lg',
+      md: 'in--text-2xl',
+      lg: 'in--text-3xl',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+})
+
+const iconVariants = cva('in--text-muted-foreground', {
+  variants: {
+    size: {
+      sm: 'in--h-4 in--w-4',
+      md: 'in--h-5 in--w-5',
+      lg: 'in--h-6 in--w-6',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+})
+
+export interface MarketStatProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof marketStatVariants> {
   title?: string
   value?: string | number
   change?: number
   icon?: React.ReactNode
   prefix?: string
   suffix?: string
-  size?: 'sm' | 'md' | 'lg'
 }
 
 const MarketStat = React.forwardRef<HTMLDivElement, MarketStatProps>(
   (
-    {
-      title,
-      value,
-      change,
-      icon,
-      className,
-      prefix,
-      suffix,
-      size = 'md',
-      ...props
-    },
+    { title, value, change, icon, className, prefix, suffix, size, ...props },
     ref
   ) => {
-    const sizeClasses = {
-      sm: 'p-2 min-h-[80px]',
-      md: 'p-4 min-h-[100px]',
-      lg: 'p-6 min-h-[120px]',
-    }
-
-    const titleClasses = {
-      sm: 'text-xs',
-      md: 'text-sm',
-      lg: 'text-base',
-    }
-
-    const valueClasses = {
-      sm: 'text-lg',
-      md: 'text-2xl',
-      lg: 'text-3xl',
-    }
-
-    const iconClasses = {
-      sm: 'h-4 w-4',
-      md: 'h-5 w-5',
-      lg: 'h-6 w-6',
-    }
-
     return (
       <Card
         ref={ref}
@@ -62,30 +86,12 @@ const MarketStat = React.forwardRef<HTMLDivElement, MarketStatProps>(
         )}
         {...props}
       >
-        <CardContent className={cn('in--overflow-hidden', sizeClasses[size])}>
+        <CardContent className={marketStatVariants({ size })}>
           <div className="in--flex in--justify-between in--items-center in--mb-2">
-            <span
-              className={cn(
-                'in--font-medium in--text-muted-foreground in--truncate',
-                titleClasses[size]
-              )}
-            >
-              {title}
-            </span>
-            {icon && (
-              <span
-                className={cn('in--text-muted-foreground', iconClasses[size])}
-              >
-                {icon}
-              </span>
-            )}
+            <span className={titleVariants({ size })}>{title}</span>
+            {icon && <span className={iconVariants({ size })}>{icon}</span>}
           </div>
-          <div
-            className={cn(
-              'in--font-bold in--truncate in--mb-2',
-              valueClasses[size]
-            )}
-          >
+          <div className={valueVariants({ size })}>
             {prefix && (
               <span className="in--text-muted-foreground in--mr-1">
                 {prefix}

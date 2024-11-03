@@ -4,7 +4,7 @@
   "include": ["src", "tests", "tools"],
   "compilerOptions": {
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "noEmit": true,
     "paths": {
       "@/*": ["./src/*"],
