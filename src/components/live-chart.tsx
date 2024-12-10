@@ -22,7 +22,7 @@ export type LiveChartProps = {
     darkText?: string
     lightText?: string
   }
-  loading?: boolean
+  showNoData?: boolean
 } & Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>
 
 export function LiveChart({
@@ -36,7 +36,7 @@ export function LiveChart({
     darkText: '#fafafa',
     lightText: '#0a0a0a',
   },
-  loading = false,
+  showNoData = false,
   ...rest
 }: LiveChartProps) {
   const containerRef = React.useRef<HTMLDivElement>(null)
@@ -53,7 +53,7 @@ export function LiveChart({
           if (!chartItems.current.length)
             return (
               <div className="in--w-full in--h-full in--flex-grow in--border in--border-border in--relative in--rounded-lg">
-                {!loading && (
+                {!!showNoData && (
                   <NoData className="in--absolute in--top-1/2 in--left-1/2 -in--translate-x-1/2 -in--translate-y-1/2 in--z-10" />
                 )}
                 <Skeleton className="in--w-full in--h-full" />

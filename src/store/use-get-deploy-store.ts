@@ -32,6 +32,7 @@ export const useGetDeployStore = create<GetDeployStore>()(
               },
             }
             break
+          case 'beneficiary':
           case 'initialPurchaseAmount':
             typeVal = value
             break
