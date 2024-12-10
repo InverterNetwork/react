@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.9](https://github.com/InverterNetwork/react/compare/v0.3.9-alpha.5...v0.3.9) (2024-12-10)
+
+
+### Bug Fixes
+
+* themes, envio url ([3c6b081](https://github.com/InverterNetwork/react/commit/3c6b081b39ca8307dc8f21c02e97e25745f5ea0e))
+
 ### [0.3.8](https://github.com/InverterNetwork/react/compare/v0.3.7...v0.3.8) (2024-10-31)
 
 ### [0.3.7](https://github.com/InverterNetwork/react/compare/v0.3.6...v0.3.7) (2024-10-30)
