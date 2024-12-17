@@ -1,6 +1,6 @@
 'use client'
 
-import type { SelectorStore } from '@/types'
+import type { SelectorStore, SelectorStoreAddressItem } from '@/types'
 import { isAddress } from 'viem'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
@@ -17,7 +17,7 @@ export const useSelectorStore = create<SelectorStore>()(
           state.isEditing = editing ?? !state.isEditing
         })
       },
-      addAddress: ({ address, type }) => {
+      addAddress: ({ address, type, title }) => {
         if (!address) return
         if (!isAddress(address)) return
 
@@ -29,22 +29,22 @@ export const useSelectorStore = create<SelectorStore>()(
         )
 
         set((state) => {
+          // define previous date
+          let prevData: SelectorStoreAddressItem | null = null
+
           // remove the existing index
-          if (existingIndex !== -1)
-            state[
-              type === 'orchestrator'
-                ? 'orchestratorAddresses'
-                : 'moduleAddresses'
-            ].splice(existingIndex, 1)
+          if (existingIndex !== -1) {
+            prevData = previousAddresses[existingIndex]
+            state[`${type}Addresses`].splice(existingIndex, 1)
+          }
+
+          const nullableTitle = prevData?.title ?? title
 
           // Add new orchestrator
-          state[
-            type === 'orchestrator'
-              ? 'orchestratorAddresses'
-              : 'moduleAddresses'
-          ].unshift({
+          state[`${type}Addresses`].unshift({
             address,
-            date: new Date(),
+            date: prevData?.date ?? new Date(),
+            ...(nullableTitle && { title: nullableTitle }),
           })
 
           state.isEditing = false

@@ -28,8 +28,10 @@ export const useInverter = ({
 
   const enabled = options.enabled
 
+  const queryHash = `inverter-${walletClient.isSuccess}-${walletClient.data?.account.address}`
+
   const inverter = useQuery({
-    queryKey: ['inverter', ...dependencies],
+    queryKey: [queryHash, ...dependencies],
     queryFn: () => {
       if (!publicClient) throw new Error('Public client is not available')
 
