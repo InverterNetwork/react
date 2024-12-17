@@ -2,19 +2,36 @@
 
 import { Inverter } from '@inverter-network/sdk'
 import { useQuery } from '@tanstack/react-query'
+import type { UseQueryOptions } from '@tanstack/react-query'
 import { usePublicClient, useWalletClient } from 'wagmi'
+import type { PopWalletClient } from '@inverter-network/sdk'
+
+export type UseInverterParams = {
+  options?: Omit<
+    UseQueryOptions<Inverter<PopWalletClient>>,
+    'queryKey' | 'queryFn'
+  >
+  dependencies?: any[]
+}
 
 export type UseInverterReturnType = ReturnType<typeof useInverter>
 
-export const useInverter = () => {
-  const publicClient = usePublicClient(),
-    walletClient = useWalletClient(),
-    chainId = publicClient?.chain.id
+export const useInverter = ({
+  options = {
+    enabled: true,
+    refetchOnWindowFocus: false,
+  },
+  dependencies = [],
+}: UseInverterParams = {}) => {
+  const publicClient = usePublicClient()
+  const walletClient = useWalletClient()
+
+  const enabled = options.enabled
 
   const inverter = useQuery({
-    queryKey: ['inverter', chainId, walletClient.data?.account.address],
+    queryKey: ['inverter', ...dependencies],
     queryFn: () => {
-      if (!publicClient) return
+      if (!publicClient) throw new Error('Public client is not available')
 
       const instance = Inverter.getInstance({
         publicClient,
@@ -23,6 +40,8 @@ export const useInverter = () => {
 
       return instance
     },
+    ...options,
+    enabled,
   })
 
   return inverter

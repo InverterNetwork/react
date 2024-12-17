@@ -43,7 +43,12 @@ export function useWorkflow<
   const enabled = !!inverter.data && !!orchestratorAddress && options.enabled
 
   const query = useQuery({
-    queryKey: ['workflow', inverter.dataUpdatedAt, ...dependencies],
+    queryKey: [
+      'workflow',
+      inverter.dataUpdatedAt,
+      orchestratorAddress,
+      ...dependencies,
+    ],
     queryFn: () =>
       inverter.data!.getWorkflow({
         orchestratorAddress: orchestratorAddress!,
