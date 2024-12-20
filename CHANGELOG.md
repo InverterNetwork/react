@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.11](https://github.com/InverterNetwork/react/compare/v0.3.10...v0.3.11) (2024-12-20)
+
+
+### Features
+
+* moduleMethod is open persist state ([f2356f0](https://github.com/InverterNetwork/react/commit/f2356f0928c9cc82610e03f464b1447b42757b86))
+
+
+### Bug Fixes
+
+* hydration at theme set ([99f0504](https://github.com/InverterNetwork/react/commit/99f0504b4ccf6cfab0399fae465083ccf72f7054))
+* theme provider complexity ([caf5292](https://github.com/InverterNetwork/react/commit/caf5292e03afc214e67d156a1e6b0c126dd53c98))
+
 ### [0.3.10](https://github.com/InverterNetwork/react/compare/v0.3.10-alpha.1...v0.3.10) (2024-12-18)
 
 ### [0.3.9](https://github.com/InverterNetwork/react/compare/v0.3.9-alpha.5...v0.3.9) (2024-12-10)
