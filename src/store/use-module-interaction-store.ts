@@ -54,6 +54,23 @@ export const useModuleInteractionStore = create<ModuleInteractionStore>()(
       })
     },
 
+    setModuleMethodIsOpen: (params) => {
+      set((state) => {
+        const { moduleName, methodName, isOpen } = params
+        state.moduleInteractionState[moduleName] =
+          state.moduleInteractionState[moduleName] || []
+        const module = state.moduleInteractionState[moduleName]
+        const methodIndex = module.findIndex((m) => m.methodName === methodName)
+
+        if (methodIndex !== -1) {
+          module[methodIndex].isOpen = isOpen
+        } else {
+          // Method doesn't exist, add it with isOpen
+          module.push({ methodName, isOpen })
+        }
+      })
+    },
+
     updateModuleMethodResponse: (params) => {
       set((state) => {
         const { moduleName, methodName, response } = params

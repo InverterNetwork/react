@@ -61,11 +61,16 @@ export type UpdateModuleMethodArgParams = UpdateModuleMethodBase & {
   argsLength: number
 }
 
+export type SetAccordionOpenParams = UpdateModuleMethodBase & {
+  isOpen: boolean
+}
+
 export type UpdateModuleMethodResponseParams = UpdateModuleMethodBase & {
   response: any
 }
 
 export type ModuleInteractionMethodState = {
+  isOpen?: boolean
   methodName?: string
   args?: any[]
   response?: any
@@ -84,6 +89,7 @@ export interface ModuleInteractionStore {
   setSelectedModuleType: (moduleType: SelectedModuleType) => void
   setSelectedOptionalModuleIndex: (index: number) => void
   updateModuleMethodArg: (params: UpdateModuleMethodArgParams) => void
+  setModuleMethodIsOpen: (params: SetAccordionOpenParams) => void
   updateModuleMethodResponse: (params: UpdateModuleMethodResponseParams) => void
   resetModuleInteractionState: () => void
 }

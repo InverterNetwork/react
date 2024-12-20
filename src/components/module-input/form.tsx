@@ -122,7 +122,7 @@ const ArrayItemHeader = ({
   <>
     {index !== 0 && (
       <Button
-        className="in--absolute in--top-10 in--right-0 in--p-1"
+        className="in--absolute in--top-6 in--right-0 in--p-1"
         color="ghost"
         size="sm"
         onClick={onRemove}
@@ -131,9 +131,9 @@ const ArrayItemHeader = ({
       </Button>
     )}
 
-    <Separator className="in--mb-0">
-      {firstLetterToUpperCase(name) + ' ' + (index + 1)}
-    </Separator>
+    <Separator />
+
+    <p>{firstLetterToUpperCase(name) + ' ' + (index + 1)}</p>
   </>
 )
 
