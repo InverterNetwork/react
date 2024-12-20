@@ -10,17 +10,18 @@ export type ThemeProviderProps = {
   themeConfig?: InverterThemeConfig
 }
 
-const ThemeScript = ({ theme = 'light' }: { theme?: 'light' | 'dark' }) => {
-  React.useLayoutEffect(() => {
-    const derivedTheme =
-      document.cookie.match(/inverterTheme=(light|dark)/)?.[1] ||
-      theme ||
-      'light'
-    document.documentElement.setAttribute('data-inverter-theme', derivedTheme)
-    document.documentElement.style.colorScheme = derivedTheme
-  }, [])
-
-  return null
+const ThemeScript = () => {
+  return (
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+        const derivedTheme = document.cookie.match(/inverterTheme=(light|dark)/)?.[1] || 'light'
+        document.documentElement.setAttribute('data-inverter-theme', derivedTheme)
+        document.documentElement.style.colorScheme = derivedTheme
+    `,
+      }}
+    />
+  )
 }
 
 const ThemeStyles = ({
@@ -34,21 +35,21 @@ const ThemeStyles = ({
       .join('')
   }
 
-  React.useLayoutEffect(() => {
-    const baseVars = parseVariables(themeConfig?.baseTheme || {})
-    const lightVars = parseVariables(themeConfig?.lightTheme || {})
-    const darkVars = parseVariables(themeConfig?.darkTheme || {})
+  const baseVars = parseVariables(themeConfig?.baseTheme || {})
+  const lightVars = parseVariables(themeConfig?.lightTheme || {})
+  const darkVars = parseVariables(themeConfig?.darkTheme || {})
 
-    const css = `
+  const css = `
       :root {${baseVars}}
       [data-inverter-theme="light"] {${lightVars}}
       [data-inverter-theme="dark"] {${darkVars}}
     `
 
+  React.useLayoutEffect(() => {
     document.documentElement.style.cssText = css
   }, [])
 
-  return null
+  return <style dangerouslySetInnerHTML={{ __html: css }} />
 }
 
 export function ThemeProvider({ children, themeConfig }: ThemeProviderProps) {
@@ -65,7 +66,7 @@ export function ThemeProvider({ children, themeConfig }: ThemeProviderProps) {
   return (
     <>
       <ThemeStyles themeConfig={themeConfig} />
-      <ThemeScript theme={themeConfig?.theme} />
+      <ThemeScript />
       {children}
     </>
   )
