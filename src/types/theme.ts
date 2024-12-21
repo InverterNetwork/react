@@ -1,5 +1,5 @@
 export type InverterThemeConfig = {
-  theme?: 'light' | 'dark'
+  theme?: 'light' | 'dark' | 'system'
   baseTheme?: BaseTheme
   lightTheme?: ThemeColors
   darkTheme?: ThemeColors
