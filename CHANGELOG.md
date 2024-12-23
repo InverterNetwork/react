@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.13](https://github.com/InverterNetwork/react/compare/v0.3.12...v0.3.13) (2024-12-23)
+
+
+### Features
+
+* unified selector store, updated selector selects, inverter refetch at chain change ([deecb44](https://github.com/InverterNetwork/react/commit/deecb44f1292bbd4df04ce64df69bae5cb480dfa))
+
 ### [0.3.12](https://github.com/InverterNetwork/react/compare/v0.3.11...v0.3.12) (2024-12-21)
 
 
