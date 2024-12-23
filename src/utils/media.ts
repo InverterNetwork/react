@@ -4,18 +4,29 @@ export type PrunedFile = {
   name: string
 }
 
-// Function to convert a Blob to a base64 string
-export async function pruneFile(blob?: Blob | File): Promise<PrunedFile> {
-  if (!blob) throw new Error('No file selected')
+/**
+ * Converts a File to a base64 string
+ * @param file - The file to convert
+ * @returns Promise resolving to pruned file object containing base64 string, type and name
+ * @throws Error if no file is provided
+ */
+export async function pruneFile(file?: Blob | File): Promise<PrunedFile> {
+  if (!file) throw new Error('No file selected')
 
-  const arrayBuffer = await blob.arrayBuffer()
+  const arrayBuffer = await file.arrayBuffer()
   const buffer = Buffer.from(arrayBuffer)
-  return { string: buffer.toString('base64'), type: blob.type, name: blob.name }
+  return { string: buffer.toString('base64'), type: file.type, name: file.name }
 }
 
-// Function to reconstruct a Blob from a base64 string
+/**
+ * Reconstructs a File from a base64 string
+ * @param param0 - Object containing base64 string, type and name
+ * @param param0.string - Base64 encoded file data
+ * @param param0.type - MIME type of the file
+ * @param param0.name - Name of the file
+ * @returns Reconstructed File object
+ */
 export function parseFile({ string, type, name }: PrunedFile): File {
   const buffer = Buffer.from(string, 'base64')
-  // Create a File from the Blob, specifying the name and type
   return new File([buffer], name, { type })
 }

@@ -28,7 +28,7 @@ export const useInverter = ({
 
   const enabled = options.enabled
 
-  const queryHash = `inverter-${walletClient.isSuccess}-${walletClient.data?.account.address}`
+  const queryHash = `inverter-${walletClient.isSuccess}-${publicClient?.chain.id}-${walletClient.data?.account.address}`
 
   const inverter = useQuery({
     queryKey: [queryHash, ...dependencies],

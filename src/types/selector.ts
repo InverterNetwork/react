@@ -1,23 +1,30 @@
 // ===========STORE================
+export type SelectorStoreAddressItemType = 'orchestrator' | 'contract'
+
 export type SelectorStoreAddressItem = {
+  type: SelectorStoreAddressItemType
   address: `0x${string}`
   date: Date
   title?: string
+  chainId?: number
 }
 
-export type SelectorStoreAddressSelectorStore = 'orchestrator' | 'module'
-
 export type SelectorStore = {
-  orchestratorAddresses: SelectorStoreAddressItem[]
-  moduleAddresses: SelectorStoreAddressItem[]
+  addresses: SelectorStoreAddressItem[]
   isEditing: boolean
   setIsEditing: (editing?: boolean) => void
   addAddress: ({
     address,
     type,
+    title,
+    chainId,
   }: {
     address: `0x${string}` | null | undefined
-    type: SelectorStoreAddressSelectorStore
+    type: SelectorStoreAddressItemType
     title?: string
+    chainId?: number
   }) => void
+  getAddresses: (
+    type: SelectorStoreAddressItemType
+  ) => SelectorStoreAddressItem[]
 }

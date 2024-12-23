@@ -27,7 +27,7 @@ export * from './components/live-chart'
 export * from './components/wallet-widget'
 export * from './components/orchestrator-address-selector'
 export * from './components/module-selector'
-export * from './components/module-address-selector'
+export * from './components/contract-address-selector'
 // Stores
 export * from './store'
 // Hooks

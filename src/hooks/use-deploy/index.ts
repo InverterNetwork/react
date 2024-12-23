@@ -12,6 +12,7 @@ import { useInverter } from '../use-inverter'
 
 import { initialStates } from './constants'
 import type { UseDeployOnSuccess } from '@/types'
+import { useAccount } from 'wagmi'
 
 export const useDeploy = <T extends DeployableContracts>({
   name,
@@ -23,6 +24,7 @@ export const useDeploy = <T extends DeployableContracts>({
   onSuccess?: UseDeployOnSuccess
 }) => {
   const moduleData = getModuleData(name)
+  const { chainId } = useAccount()
 
   if (!('deploymentInputs' in moduleData)) {
     throw new Error('Module does not support deployment')
@@ -60,7 +62,12 @@ export const useDeploy = <T extends DeployableContracts>({
         hash: transactionHash,
       })
 
-      addAddress({ address: contractAddress, type: 'module' })
+      addAddress({
+        title: name,
+        address: contractAddress,
+        type: 'contract',
+        chainId,
+      })
 
       onSuccess?.({ contractAddress, transactionHash })
     },

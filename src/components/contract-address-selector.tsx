@@ -7,7 +7,7 @@ import { useSelectorStore } from '@/store'
 import { cn, compressAddress, unixTimeToDisplay } from '@/utils'
 import CreatableSelect from 'react-select/creatable'
 
-export const OrchestratorAddressSelector = ({
+export const ContractAddressSelector = ({
   className,
   menuPlacement,
 }: {
@@ -18,7 +18,7 @@ export const OrchestratorAddressSelector = ({
   const { addAddress, getAddresses } = useSelectorStore()
   const selectId = React.useId()
 
-  const options = getAddresses('orchestrator').map((i) => ({
+  const options = getAddresses('contract').map((i) => ({
     value: `${i.chainId}-${i.address}`,
     data: i,
   }))
@@ -33,12 +33,12 @@ export const OrchestratorAddressSelector = ({
       options={options}
       value={!isHydrated ? undefined : options[0]}
       onCreateOption={(e) => {
-        addAddress({ address: e as `0x${string}`, type: 'orchestrator' })
+        addAddress({ address: e as `0x${string}`, type: 'contract' })
       }}
       onChange={(e) => {
-        addAddress({ address: e?.data.address, type: 'orchestrator' })
+        addAddress({ address: e?.data.address, type: 'contract' })
       }}
-      placeholder="Select or create orchestrator address"
+      placeholder="Select or create contract address"
       formatOptionLabel={(i, { context }) => {
         if (!i.data) return `Create "${i.value}"`
 
