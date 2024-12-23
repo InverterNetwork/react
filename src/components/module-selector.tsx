@@ -5,7 +5,7 @@ import * as React from 'react'
 import { useIsHydrated } from '@/hooks'
 import ReactSelect from 'react-select'
 import { data } from '@inverter-network/abis'
-import { prettyName } from '@/utils'
+import { getPrettyModuleName } from '@inverter-network/sdk'
 
 export const ModuleSelector = ({
   setName,
@@ -18,7 +18,7 @@ export const ModuleSelector = ({
 
   const options = data.map((i) => ({
     value: i.name,
-    label: prettyName(i.name),
+    label: getPrettyModuleName(i.name),
   }))
 
   return (
@@ -31,7 +31,7 @@ export const ModuleSelector = ({
           ? undefined
           : {
               value: name,
-              label: prettyName(name),
+              label: getPrettyModuleName(name),
             }
       }
       onChange={(e) => {

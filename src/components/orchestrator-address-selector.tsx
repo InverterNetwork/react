@@ -4,8 +4,9 @@ import * as React from 'react'
 
 import { useIsHydrated } from '@/hooks'
 import { useSelectorStore } from '@/store'
-import { cn, compressAddress, unixTimeToDisplay } from '@/utils'
+import { cn } from '@/utils'
 import CreatableSelect from 'react-select/creatable'
+import { compressAddress, dateToDisplay } from '@inverter-network/sdk'
 
 export const OrchestratorAddressSelector = ({
   className,
@@ -55,7 +56,7 @@ export const OrchestratorAddressSelector = ({
               <b>Address:</b> {compressAddress(i.data.address)}
             </li>
             <li>
-              <b>Date:</b> {unixTimeToDisplay(new Date(i.data.date))}
+              <b>Date:</b> {dateToDisplay(new Date(i.data.date))}
             </li>
             {i.data?.chainId && (
               <li>

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { cn, firstLetterToUpperCase, prettyName } from '@/utils'
+import { cn } from '@/utils'
 import { JsonView } from '@/components/ui/json-view'
 import { Label } from '@/components/ui/label'
 import { Description } from '@/components/ui/description'
@@ -17,6 +17,10 @@ import {
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { CircleX } from 'lucide-react'
+import {
+  firstLetterToUpperCase,
+  getPrettyModuleName,
+} from '@inverter-network/sdk'
 
 type FormPropsBase = {
   arg?: any
@@ -50,7 +54,7 @@ const Form = ({
   setUids,
   containerProps,
 }: FormProps) => {
-  const fName = prettyName(name)
+  const fName = getPrettyModuleName(name)
 
   const { className, ...rest } = containerProps ?? {}
 

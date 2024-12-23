@@ -25,11 +25,7 @@ export const useSelectorStore = create<SelectorStore>()(
 
         // if address is already in the list, set existingIndex
         const existingIndex = previousAddresses.findIndex(
-          (a) =>
-            a.address === address &&
-            a.type === type &&
-            // if chainId is not provided, we don't care about it
-            (!chainId || a.chainId === chainId)
+          (a) => a.address === address && a.type === type
         )
 
         set((state) => {
@@ -43,8 +39,8 @@ export const useSelectorStore = create<SelectorStore>()(
           }
 
           // define previous nullable data
-          const nullableTitle = prevData?.title ?? title
-          const nullableChainId = prevData?.chainId ?? chainId
+          const nullableTitle = title ?? prevData?.title
+          const nullableChainId = chainId ?? prevData?.chainId
 
           // Add new address
           state.addresses.unshift({
@@ -61,6 +57,14 @@ export const useSelectorStore = create<SelectorStore>()(
       },
       getAddresses: (type) => {
         return get().addresses.filter((a) => a.type === type)
+      },
+      removeAddress: ({ address, type }) => {
+        set((state) => {
+          // Using filter instead of splice for immutable update
+          state.addresses = state.addresses.filter(
+            (a) => !(a.address === address && a.type === type)
+          )
+        })
       },
     })),
     {

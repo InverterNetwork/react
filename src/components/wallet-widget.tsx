@@ -2,10 +2,11 @@
 
 import * as React from 'react'
 import { useChainSpecs, useIsHydrated } from '@/hooks'
-import { cn, compressAddress } from '@/utils'
+import { cn } from '@/utils'
 import { Button } from './ui/button'
 import type { ButtonProps } from './ui/button'
 import { CircleAlert, Pointer, Wallet } from 'lucide-react'
+import { compressAddress } from '@inverter-network/sdk'
 
 export interface WalletWidgetProps extends ButtonProps {
   text?: string

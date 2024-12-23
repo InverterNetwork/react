@@ -2,8 +2,12 @@
 
 import * as React from 'react'
 
-import { amountString, cn, prettyName } from '@/utils'
-import { getJsType } from '@inverter-network/sdk'
+import { cn } from '@/utils'
+import {
+  getJsType,
+  getPrettyModuleName,
+  toAmountString,
+} from '@inverter-network/sdk'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
@@ -30,7 +34,7 @@ export const Basic = ({
   const required =
     inputProps?.required ?? !['any', 'boolean'].includes(getJsType(input)!)
 
-  const label = prettyName(input.name)
+  const label = getPrettyModuleName(input.name)
   const description = input.description
 
   const defaultProps = {
@@ -42,7 +46,7 @@ export const Basic = ({
       updateArg(
         argIndex,
         jsType === 'numberString'
-          ? amountString(e.target.value)
+          ? toAmountString(e.target.value)
           : e.target.value
       ),
   }

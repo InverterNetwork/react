@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { pruneFile } from '@/utils'
+import { pruneFile } from '@inverter-network/sdk'
 
 export type UseFileUploadParams = {
   onError?: (error: string) => void

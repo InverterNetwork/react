@@ -27,4 +27,11 @@ export type SelectorStore = {
   getAddresses: (
     type: SelectorStoreAddressItemType
   ) => SelectorStoreAddressItem[]
+  removeAddress: ({
+    address,
+    type,
+  }: {
+    address: `0x${string}`
+    type: SelectorStoreAddressItemType
+  }) => void
 }

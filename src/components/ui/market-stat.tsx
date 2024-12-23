@@ -4,7 +4,8 @@ import type { VariantProps } from 'class-variance-authority'
 
 import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react'
 import { Card, CardContent } from './card'
-import { cn, toCompactNumber } from '@/utils'
+import { cn } from '@/utils'
+import { toCompactNumber } from '@inverter-network/sdk'
 
 const marketStatVariants = cva('in--overflow-hidden', {
   variants: {
