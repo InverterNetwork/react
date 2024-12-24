@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.17](https://github.com/InverterNetwork/react/compare/v0.3.16...v0.3.17) (2024-12-24)
+
+
+### Bug Fixes
+
+* reset form if requested modules changed ([040e7b2](https://github.com/InverterNetwork/react/commit/040e7b23e6b53179f850e4e2b17309e69830e282))
+
 ### [0.3.16](https://github.com/InverterNetwork/react/compare/v0.3.15...v0.3.16) (2024-12-24)
 
 
