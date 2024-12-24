@@ -9,6 +9,7 @@ import type {
 } from '@/types'
 import { isDeployForm } from '@/utils'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { useRef } from 'react'
 import type { RequiredDeep } from 'type-fest-4'
 
 export type UseGetDeployReturnType = ReturnType<typeof useGetDeploy>
@@ -33,6 +34,7 @@ export const useGetDeploy = ({
     setPrepGetDeployStep,
     setGetDeployFormStep,
     getDeployFormUserArgs,
+    resetGetDeployForm,
     ...restUseGetDeployStoreReturn
   } = useGetDeployStore()
 
@@ -43,12 +45,16 @@ export const useGetDeploy = ({
     (acc, curr) => acc + (Array.isArray(curr) ? curr.join(',') : curr),
     ''
   )
+
+  const prevGetRequestedModulesHash = useRef<string | null>(null)
+
   const prepDeploymentQueryHash = `prep_deployment-${inverter.dataUpdatedAt}-${requestedModulesHash}-${factoryType}`
 
   // Prep the deployment
   const prepDeployment = useQuery({
     queryKey: [prepDeploymentQueryHash],
-    queryFn: async () => {
+    queryFn: async ({ queryKey }) => {
+      console.log('queryKey', queryKey)
       if (
         !('authorizer' in requestedModules) ||
         !('fundingManager' in requestedModules) ||
@@ -60,6 +66,16 @@ export const useGetDeploy = ({
 
       if (!inverter.data) throw new Error('Inverter instance not found')
 
+      const prevHash = prevGetRequestedModulesHash.current
+      const currHash = queryKey[0].split('-')[2]
+
+      const shouldResetForm = !!prevHash && prevHash !== currHash
+      prevGetRequestedModulesHash.current = currHash
+
+      if (shouldResetForm) {
+        resetGetDeployForm()
+      }
+
       const { run, inputs } = await inverter.data.getDeploy({
         requestedModules,
         factoryType,
@@ -68,6 +84,8 @@ export const useGetDeploy = ({
       return { run, inputs }
     },
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
+    gcTime: 0,
     enabled:
       'authorizer' in requestedModules &&
       'fundingManager' in requestedModules &&
@@ -142,6 +160,7 @@ export const useGetDeploy = ({
   }
 
   return {
+    resetGetDeployForm,
     requestedModules,
     getDeployFormUserArgs,
     getDeployFormStep,
