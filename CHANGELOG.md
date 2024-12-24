@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.15](https://github.com/InverterNetwork/react/compare/v0.3.14...v0.3.15) (2024-12-24)
+
+
+### Bug Fixes
+
+* no more react select, onSave props, abi selector, seperator with child ([2826158](https://github.com/InverterNetwork/react/commit/2826158a34e1596b3b1557e16f20f258779396e6))
+
 ### [0.3.14](https://github.com/InverterNetwork/react/compare/v0.3.13...v0.3.14) (2024-12-23)
 
 ### [0.3.13](https://github.com/InverterNetwork/react/compare/v0.3.12...v0.3.13) (2024-12-23)
