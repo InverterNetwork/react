@@ -31,7 +31,7 @@ import { chainNames, getChainName } from '@inverter-network/sdk'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import type { SelectorStoreAddressItem } from '@/types'
 
-export type OnSelectorAddressLabelDone = (
+export type OnSelectorAddressLabelSave = (
   selectorItem: Pick<
     SelectorStoreAddressItem,
     'type' | 'title' | 'address' | 'chainId'
@@ -45,7 +45,7 @@ export type SelectorAddressDialogProps = {
   triggerLabel: string
   closeLabel: string
   isDropdownItem?: boolean
-  onDone?: OnSelectorAddressLabelDone
+  onSave?: OnSelectorAddressLabelSave
   className?: string
   buttonProps?: ButtonProps
 }
@@ -56,7 +56,7 @@ export function SelectorAddressDialog({
   triggerLabel,
   closeLabel,
   className,
-  onDone,
+  onSave,
   isDropdownItem = false,
   buttonProps,
 }: SelectorAddressDialogProps) {
@@ -164,7 +164,7 @@ export function SelectorAddressDialog({
           <DialogClose asChild>
             <Button
               onClick={() => {
-                onDone?.({
+                onSave?.({
                   type: selectorItem.type,
                   title: internalTitle,
                   address: internalAddress,

@@ -27,29 +27,29 @@ import {
 
 import { SelectorAddressDialog } from './selector-address-dialog'
 
-import type { OnSelectorAddressLabelDone } from './selector-address-dialog'
+import type { OnSelectorAddressLabelSave } from './selector-address-dialog'
 
 export type SelectorAddressLabelProps = {
   selectorItem: SelectorStoreAddressItem
   className?: string
-  onDone?: OnSelectorAddressLabelDone
+  onSave?: OnSelectorAddressLabelSave
   onSelect?: (selectorItem: SelectorStoreAddressItem) => void
   onRemove?: (selectorItem: SelectorStoreAddressItem) => void
   HrefElement?: React.ElementType
   href?: string
   exclude?: ('open' | 'edit' | 'remove')[]
-}
+} & Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'>
 
 export function SelectorAddressLabel({
   selectorItem,
   className,
-  onDone,
+  onSave,
   HrefElement,
   onSelect,
   exclude = [],
   href,
   onRemove,
-}: SelectorAddressLabelProps & React.HTMLAttributes<HTMLDivElement>) {
+}: SelectorAddressLabelProps) {
   const compressedAddress = compressAddress(selectorItem?.address)
   const title = selectorItem?.title
     ? getPrettyModuleName(selectorItem.title)
@@ -131,7 +131,7 @@ export function SelectorAddressLabel({
                 triggerLabel="Edit"
                 closeLabel="Save changes"
                 selectorItem={selectorItem}
-                onDone={onDone}
+                onSave={onSave}
                 isDropdownItem
               ></SelectorAddressDialog>
             )}
