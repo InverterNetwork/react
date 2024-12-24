@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.16](https://github.com/InverterNetwork/react/compare/v0.3.15...v0.3.16) (2024-12-24)
+
+
+### Bug Fixes
+
+* responsive tabs, frame component, use get deploy hash ([59dc55f](https://github.com/InverterNetwork/react/commit/59dc55f0c8463219e4f4d06693db63115b1b9d53))
+
 ### [0.3.15](https://github.com/InverterNetwork/react/compare/v0.3.14...v0.3.15) (2024-12-24)
 
 
