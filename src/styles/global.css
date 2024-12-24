@@ -2,7 +2,6 @@
 @import './json-view.css';
 @import './react-select.css';
 @import './typography.css';
-@import './components.css';
 @import './utilities.css';
 
 @tailwind base;

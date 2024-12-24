@@ -5,7 +5,24 @@ import * as TabsPrimitive from '@radix-ui/react-tabs'
 
 import { cn } from '@/utils'
 
-const Tabs = TabsPrimitive.Root
+const Tabs = ({
+  responsive,
+  ...props
+}: TabsPrimitive.TabsProps & { responsive?: boolean }) => {
+  return (
+    <TabsPrimitive.Root
+      className={cn(
+        responsive
+          ? '[&_[role="tablist"]]:in--w-full [&_[role="tablist"]]:in--flex-wrap [&_[role="tablist"]]:in--h-max'
+          : '[&_[role="tablist"]]:in--h-10',
+        responsive && '[&_[role="tab"]]:in--flex-1',
+        props?.className
+      )}
+      {...props}
+    />
+  )
+}
+Tabs.displayName = TabsPrimitive.Root.displayName
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
@@ -14,7 +31,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'in--inline-flex in--h-10 in--items-center in--justify-center in--rounded-md in--bg-muted in--p-1 in--text-muted-foreground',
+      'in--inline-flex in--items-center in--justify-center in--rounded-md in--bg-muted in--p-1 in--text-muted-foreground',
       className
     )}
     {...props}

@@ -13,39 +13,41 @@ import type { RequiredDeep } from 'type-fest-4'
 
 export type UseGetDeployReturnType = ReturnType<typeof useGetDeploy>
 
+export type UseGetDeployProps = {
+  onSuccess?: UseGetDeployOnSuccess
+  onError?: (error: Error) => void
+}
+
 export const useGetDeploy = ({
   onSuccess,
   onError,
-}: {
-  onNetworkChangeWarning?: () => void
-  onSuccess?: UseGetDeployOnSuccess
-  onError?: (error: Error) => void
-} = {}) => {
+}: UseGetDeployProps = {}) => {
   // Get the orchestrator state store
   const { addAddress } = useSelectorStore()
 
   // Get the deploy store
   const {
-    addRequestedModule,
-    getDeployFormStep,
-    getDeployFormUserArgs,
-    resetGetDeployForm,
-    factoryType,
-    prepGetDeployStep,
     requestedModules,
-    resetRequestedModules,
-    setGetDeployFormStep,
-    setFactoryType,
+    factoryType,
+    getDeployFormStep,
     setPrepGetDeployStep,
-    setGetDeployFormUserArg,
+    setGetDeployFormStep,
+    getDeployFormUserArgs,
+    ...restUseGetDeployStoreReturn
   } = useGetDeployStore()
 
   // Get the inverter instance
-  const inverter = useInverter().data
+  const inverter = useInverter()
+
+  const requestedModulesHash = Object.values(requestedModules).reduce(
+    (acc, curr) => acc + (Array.isArray(curr) ? curr.join(',') : curr),
+    ''
+  )
+  const prepDeploymentQueryHash = `prep_deployment-${inverter.dataUpdatedAt}-${requestedModulesHash}-${factoryType}`
 
   // Prep the deployment
   const prepDeployment = useQuery({
-    queryKey: ['prepDeployment', JSON.stringify(requestedModules), factoryType],
+    queryKey: [prepDeploymentQueryHash],
     queryFn: async () => {
       if (
         !('authorizer' in requestedModules) ||
@@ -56,22 +58,16 @@ export const useGetDeploy = ({
           'Authorizer, Funding Manager and Payment Processor are required'
         )
 
-      if (!inverter) throw new Error('Inverter instance not found')
+      if (!inverter.data) throw new Error('Inverter instance not found')
 
-      const { run, inputs } = await inverter.getDeploy({
+      const { run, inputs } = await inverter.data.getDeploy({
         requestedModules,
         factoryType,
       })
 
-      resetGetDeployForm()
-
       return { run, inputs }
     },
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    gcTime: 0,
-    staleTime: Infinity,
     enabled:
       'authorizer' in requestedModules &&
       'fundingManager' in requestedModules &&
@@ -148,12 +144,7 @@ export const useGetDeploy = ({
   return {
     requestedModules,
     getDeployFormUserArgs,
-    setGetDeployFormUserArg,
-    setFactoryType,
-    resetRequestedModules,
     getDeployFormStep,
-    prepGetDeployStep,
-    addRequestedModule,
     nextFormStep,
     prevFormStep,
     isLastFormStep,
@@ -163,5 +154,6 @@ export const useGetDeploy = ({
     prepDeployment,
     runDeployment,
     factoryType,
+    ...restUseGetDeployStoreReturn,
   }
 }

@@ -10,7 +10,13 @@ export function Frame({
   HTMLDivElement
 >) {
   return (
-    <div className={cn('in--frame', className)} {...props}>
+    <div
+      className={cn(
+        'in--space-y-2 in--p-6 in--border in--rounded-lg in--shadow-sm in--bg-card',
+        className
+      )}
+      {...props}
+    >
       {children}
     </div>
   )
