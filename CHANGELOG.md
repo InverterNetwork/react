@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.18](https://github.com/InverterNetwork/react/compare/v0.3.17...v0.3.18) (2024-12-25)
+
+
+### Bug Fixes
+
+* theme colors ([3281ea4](https://github.com/InverterNetwork/react/commit/3281ea4916b2b6f74efaf2d6bc192935182e0339))
+
 ### [0.3.17](https://github.com/InverterNetwork/react/compare/v0.3.16...v0.3.17) (2024-12-24)
 
 
