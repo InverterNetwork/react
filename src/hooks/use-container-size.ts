@@ -2,7 +2,9 @@
 
 import * as React from 'react'
 
-export const useContainerSize = (ref: React.RefObject<HTMLDivElement>) => {
+export const useContainerSize = (
+  ref: React.RefObject<HTMLDivElement | null>
+) => {
   const [size, setSize] = React.useState({ width: 0, height: 0 })
 
   React.useEffect(() => {
@@ -15,7 +17,7 @@ export const useContainerSize = (ref: React.RefObject<HTMLDivElement>) => {
       }
     })
 
-    if (ref.current) {
+    if (ref?.current) {
       resizeObserver.observe(ref.current)
     }
 

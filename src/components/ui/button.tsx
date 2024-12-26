@@ -61,73 +61,38 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
+    const Comp = asChild ? Slot : 'button'
     const Loader = loaders[loader]
 
-    if (asChild) {
-      return (
-        <Slot ref={ref} {...props}>
-          <>
-            {React.Children.map(
-              children as React.ReactElement,
-              (child: React.ReactElement) => {
-                return React.cloneElement(child, {
-                  className: cn(buttonVariants({ variant, size }), className),
-                  children: (
-                    <>
-                      {startIcon && (
-                        <span className={cn(!!children && 'in--mr-2')}>
-                          {startIcon}
-                        </span>
-                      )}
-                      {loading && (
-                        <Loader
-                          className={cn(
-                            'in--h-4 in--w-4 in--animate-spin',
-                            !!children && 'in--mr-2'
-                          )}
-                        />
-                      )}
-                      {child.props.children}
-                      {endIcon && (
-                        <span className={cn(!!children && 'in--ml-2')}>
-                          {endIcon}
-                        </span>
-                      )}
-                    </>
-                  ),
-                })
-              }
+    const content = (
+      <>
+        {startIcon && (
+          <span className={cn(!!children && 'in--mr-2')}>{startIcon}</span>
+        )}
+        {loading && (
+          <Loader
+            className={cn(
+              'in--h-4 in--w-4 in--animate-spin',
+              !!children && 'in--mr-2'
             )}
-          </>
-        </Slot>
-      )
-    }
+          />
+        )}
+        {children}
+        {endIcon && (
+          <span className={cn(!!children && 'in--ml-2')}>{endIcon}</span>
+        )}
+      </>
+    )
 
     return (
-      <button
+      <Comp
         className={cn(buttonVariants({ variant, size, className }))}
-        disabled={loading}
         ref={ref}
+        disabled={loading}
         {...props}
       >
-        <>
-          {startIcon && (
-            <span className={cn(!!children && 'in--mr-2')}>{startIcon}</span>
-          )}
-          {loading && (
-            <Loader
-              className={cn(
-                'in--h-4 in--w-4 in--animate-spin',
-                !!children && 'in--mr-2'
-              )}
-            />
-          )}
-          {children}
-          {endIcon && (
-            <span className={cn(!!children && 'in--ml-2')}>{endIcon}</span>
-          )}
-        </>
-      </button>
+        {content}
+      </Comp>
     )
   }
 )
