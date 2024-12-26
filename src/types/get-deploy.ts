@@ -52,3 +52,19 @@ export type UseGetDeployOnSuccess = ({
   transactionHash: `0x${string}`
   orchestratorAddress: `0x${string}`
 }) => void
+
+export type UseGetDeployProps<
+  T extends RequestedModules<FT extends undefined ? 'default' : FT>,
+  FT extends FactoryType | undefined = undefined,
+> = {
+  requestedModules: T
+  factoryType?: FT
+  resetGetDeployForm?: () => void
+  onSuccess?: UseGetDeployOnSuccess
+  onError?: (error: Error) => void
+}
+
+export type UseGetDeployFormProps = Omit<
+  UseGetDeployProps<RequestedModules<FactoryType>, FactoryType>,
+  'resetGetDeployForm' | 'requestedModules' | 'factoryType'
+>
