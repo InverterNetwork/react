@@ -64,25 +64,42 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : 'button'
     const Loader = loaders[loader]
 
-    const content = (
-      <>
-        {startIcon && (
-          <span className={cn(!!children && 'in--mr-2')}>{startIcon}</span>
-        )}
-        {loading && (
+    let finalChildren = children
+
+    if (startIcon || loading || endIcon) {
+      const elements: React.ReactNode[] = []
+      if (startIcon) {
+        elements.push(
+          <span key="start-icon" className={cn(!!children && 'in--mr-2')}>
+            {startIcon}
+          </span>
+        )
+      }
+      if (loading) {
+        elements.push(
           <Loader
+            key="loader"
             className={cn(
               'in--h-4 in--w-4 in--animate-spin',
               !!children && 'in--mr-2'
             )}
           />
-        )}
-        {children}
-        {endIcon && (
-          <span className={cn(!!children && 'in--ml-2')}>{endIcon}</span>
-        )}
-      </>
-    )
+        )
+      }
+      if (children) {
+        elements.push(
+          <React.Fragment key="children">{children}</React.Fragment>
+        )
+      }
+      if (endIcon) {
+        elements.push(
+          <span key="end-icon" className={cn(!!children && 'in--ml-2')}>
+            {endIcon}
+          </span>
+        )
+      }
+      finalChildren = elements
+    }
 
     return (
       <Comp
@@ -91,7 +108,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={loading}
         {...props}
       >
-        {content}
+        {finalChildren}
       </Comp>
     )
   }
