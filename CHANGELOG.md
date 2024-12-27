@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.21](https://github.com/InverterNetwork/react/compare/v0.3.20...v0.3.21) (2024-12-27)
+
+
+### Bug Fixes
+
+* button asChild slot ([5379f29](https://github.com/InverterNetwork/react/commit/5379f293700f8060ae717d255b1a4d49befb3bbb))
+* nodata component ([38955c4](https://github.com/InverterNetwork/react/commit/38955c41d3a5ce34bfa00523dfeec8d6ebf86074))
+
 ### [0.3.20](https://github.com/InverterNetwork/react/compare/v0.3.19...v0.3.20) (2024-12-26)
 
 
