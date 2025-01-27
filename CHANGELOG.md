@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.24](https://github.com/InverterNetwork/react/compare/v0.3.23...v0.3.24) (2025-01-27)
+
+
+### Features
+
+* enhance PostCSS configuration with advanced selector and attribute handling ([a3f56e1](https://github.com/InverterNetwork/react/commit/a3f56e1fd8355ca69e1f09375b3b6b0ca045169b))
+
 ### [0.3.23](https://github.com/InverterNetwork/react/compare/v0.3.22...v0.3.23) (2025-01-27)
 
 ### [0.3.22](https://github.com/InverterNetwork/react/compare/v0.3.21...v0.3.22) (2025-01-10)
