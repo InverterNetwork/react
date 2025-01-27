@@ -13,6 +13,10 @@
       "import": "./dist/esm/client.js",
       "default": "./dist/cjs/client.js"
     },
+    "./styles": {
+      "import": "./dist/esm/styles/global.css",
+      "default": "./dist/cjs/styles/global.css"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/cjs/index.js",

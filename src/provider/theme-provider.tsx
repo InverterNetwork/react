@@ -4,9 +4,6 @@
 import * as React from 'react'
 import type { InverterThemeConfig } from '@/types'
 
-// Import global CSS styles
-import '../styles/global.css'
-
 // Define the props type for the ThemeProvider component
 export type ThemeProviderProps = {
   children: React.ReactNode // Children components to be wrapped by the provider
