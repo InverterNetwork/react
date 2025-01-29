@@ -16,9 +16,9 @@
 }
 
 .in--react-select-container .react-select__multi-value {
-  @apply in--bg-secondary;
+  @apply in--bg-accent;
 }
 
 .in--react-select-container .react-select__multi-value__label {
-  @apply in--text-secondary-foreground;
+  @apply in--text-accent-foreground;
 }
