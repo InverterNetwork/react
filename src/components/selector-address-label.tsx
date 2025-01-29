@@ -10,7 +10,6 @@ import {
   dateToDisplay,
   firstLetterToUpperCase,
   getChainName,
-  getPrettyModuleName,
 } from '@inverter-network/sdk'
 
 import { Menu } from 'lucide-react'
@@ -51,9 +50,7 @@ export function SelectorAddressLabel({
   onRemove,
 }: SelectorAddressLabelProps) {
   const compressedAddress = compressAddress(selectorItem?.address)
-  const title = selectorItem?.title
-    ? getPrettyModuleName(selectorItem.title)
-    : '...'
+  const title = selectorItem?.title ?? '...'
   const [date, time] = dateToDisplay(selectorItem.date).split(',')
   const chainId = selectorItem?.chainId ?? '...'
   const chainName = chainId === '...' ? '...' : getChainName(chainId)
