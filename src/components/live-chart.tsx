@@ -13,8 +13,8 @@ import { cn } from '@/utils'
 import { Skeleton } from './ui/skeleton'
 
 export type LiveChartProps = {
-  chartItems: React.MutableRefObject<ProcessedLiveChartItem[]>
-  chartSeries: React.MutableRefObject<ISeriesApi<'Candlestick'> | null>
+  chartItems: React.RefObject<ProcessedLiveChartItem[]>
+  chartSeries: React.RefObject<ISeriesApi<'Candlestick'> | null>
   theme?: 'dark' | 'light'
   color?: {
     darkBackground?: string
