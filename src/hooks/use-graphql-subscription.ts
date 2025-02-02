@@ -1,44 +1,37 @@
 'use client'
 
-import * as React from 'react'
-import { useInverter } from './use-inverter'
+import { subscription } from '@inverter-network/graphql'
 import type {
   GraphQLSubscriptionArgs,
   GraphQLSubscriptionResult,
-} from '@inverter-network/sdk'
+} from '@inverter-network/graphql'
+import { useQuery } from '@tanstack/react-query'
+import type { UseQueryOptions } from '@tanstack/react-query'
+import type { Except } from 'type-fest-4'
 
 export type UseGraphQLSubscriptionParams<T extends GraphQLSubscriptionArgs> = {
   fields: T
-  enabled?: boolean
+  dependencies?: any[]
+  options?: Except<
+    UseQueryOptions<GraphQLSubscriptionResult<T> | undefined, Error>,
+    'queryKey' | 'queryFn'
+  >
 }
+
+export type UseGraphQLSubscriptionReturnType<
+  T extends GraphQLSubscriptionArgs = GraphQLSubscriptionArgs,
+> = ReturnType<typeof useGraphQLSubscription<T>>
 
 export const useGraphQLSubscription = <T extends GraphQLSubscriptionArgs>({
   fields,
-  enabled = true,
-}: UseGraphQLSubscriptionParams<T>): GraphQLSubscriptionResult<T> | null => {
-  const inverter = useInverter()
-
-  const memo = React.useMemo(() => {
-    if (!inverter.data) return null
-    return inverter.data!.graphql.subscription(fields)
-  }, [inverter.data, fields])
-
-  const [data, setData] = React.useState<Awaited<typeof memo> | null>(null)
-
-  React.useEffect(() => {
-    if (!memo || !enabled) return
-
-    const fetchData = async () => {
-      try {
-        const result = await memo
-        setData(result)
-      } catch (error) {
-        console.error('Error in GraphQL subscription:', error)
-      }
-    }
-
-    fetchData()
-  }, [memo, enabled])
-
-  return data
+  dependencies = [],
+  options = {
+    enabled: true,
+  },
+}: UseGraphQLSubscriptionParams<T>) => {
+  return useQuery({
+    queryKey: ['graphql-subscription', fields, ...dependencies],
+    queryFn: () => subscription(fields),
+    ...options,
+  })
 }

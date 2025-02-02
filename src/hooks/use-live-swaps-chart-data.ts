@@ -2,7 +2,8 @@
 
 import * as React from 'react'
 import type { ISeriesApi, UTCTimestamp } from 'lightweight-charts'
-import type { ProcessedLiveChartItem, Swap } from '@/types'
+import type { ProcessedLiveChartItem } from '@/types'
+import type { Swap } from '@inverter-network/graphql'
 
 export type UseLiveSwapsChartDataParams = {
   swaps: Swap[]
@@ -53,9 +54,9 @@ export const processSingleSwapToData = (
   time: UTCTimestamp
   price: number
 } => {
-  const { blockTimestamp, priceInCol } = swap
-  const timestamp = Number(blockTimestamp) as UTCTimestamp
-  const price = parseFloat(priceInCol)
+  const { timestamp: swapTimestamp, priceCOL, priceUSD } = swap
+  const timestamp = Number(swapTimestamp) as UTCTimestamp
+  const price = !!Number(priceUSD) ? parseFloat(priceUSD) : parseFloat(priceCOL)
   return {
     time: timestamp,
     price,

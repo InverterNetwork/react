@@ -1,14 +1,13 @@
 'use client'
 
-import { useInverter } from './use-inverter'
 import { useQuery } from '@tanstack/react-query'
-
+import type { UseQueryOptions } from '@tanstack/react-query'
+import type { Except } from 'type-fest-4'
 import type {
   GraphQLQueryArgs,
   GraphQLQueryResult,
-} from '@inverter-network/sdk'
-import type { UseQueryOptions } from '@tanstack/react-query'
-import type { Except } from 'type-fest-4'
+} from '@inverter-network/graphql'
+import { query } from '@inverter-network/graphql'
 
 export type UseGraphQLQueryParams<T extends GraphQLQueryArgs> = {
   fields: T
@@ -30,16 +29,11 @@ export const useGraphQLQuery = <T extends GraphQLQueryArgs>({
     enabled: true,
   },
 }: UseGraphQLQueryParams<T>) => {
-  const inverter = useInverter()
-
-  const enabled = !!inverter.data && options.enabled
-
-  const query = useQuery({
+  const queryResult = useQuery({
     queryKey: ['graphql-query', fields, ...dependencies],
-    queryFn: () => inverter.data!.graphql.query(fields),
+    queryFn: () => query(fields),
     ...options,
-    enabled,
   })
 
-  return query
+  return queryResult
 }
