@@ -5,7 +5,8 @@
       "name": "@inverter-network/react",
       "dependencies": {
         "@api3/logos": "^0.2.18",
-        "@inverter-network/sdk": "0.3.14",
+        "@inverter-network/graphql": "^0.9.12",
+        "@inverter-network/sdk": "0.4.0-alpha.1",
         "@radix-ui/react-accordion": "^1.2.1",
         "@radix-ui/react-alert-dialog": "^1.1.2",
         "@radix-ui/react-checkbox": "^1.1.2",
@@ -79,7 +80,7 @@
         "react-hook-form": "^7.53.0",
         "recharts": "^2.12.7",
         "typescript": "^5.6.2",
-        "viem": "^2.7.12",
+        "viem": "^2.21.55",
         "wagmi": "^2.5.7",
       },
     },
@@ -201,9 +202,11 @@
 
     "@hutson/parse-repository-url": ["@hutson/parse-repository-url@3.0.2", "", {}, "sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q=="],
 
-    "@inverter-network/abis": ["@inverter-network/abis@0.3.6", "", { "peerDependencies": { "typescript": "^5.6.2" } }, "sha512-OozgQmz4LglpLGibyPQwuDT623/WjJWy/sTI7u45pzATu1Q1Cx0yH3l077Kq2WYJCTDYpVmHosMOvVwEVIEpfA=="],
+    "@inverter-network/abis": ["@inverter-network/abis@0.3.12", "", { "peerDependencies": { "typescript": "^5.6.2" } }, "sha512-tnQ91Jii9sWq7CPSwG4pvDW3LiqXBeX/f2RUM8bH2aUmkdxnFxqJA/s/+O63uoXrMo9mDEUssa4DlCI0JPN0Wg=="],
 
-    "@inverter-network/sdk": ["@inverter-network/sdk@0.3.14", "", { "dependencies": { "@inverter-network/abis": "0.3.6", "@urql/core": "^5.0.6", "subscriptions-transport-ws": "^0.11.0", "type-fest-4": "npm:type-fest@^4.26.0" }, "peerDependencies": { "abitype": "^1.0.5", "lodash": "^4.17.0", "typescript": "^5.6.2", "viem": "^2.7.12" } }, "sha512-DCMz1h7tiEyF7da3+AN4A5YcBhDHWS59PPIl+WO2fOxftoBIgxMmtiwlPWgc8DaEPSbde0ey0ZZ347lHkobT+g=="],
+    "@inverter-network/graphql": ["@inverter-network/graphql@0.9.15", "", { "dependencies": { "@urql/core": "^5.1.0", "subscriptions-transport-ws": "^0.11.0", "uuid": "^11.0.5", "wonka": "6.3.4" } }, "sha512-Mc6tbrtaW2vcp9fKeWa9zCBl//3FGj/cSCavAMLZFP218EexXDfEA99gR8+N7uwIVZuUTtEsM+ArI8d0nP0fUw=="],
+
+    "@inverter-network/sdk": ["@inverter-network/sdk@0.4.0-alpha.1", "", { "dependencies": { "@inverter-network/abis": "0.3.12", "type-fest-4": "npm:type-fest@^4.26.0" }, "peerDependencies": { "abitype": "^1.0.5", "lodash": "^4.17.0", "typescript": "^5.6.2", "viem": "^2.21.55" } }, "sha512-H5B1byEuYxGd+n7fAO2jM16Y0JMn/aGEjzYngulfcH2/is10x1GGa6al1rPHah5cznl/e1lRR82ySLvRCEKLVA=="],
 
     "@isaacs/cliui": ["@isaacs/cliui@8.0.2", "", { "dependencies": { "string-width": "^5.1.2", "string-width-cjs": "npm:string-width@^4.2.0", "strip-ansi": "^7.0.1", "strip-ansi-cjs": "npm:strip-ansi@^6.0.1", "wrap-ansi": "^8.1.0", "wrap-ansi-cjs": "npm:wrap-ansi@^7.0.0" } }, "sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA=="],
 
@@ -1645,7 +1648,7 @@
 
     "util-deprecate": ["util-deprecate@1.0.2", "", {}, "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="],
 
-    "uuid": ["uuid@8.3.2", "", { "bin": { "uuid": "dist/bin/uuid" } }, "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="],
+    "uuid": ["uuid@11.0.5", "", { "bin": { "uuid": "dist/esm/bin/uuid" } }, "sha512-508e6IcKLrhxKdBbcA2b4KQZlLVp2+J5UwQ6F7Drckkc5N9ZJwFa4TgWtsww9UG8fGHbm6gbV19TdM5pQ4GaIA=="],
 
     "validate-npm-package-license": ["validate-npm-package-license@3.0.4", "", { "dependencies": { "spdx-correct": "^3.0.0", "spdx-expression-parse": "^3.0.0" } }, "sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew=="],
 
@@ -1741,7 +1744,11 @@
 
     "@metamask/rpc-errors/@metamask/utils": ["@metamask/utils@9.3.0", "", { "dependencies": { "@ethereumjs/tx": "^4.2.0", "@metamask/superstruct": "^3.1.0", "@noble/hashes": "^1.3.1", "@scure/base": "^1.1.3", "@types/debug": "^4.1.7", "debug": "^4.3.4", "pony-cause": "^2.1.10", "semver": "^7.5.4", "uuid": "^9.0.1" } }, "sha512-w8CVbdkDrVXFJbfBSlDfafDR6BAkpDmv1bC1UJVCoVny5tW2RKAdn9i68Xf7asYT4TnUhl/hN4zfUiKQq9II4g=="],
 
+    "@metamask/sdk/uuid": ["uuid@8.3.2", "", { "bin": { "uuid": "dist/bin/uuid" } }, "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="],
+
     "@metamask/sdk-communication-layer/date-fns": ["date-fns@2.30.0", "", { "dependencies": { "@babel/runtime": "^7.21.0" } }, "sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw=="],
+
+    "@metamask/sdk-communication-layer/uuid": ["uuid@8.3.2", "", { "bin": { "uuid": "dist/bin/uuid" } }, "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="],
 
     "@metamask/utils/uuid": ["uuid@9.0.1", "", { "bin": { "uuid": "dist/bin/uuid" } }, "sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA=="],
 

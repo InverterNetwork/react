@@ -36,6 +36,7 @@ export function WalletWidget(props: WalletWidgetProps) {
     )
 
   const getStartIcon = () => {
+    if ('startIcon' in props) return props.startIcon
     if (!isConnected) return <Wallet size={20} />
 
     if (!!iconSrc)
@@ -56,6 +57,7 @@ export function WalletWidget(props: WalletWidgetProps) {
   }
 
   const getEndIcon = () => {
+    if ('endIcon' in props) return props.endIcon
     if (!!isConnected && !!text) return <Pointer size={20} />
 
     return null
@@ -63,25 +65,34 @@ export function WalletWidget(props: WalletWidgetProps) {
 
   const getChildren = () => {
     if (!isConnected) return 'Connect Wallet'
-
     if (!!text) return text
 
     return compressAddress(address)
   }
 
+  const color = (() => {
+    if ('color' in props) return props.color
+    if (!isConnected || !!text || isUnsupportedChain) return 'primary'
+    return ''
+  })()
+
+  const variant = (() => {
+    if ('variant' in props) return props.variant
+    if (isConnected) return 'outline'
+    return 'default'
+  })()
+
   return (
     <Button
-      {...rest}
-      {...((!isConnected || !!text || isUnsupportedChain) && {
-        color: 'primary',
-      })}
+      color={color}
+      variant={variant}
       startIcon={getStartIcon()}
       endIcon={getEndIcon()}
       className={cn(className, 'in--leading-[unset]')}
-      type="button"
-      size={!size ? 'sm' : size}
+      type={props.type ?? 'button'}
+      size={size ?? 'sm'}
       onClick={setShowWalletWidget}
-      {...(isConnected && { variant: 'outline' })}
+      {...rest}
     >
       {getChildren()}
     </Button>
