@@ -14,9 +14,13 @@ export type GetDeployFormStep =
   | 'issuanceToken'
   | 'initialPurchaseAmount'
   | 'beneficiary'
+  | 'migrationConfig'
 
 export type GetDeployFormUserArgs = PartialDeep<
-  GetUserArgs<RequestedModules, 'default' | 'immutable-pim' | 'restricted-pim'>
+  GetUserArgs<
+    RequestedModules,
+    'default' | 'immutable-pim' | 'restricted-pim' | 'migrating-pim'
+  >
 >
 
 export type GetDeployStore = {

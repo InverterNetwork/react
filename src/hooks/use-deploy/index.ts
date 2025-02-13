@@ -35,6 +35,7 @@ export const useDeploy = <T extends DeployableContracts>({
   const { addAddress } = useSelectorStore()
 
   const [userArgs, setUserArgs] = useState(
+    // @ts-expect-error - not all modules have initial states
     (initialStates?.[name] || {}) as GetUserModuleArg<T>
   )
 
