@@ -1,7 +1,7 @@
 {
   "name": "@inverter-network/react",
   "description": "INVERTER react",
-  "version": "0.4.0-alpha.3",
+  "version": "0.4.0-alpha.4",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
