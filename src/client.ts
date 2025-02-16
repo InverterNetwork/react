@@ -22,6 +22,7 @@ export * from './components/ui/switch'
 export * from './components/ui/tabs'
 export * from './components/ui/three-d-card'
 export * from './components/ui/tooltip'
+export * from './components/ui/progress'
 // Components / Widgets
 export * from './components/selector-address-dialog'
 export * from './components/selector-address-label'

@@ -20,7 +20,7 @@ const FloatingInput = React.forwardRef<HTMLInputElement, InputProps>(
 FloatingInput.displayName = 'FloatingInput'
 
 const FloatingLabel = React.forwardRef<
-  React.ElementRef<typeof Label>,
+  React.ComponentRef<typeof Label>,
   React.ComponentPropsWithoutRef<typeof Label>
 >(({ className, ...props }, ref) => {
   return (
@@ -39,7 +39,7 @@ FloatingLabel.displayName = 'FloatingLabel'
 type FloatingLabelInputProps = InputProps & { label?: string }
 
 const FloatingLabelInput = React.forwardRef<
-  React.ElementRef<typeof FloatingInput>,
+  React.ComponentRef<typeof FloatingInput>,
   React.PropsWithoutRef<FloatingLabelInputProps>
 >(({ id, label, ...props }, ref) => {
   return (

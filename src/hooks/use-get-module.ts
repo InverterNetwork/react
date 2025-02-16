@@ -4,12 +4,13 @@ import type { ModuleName } from '@inverter-network/abis'
 import type { UseQueryOptions } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import { ERC20_ABI } from '@inverter-network/sdk'
+import type { Extras } from '@inverter-network/sdk'
 import { useInverter } from './use-inverter'
 
 export type UseGetModuleParams = {
   address?: string | `0x${string}`
   name: ModuleName
-  decimals?: number
+  extras?: Extras
 }
 
 export type UseGetModuleOptions = Omit<
@@ -31,7 +32,7 @@ export const useGetModule = ({
   dependencies?: any[]
 }) => {
   const { address, name } = params
-  let { decimals } = params
+  let { decimals } = params.extras || {}
   const inverter = useInverter()
   const zeroXAddress = address as `0x${string}`
 
@@ -105,6 +106,7 @@ export const useGetModule = ({
           decimals,
           walletAddress: inverter.data!.walletClient?.account?.address,
           defaultToken,
+          ...params.extras,
         },
       })
 

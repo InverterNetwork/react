@@ -22,7 +22,7 @@ FloatingTextarea.displayName = 'FloatingTextarea'
 type FloatingLabelTextareaProps = TextareaProps & { label?: string }
 
 const FloatingLabelTextarea = React.forwardRef<
-  React.ElementRef<typeof FloatingTextarea>,
+  React.ComponentRef<typeof FloatingTextarea>,
   React.PropsWithoutRef<FloatingLabelTextareaProps>
 >(({ id, label, ...props }, ref) => {
   return (
