@@ -4,35 +4,37 @@ import type { ModuleName } from '@inverter-network/abis'
 import type { UseQueryOptions } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import { ERC20_ABI } from '@inverter-network/sdk'
-import type { Extras } from '@inverter-network/sdk'
+import type {
+  Extras,
+  GetModuleReturn,
+  PopWalletClient,
+} from '@inverter-network/sdk'
+import type { Except } from 'type-fest-4'
 import { useInverter } from './use-inverter'
 
-export type UseGetModuleParams = {
+export type UseGetModuleParams<T extends ModuleName> = {
   address?: string | `0x${string}`
-  name: ModuleName
+  name: T
   extras?: Extras
+  dependencies?: any[]
+  options?: Except<
+    UseQueryOptions<GetModuleReturn<T, PopWalletClient> | undefined, Error>,
+    'queryKey' | 'queryFn'
+  >
 }
-
-export type UseGetModuleOptions = Omit<
-  UseQueryOptions<any, Error>,
-  'queryKey' | 'queryFn'
->
 
 export type UseGetModuleReturnType = ReturnType<typeof useGetModule>
 
-export const useGetModule = ({
-  params,
+export const useGetModule = <T extends ModuleName>({
+  address,
+  name,
+  extras,
   options = {
     enabled: true,
   },
   dependencies = [],
-}: {
-  params: UseGetModuleParams
-  options?: UseGetModuleOptions
-  dependencies?: any[]
-}) => {
-  const { address, name } = params
-  let { decimals } = params.extras || {}
+}: UseGetModuleParams<T>) => {
+  let { decimals, walletAddress, ...restExtras } = extras || {}
   const inverter = useInverter()
   const zeroXAddress = address as `0x${string}`
 
@@ -99,14 +101,17 @@ export const useGetModule = ({
         }
       }
 
+      if (!walletAddress && !!inverter.data?.walletClient?.account?.address) {
+        walletAddress = inverter.data.walletClient.account.address
+      }
+
       const data = inverter.data!.getModule({
         name,
         address: zeroXAddress,
         extras: {
           decimals,
-          walletAddress: inverter.data!.walletClient?.account?.address,
           defaultToken,
-          ...params.extras,
+          ...restExtras,
         },
       })
 
