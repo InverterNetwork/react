@@ -5,8 +5,8 @@
       "name": "@inverter-network/react",
       "dependencies": {
         "@api3/logos": "^0.2.18",
-        "@inverter-network/graphql": "^0.9.15",
-        "@inverter-network/sdk": "0.4.0-alpha.5",
+        "@inverter-network/graphql": "^0.9.17",
+        "@inverter-network/sdk": "0.4.0-alpha.6",
         "@radix-ui/react-accordion": "^1.2.1",
         "@radix-ui/react-alert-dialog": "^1.1.2",
         "@radix-ui/react-checkbox": "^1.1.2",
@@ -203,11 +203,11 @@
 
     "@hutson/parse-repository-url": ["@hutson/parse-repository-url@3.0.2", "", {}, "sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q=="],
 
-    "@inverter-network/abis": ["@inverter-network/abis@0.3.17", "", { "peerDependencies": { "typescript": "^5.6.2" } }, "sha512-pjgkTquXue7y4s0Ast/APHrALqwp/Ai8NaJaMZLS+jguvJNJD2EoaKe7SsSt7D34kiH3GIZNCCZoQ50qgtrIAA=="],
+    "@inverter-network/abis": ["@inverter-network/abis@0.3.21", "", { "peerDependencies": { "typescript": "^5.6.2" } }, "sha512-FAd0KFTT8vPrmR98y0a4dy4Qukei4TrmGTklyldvaGJpYpWr0XLxyZixQNNFBPPJRh+pA0mYFaBFzbaXlbxtTg=="],
 
-    "@inverter-network/graphql": ["@inverter-network/graphql@0.9.15", "", { "dependencies": { "@urql/core": "^5.1.0", "subscriptions-transport-ws": "^0.11.0", "uuid": "^11.0.5", "wonka": "6.3.4" } }, "sha512-Mc6tbrtaW2vcp9fKeWa9zCBl//3FGj/cSCavAMLZFP218EexXDfEA99gR8+N7uwIVZuUTtEsM+ArI8d0nP0fUw=="],
+    "@inverter-network/graphql": ["@inverter-network/graphql@0.9.17", "", { "dependencies": { "@urql/core": "^5.1.0", "subscriptions-transport-ws": "^0.11.0", "uuid": "^11.0.5", "wonka": "6.3.4" } }, "sha512-4acF/BKVXvg5HnKQlmm24EfY/2ghoaDcJv+DM0GKX0hF6QTh6OBk0xa8sfKLO5Wn/rbRJhyoDjwuDdPJwvDwVA=="],
 
-    "@inverter-network/sdk": ["@inverter-network/sdk@0.4.0-alpha.5", "", { "dependencies": { "@inverter-network/abis": "0.3.17", "debug": "^4.4.0", "type-fest-4": "npm:type-fest@^4.26.0" }, "peerDependencies": { "abitype": "^1.0.5", "lodash": "^4.17.0", "typescript": "^5.6.2", "viem": "^2.21.55" } }, "sha512-2Ipff099BDkFz445j49x5z/OzSFSj9VajjL3SpLEVHySlJElqySB38qsHgPmwGVwtu23BzA+aweL94RYI7OjQg=="],
+    "@inverter-network/sdk": ["@inverter-network/sdk@0.4.0-alpha.6", "", { "dependencies": { "@inverter-network/abis": "0.3.21", "debug": "^4.4.0", "type-fest-4": "npm:type-fest@^4.26.0" }, "peerDependencies": { "abitype": "^1.0.5", "lodash": "^4.17.0", "typescript": "^5.6.2", "viem": "^2.21.55" } }, "sha512-Yc4Jc5ZbKtTf6JjvLREkz88RwjN9QJxX0SZzqcnbWKWMX4fp7mEgbJXZ8N3+JNkP/UvPE3GDg/8jDtgmeR3dYg=="],
 
     "@isaacs/cliui": ["@isaacs/cliui@8.0.2", "", { "dependencies": { "string-width": "^5.1.2", "string-width-cjs": "npm:string-width@^4.2.0", "strip-ansi": "^7.0.1", "strip-ansi-cjs": "npm:strip-ansi@^6.0.1", "wrap-ansi": "^8.1.0", "wrap-ansi-cjs": "npm:wrap-ansi@^7.0.0" } }, "sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA=="],
 
