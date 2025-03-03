@@ -1,10 +1,10 @@
 'use client'
 
 import { useModuleInteractionStore } from '@/store'
-import type { GetModuleReturn } from '@inverter-network/sdk'
+import type { GetModuleReturnType } from '@inverter-network/sdk'
 
 export const useModuleInteraction = (
-  selectedModule: GetModuleReturn<any, any> | undefined
+  selectedModule: GetModuleReturnType<any, any> | undefined
 ) => {
   const {
     moduleInteractionMode,

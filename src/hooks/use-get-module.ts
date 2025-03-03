@@ -5,8 +5,8 @@ import type { UseQueryOptions } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import { ERC20_ABI } from '@inverter-network/sdk'
 import type {
-  Extras,
-  GetModuleReturn,
+  TagConfig,
+  GetModuleReturnType,
   PopWalletClient,
 } from '@inverter-network/sdk'
 import type { Except } from 'type-fest-4'
@@ -15,10 +15,10 @@ import { useInverter } from './use-inverter'
 export type UseGetModuleParams<T extends ModuleName> = {
   address?: string | `0x${string}`
   name: T
-  extras?: Extras
+  tagConfig?: TagConfig
   dependencies?: any[]
   options?: Except<
-    UseQueryOptions<GetModuleReturn<T, PopWalletClient> | undefined, Error>,
+    UseQueryOptions<GetModuleReturnType<T, PopWalletClient> | undefined, Error>,
     'queryKey' | 'queryFn'
   >
 }
@@ -28,13 +28,13 @@ export type UseGetModuleReturnType = ReturnType<typeof useGetModule>
 export const useGetModule = <T extends ModuleName>({
   address,
   name,
-  extras,
+  tagConfig,
   options = {
     enabled: true,
   },
   dependencies = [],
 }: UseGetModuleParams<T>) => {
-  let { decimals, walletAddress, ...restExtras } = extras || {}
+  let { decimals, walletAddress, ...restTagConfig } = tagConfig || {}
   const inverter = useInverter()
   const zeroXAddress = address as `0x${string}`
 
@@ -108,10 +108,10 @@ export const useGetModule = <T extends ModuleName>({
       const data = inverter.data!.getModule({
         name,
         address: zeroXAddress,
-        extras: {
+        tagConfig: {
           decimals,
           defaultToken,
-          ...restExtras,
+          ...restTagConfig,
         },
       })
 

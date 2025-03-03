@@ -5,7 +5,7 @@ import { useGetDeployStore } from '@/store'
 import type { GetDeployFormStep, UseGetDeployFormProps } from '@/types'
 import { isDeployForm } from '@/utils'
 import type {
-  DeploySchema,
+  GetDeployWorkflowInputs,
   FactoryType,
   RequestedModules,
 } from '@inverter-network/sdk'
@@ -39,7 +39,10 @@ export const useGetDeployForm = ({
   const availableFormSteps = (() => {
     if (!prepDeployment.data) return []
     const { optionalModules, ...rest } = prepDeployment.data
-      .inputs as unknown as DeploySchema<RequestedModules, FactoryType>
+      .inputs as unknown as GetDeployWorkflowInputs<
+      RequestedModules,
+      FactoryType
+    >
 
     const result = (
       Object.keys(prepDeployment.data.inputs) as GetDeployFormStep[]

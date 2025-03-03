@@ -3,7 +3,7 @@
 import { useModuleInteractionStore } from '@/store'
 import type { UseWorkFlowReturnType } from './use-workflow'
 import type { SelectedModuleType } from '@/types'
-import type { GetModuleReturn } from '@inverter-network/sdk'
+import type { GetModuleReturnType } from '@inverter-network/sdk'
 
 export const useWorkflowInteraction = (
   workflow: UseWorkFlowReturnType<any>
@@ -61,7 +61,7 @@ export const useWorkflowInteraction = (
         ]
 
         return workflow.data?.[key]?.[value]
-      })()) as GetModuleReturn<any, any> | undefined
+      })()) as GetModuleReturnType<any, any> | undefined
 
   // set the selectedOptionalModuleIndex
   const setOptionalModule = (index: number) => {

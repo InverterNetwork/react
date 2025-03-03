@@ -1,7 +1,7 @@
 {
   "name": "@inverter-network/react",
   "description": "INVERTER react",
-  "version": "0.4.0-alpha.10",
+  "version": "0.4.0-alpha.11",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
@@ -79,7 +79,7 @@
   },
   "dependencies": {
     "@api3/logos": "^0.2.18",
-    "@inverter-network/sdk": "0.4.0-alpha.9",
+    "@inverter-network/sdk": "0.4.0-alpha.11",
     "@inverter-network/graphql": "^0.9.17",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",

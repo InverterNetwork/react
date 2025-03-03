@@ -64,7 +64,7 @@ export const useGetDeploy = <
 
       if (shouldResetForm) resetGetDeployForm?.()
 
-      return await inverter.data.getDeploy({
+      return await inverter.data.deployWorkflow({
         requestedModules,
         factoryType,
       })
