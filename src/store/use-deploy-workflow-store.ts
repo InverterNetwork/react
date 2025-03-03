@@ -1,24 +1,24 @@
 'use client'
 
-import type { GetDeployStore } from '@/types'
+import type { DeployWorkflowStore } from '@/types'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-export const useGetDeployStore = create<GetDeployStore>()(
+export const useDeployWorkflowStore = create<DeployWorkflowStore>()(
   immer((set) => ({
     // Deploy Form State
-    getDeployFormUserArgs: {},
-    getDeployFormStep: 'orchestrator',
-    setGetDeployFormStep: (step) => {
+    deployWorkflowFormUserArgs: {},
+    deployWorkflowFormStep: 'orchestrator',
+    setDeployWorkflowFormStep: (step) => {
       set((state) => {
-        state.getDeployFormStep = step
+        state.deployWorkflowFormStep = step
       })
     },
-    setGetDeployFormUserArg: (type, name, value, optName) => {
+    setDeployWorkflowFormUserArg: (type, name, value, optName) => {
       set((state) => {
         let typeVal: any
 
-        const prev = state.getDeployFormUserArgs
+        const prev = state.deployWorkflowFormUserArgs
         const prevTypeVal = (prev as any)?.[type] || {}
         const prevTypeValObj = (prevTypeVal as any)?.[name ?? '']
 
@@ -53,25 +53,25 @@ export const useGetDeployStore = create<GetDeployStore>()(
             break
         }
 
-        state.getDeployFormUserArgs = {
+        state.deployWorkflowFormUserArgs = {
           ...prev,
           [type]: typeVal,
         }
       })
     },
-    resetGetDeployForm: () => {
+    resetDeployWorkflowForm: () => {
       set((state) => {
-        state.getDeployFormUserArgs = {}
+        state.deployWorkflowFormUserArgs = {}
       })
     },
 
     // Prep State
     factoryType: 'default',
-    prepGetDeployStep: 'Prepare',
+    prepDeployWorkflowStep: 'Prepare',
     requestedModules: {},
-    setPrepGetDeployStep: (step) => {
+    setPrepDeployWorkflowStep: (step) => {
       set((state) => {
-        state.prepGetDeployStep = step
+        state.prepDeployWorkflowStep = step
       })
     },
     setFactoryType: (factoryType) => {

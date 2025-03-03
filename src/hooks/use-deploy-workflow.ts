@@ -2,7 +2,7 @@
 
 import { useInverter } from '@/hooks'
 import { useSelectorStore } from '@/store'
-import type { UseGetDeployProps } from '@/types'
+import type { UseDeployWorkflowProps } from '@/types'
 import type {
   FactoryType,
   GetUserArgs,
@@ -11,21 +11,21 @@ import type {
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useRef } from 'react'
 
-export type UseGetDeployReturnType<
+export type UseDeployWorkflowReturnType<
   T extends RequestedModules<FT extends undefined ? 'default' : FT>,
   FT extends FactoryType | undefined = undefined,
-> = ReturnType<typeof useGetDeploy<T, FT>>
+> = ReturnType<typeof useDeployWorkflow<T, FT>>
 
-export const useGetDeploy = <
+export const useDeployWorkflow = <
   T extends RequestedModules<FT extends undefined ? 'default' : FT>,
   FT extends FactoryType | undefined = undefined,
 >({
   requestedModules,
   factoryType,
-  resetGetDeployForm,
+  resetDeployWorkflowForm,
   onSuccess,
   onError,
-}: UseGetDeployProps<T, FT>) => {
+}: UseDeployWorkflowProps<T, FT>) => {
   // Get the orchestrator state store
   const { addAddress } = useSelectorStore()
 
@@ -62,7 +62,7 @@ export const useGetDeploy = <
       const shouldResetForm = !!prevHash && prevHash !== currHash
       prevGetRequestedModulesHash.current = currHash
 
-      if (shouldResetForm) resetGetDeployForm?.()
+      if (shouldResetForm) resetDeployWorkflowForm?.()
 
       return await inverter.data.deployWorkflow({
         requestedModules,

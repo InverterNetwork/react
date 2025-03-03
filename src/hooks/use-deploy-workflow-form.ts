@@ -1,8 +1,11 @@
 'use client'
 
-import { useGetDeploy } from '@/hooks'
-import { useGetDeployStore } from '@/store'
-import type { GetDeployFormStep, UseGetDeployFormProps } from '@/types'
+import { useDeployWorkflow } from '@/hooks'
+import { useDeployWorkflowStore } from '@/store'
+import type {
+  DeployWorkflowFormStep,
+  UseDeployWorkflowFormProps,
+} from '@/types'
 import { isDeployForm } from '@/utils'
 import type {
   GetDeployWorkflowInputs,
@@ -10,25 +13,27 @@ import type {
   RequestedModules,
 } from '@inverter-network/sdk'
 
-export type UseGetDeployFormReturnType = ReturnType<typeof useGetDeployForm>
+export type UseDeployWorkflowFormReturnType = ReturnType<
+  typeof useDeployWorkflowForm
+>
 
-export const useGetDeployForm = ({
+export const useDeployWorkflowForm = ({
   onSuccess,
   onError,
-}: UseGetDeployFormProps = {}) => {
+}: UseDeployWorkflowFormProps = {}) => {
   // Get the deploy store
   const {
     requestedModules,
     factoryType,
-    getDeployFormStep,
-    setPrepGetDeployStep,
-    setGetDeployFormStep,
-    getDeployFormUserArgs,
-    resetGetDeployForm,
-    ...restUseGetDeployStoreReturn
-  } = useGetDeployStore()
+    deployWorkflowFormStep,
+    setPrepDeployWorkflowStep,
+    setDeployWorkflowFormStep,
+    deployWorkflowFormUserArgs,
+    resetDeployWorkflowForm,
+    ...restUseDeployWorkflowStoreReturn
+  } = useDeployWorkflowStore()
 
-  const { prepDeployment, runDeployment } = useGetDeploy({
+  const { prepDeployment, runDeployment } = useDeployWorkflow({
     requestedModules: requestedModules as Exclude<typeof requestedModules, {}>,
     factoryType,
     onSuccess,
@@ -45,7 +50,7 @@ export const useGetDeployForm = ({
     >
 
     const result = (
-      Object.keys(prepDeployment.data.inputs) as GetDeployFormStep[]
+      Object.keys(prepDeployment.data.inputs) as DeployWorkflowFormStep[]
     ).filter((key) => {
       if (key === 'optionalModules')
         return optionalModules.some((optItem) => !!optItem.inputs.length)
@@ -61,7 +66,7 @@ export const useGetDeployForm = ({
   })()
 
   // Get the current form step index
-  const currentStepIndex = availableFormSteps.indexOf(getDeployFormStep)
+  const currentStepIndex = availableFormSteps.indexOf(deployWorkflowFormStep)
 
   // Construct a next step function that increments the current step index until it reaches the last step
   const isLastFormStep = currentStepIndex === availableFormSteps.length - 1
@@ -69,33 +74,33 @@ export const useGetDeployForm = ({
   // Construct a previous step function that decrements the current step index until it reaches the first step
   const prevFormStep = () => {
     if (currentStepIndex === 0) {
-      setPrepGetDeployStep('Prepare')
+      setPrepDeployWorkflowStep('Prepare')
       return
     }
-    setGetDeployFormStep(availableFormSteps[currentStepIndex - 1])
+    setDeployWorkflowFormStep(availableFormSteps[currentStepIndex - 1])
   }
 
   const nextFormStep = () => {
-    if (isLastFormStep && isDeployForm(getDeployFormUserArgs)) {
-      return runDeployment.mutate(getDeployFormUserArgs)
+    if (isLastFormStep && isDeployForm(deployWorkflowFormUserArgs)) {
+      return runDeployment.mutate(deployWorkflowFormUserArgs)
     }
-    setGetDeployFormStep(availableFormSteps[currentStepIndex + 1])
+    setDeployWorkflowFormStep(availableFormSteps[currentStepIndex + 1])
   }
 
   return {
-    resetGetDeployForm,
+    resetDeployWorkflowForm,
     requestedModules,
-    getDeployFormUserArgs,
-    getDeployFormStep,
+    deployWorkflowFormUserArgs,
+    deployWorkflowFormStep,
     nextFormStep,
     prevFormStep,
     isLastFormStep,
     availableFormSteps,
-    setGetDeployFormStep,
-    setPrepGetDeployStep,
+    setDeployWorkflowFormStep,
+    setPrepDeployWorkflowStep,
     prepDeployment,
     runDeployment,
     factoryType,
-    ...restUseGetDeployStoreReturn,
+    ...restUseDeployWorkflowStoreReturn,
   }
 }

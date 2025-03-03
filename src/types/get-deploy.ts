@@ -6,9 +6,9 @@ import type {
 import type { ValueOf, PartialDeep } from 'type-fest-4'
 
 // ===========STORE==============
-export type PrepGetDeployStep = 'Prepare' | 'Deploy'
+export type PrepDeployWorkflowStep = 'Prepare' | 'Deploy'
 
-export type GetDeployFormStep =
+export type DeployWorkflowFormStep =
   | Exclude<keyof RequestedModules, 'paymentProcessor'>
   | 'orchestrator'
   | 'issuanceToken'
@@ -16,19 +16,19 @@ export type GetDeployFormStep =
   | 'beneficiary'
   | 'migrationConfig'
 
-export type GetDeployFormUserArgs = PartialDeep<
+export type DeployWorkflowFormUserArgs = PartialDeep<
   GetUserArgs<
     RequestedModules,
     'default' | 'immutable-pim' | 'restricted-pim' | 'migrating-pim'
   >
 >
 
-export type GetDeployStore = {
+export type DeployWorkflowStore = {
   // Prep Deploy Store
   factoryType: FactoryType
   requestedModules: RequestedModules<FactoryType> | {}
-  prepGetDeployStep: PrepGetDeployStep
-  setPrepGetDeployStep: (step: PrepGetDeployStep) => void
+  prepDeployWorkflowStep: PrepDeployWorkflowStep
+  setPrepDeployWorkflowStep: (step: PrepDeployWorkflowStep) => void
   setFactoryType: (factoryType: FactoryType) => void
   addRequestedModule: (
     moduleType: keyof RequestedModules<FactoryType>,
@@ -36,20 +36,20 @@ export type GetDeployStore = {
   ) => void
   resetRequestedModules: () => void
   // Deploy Form Store
-  getDeployFormUserArgs: GetDeployFormUserArgs
-  getDeployFormStep: GetDeployFormStep
-  setGetDeployFormStep: (step: GetDeployFormStep) => void
-  setGetDeployFormUserArg: (
+  deployWorkflowFormUserArgs: DeployWorkflowFormUserArgs
+  deployWorkflowFormStep: DeployWorkflowFormStep
+  setDeployWorkflowFormStep: (step: DeployWorkflowFormStep) => void
+  setDeployWorkflowFormUserArg: (
     type: string,
     name: string | null,
     value: any,
     optName?: string
   ) => void
-  resetGetDeployForm: () => void
+  resetDeployWorkflowForm: () => void
 }
 
 // ===========HOOKS==============
-export type UseGetDeployOnSuccess = ({
+export type UseDeployWorkflowOnSuccess = ({
   transactionHash,
   orchestratorAddress,
 }: {
@@ -57,18 +57,18 @@ export type UseGetDeployOnSuccess = ({
   orchestratorAddress: `0x${string}`
 }) => void
 
-export type UseGetDeployProps<
+export type UseDeployWorkflowProps<
   T extends RequestedModules<FT extends undefined ? 'default' : FT>,
   FT extends FactoryType | undefined = undefined,
 > = {
   requestedModules: T
   factoryType?: FT
-  resetGetDeployForm?: () => void
-  onSuccess?: UseGetDeployOnSuccess
+  resetDeployWorkflowForm?: () => void
+  onSuccess?: UseDeployWorkflowOnSuccess
   onError?: (error: Error) => void
 }
 
-export type UseGetDeployFormProps = Omit<
-  UseGetDeployProps<RequestedModules<FactoryType>, FactoryType>,
-  'resetGetDeployForm' | 'requestedModules' | 'factoryType'
+export type UseDeployWorkflowFormProps = Omit<
+  UseDeployWorkflowProps<RequestedModules<FactoryType>, FactoryType>,
+  'resetDeployWorkflowForm' | 'requestedModules' | 'factoryType'
 >
