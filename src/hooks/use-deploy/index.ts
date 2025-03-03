@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query'
 import type {
   DeployableContracts,
-  GetUserModuleArg,
+  GetDeployWorkflowModuleArg,
 } from '@inverter-network/sdk'
 import { useState } from 'react'
 import { getModuleData } from '@inverter-network/abis'
@@ -36,7 +36,7 @@ export const useDeploy = <T extends DeployableContracts>({
 
   const [userArgs, setUserArgs] = useState(
     // @ts-expect-error - not all modules have initial states
-    (initialStates?.[name] || {}) as GetUserModuleArg<T>
+    (initialStates?.[name] || {}) as GetDeployWorkflowModuleArg<T>
   )
 
   const handleSetUserArgs = (name: string, value: any) => {

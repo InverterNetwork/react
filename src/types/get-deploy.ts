@@ -1,6 +1,6 @@
 import type {
   FactoryType,
-  GetUserArgs,
+  GetDeployWorkflowArgs,
   RequestedModules,
 } from '@inverter-network/sdk'
 import type { ValueOf, PartialDeep } from 'type-fest-4'
@@ -17,7 +17,7 @@ export type DeployWorkflowFormStep =
   | 'migrationConfig'
 
 export type DeployWorkflowFormUserArgs = PartialDeep<
-  GetUserArgs<
+  GetDeployWorkflowArgs<
     RequestedModules,
     'default' | 'immutable-pim' | 'restricted-pim' | 'migrating-pim'
   >

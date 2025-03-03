@@ -5,7 +5,7 @@ import { useSelectorStore } from '@/store'
 import type { UseDeployWorkflowProps } from '@/types'
 import type {
   FactoryType,
-  GetUserArgs,
+  GetDeployWorkflowArgs,
   RequestedModules,
 } from '@inverter-network/sdk'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -78,7 +78,7 @@ export const useDeployWorkflow = <
       'paymentProcessor' in requestedModules,
   })
 
-  type Args = GetUserArgs<T, FT extends undefined ? 'default' : FT>
+  type Args = GetDeployWorkflowArgs<T, FT extends undefined ? 'default' : FT>
 
   // Deploy the workflow
   const runDeployment = useMutation({
