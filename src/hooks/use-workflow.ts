@@ -47,7 +47,9 @@ export function useWorkflow<
     refetchOnWindowFocus: false,
   },
   dependencies = [],
-}: UseWorkFlowParams<T>): UseQueryResult<Workflow<PopWalletClient, T, FT, IT>> {
+}: UseWorkFlowParams<T, FT, IT>): UseQueryResult<
+  Workflow<PopWalletClient, T, FT, IT>
+> {
   const inverter = useInverter()
 
   const enabled = !!inverter.data && !!orchestratorAddress && options.enabled
