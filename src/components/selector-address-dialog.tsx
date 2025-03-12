@@ -96,69 +96,77 @@ export function SelectorAddressDialog({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:in--max-w-[425px] in--max-h-[80vh] in--overflow-y-auto">
+      <DialogContent className="sm:in--max-w-[425px] in--max-h-[80vh] in--overflow-y-auto in--overflow-x-hidden in--flex in--flex-col">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
 
-        <FloatingLabelInput
-          label="Title"
-          value={internalTitle}
-          onChange={(e) => setInternalTitle(e.target.value)}
-        />
+        <div className="in--flex in--flex-col in--gap-4 in--flex-1">
+          <FloatingLabelInput
+            label="Title"
+            value={internalTitle}
+            onChange={(e) => setInternalTitle(e.target.value)}
+          />
 
-        <FloatingLabelInput
-          label="Address"
-          value={internalAddress}
-          onChange={(e) => setInternalAddress(e.target.value as `0x${string}`)}
-        />
+          <FloatingLabelInput
+            label="Address"
+            value={internalAddress}
+            onChange={(e) =>
+              setInternalAddress(e.target.value as `0x${string}`)
+            }
+          />
 
-        <Popover open={isChainSelectOpen} onOpenChange={setIsChainSelectOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={isChainSelectOpen}
-            >
-              {internalChainId
-                ? getChainName(Number(internalChainId) ?? 'Unknown chain...')
-                : 'Select chain...'}
-              <ChevronsUpDown className="in--ml-2 in--h-4 in--w-4 in--shrink-0 in--opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="in--w-[200px] in--p-0">
-            <Command>
-              <CommandInput placeholder="Search chain..." />
-              <CommandList>
-                <CommandEmpty>No chain found.</CommandEmpty>
-                <CommandGroup>
-                  {chainNames.map((chain) => (
-                    <CommandItem
-                      key={`${chain.id}:${chain.name}`}
-                      value={`${chain.id}:${chain.name}`}
-                      onSelect={(currentValue) => {
-                        const [id] = currentValue.split(':')
-                        setInternalChainId(id)
-                        setIsChainSelectOpen(false)
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          'in--mr-2 in--h-4 in--w-4',
-                          internalChainId === String(chain.id)
-                            ? 'in--opacity-100'
-                            : 'in--opacity-0'
-                        )}
-                      />
-                      {chain.name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
+          <Popover
+            modal={true}
+            open={isChainSelectOpen}
+            onOpenChange={setIsChainSelectOpen}
+          >
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={isChainSelectOpen}
+              >
+                {internalChainId
+                  ? getChainName(Number(internalChainId) ?? 'Unknown chain...')
+                  : 'Select chain...'}
+                <ChevronsUpDown className="in--ml-2 in--h-4 in--w-4 in--shrink-0 in--opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="in--w-[200px]  !in--p-0">
+              <Command className="!in--p-0">
+                <CommandInput placeholder="Search chain..." />
+                <CommandList>
+                  <CommandEmpty>No chain found.</CommandEmpty>
+                  <CommandGroup>
+                    {chainNames.map((chain) => (
+                      <CommandItem
+                        key={`${chain.id}:${chain.name}`}
+                        value={`${chain.id}:${chain.name}`}
+                        onSelect={(currentValue) => {
+                          const [id] = currentValue.split(':')
+                          setInternalChainId(id)
+                          setIsChainSelectOpen(false)
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            'in--mr-2 in--h-4 in--w-4',
+                            internalChainId === String(chain.id)
+                              ? 'in--opacity-100'
+                              : 'in--opacity-0'
+                          )}
+                        />
+                        {chain.name}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+        </div>
 
         <DialogFooter>
           <DialogClose asChild>
