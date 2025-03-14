@@ -9,12 +9,13 @@ export type CSSVariableValue = `${number}${string}` | string
 
 export type BaseTheme = {
   radius?: CSSVariableValue
-  ring?: CSSVariableValue
 }
 
 export type ThemeColors = {
   primary?: CSSVariableValue
   'primary-foreground'?: CSSVariableValue
+  'primary-hover'?: CSSVariableValue
+  'primary-active'?: CSSVariableValue
 
   accent?: CSSVariableValue
   'accent-foreground'?: CSSVariableValue
@@ -31,24 +32,30 @@ export type ThemeColors = {
 
   secondary?: CSSVariableValue
   'secondary-foreground'?: CSSVariableValue
+  'secondary-hover'?: CSSVariableValue
+  'secondary-active'?: CSSVariableValue
 
   muted?: CSSVariableValue
   'muted-foreground'?: CSSVariableValue
 
   destructive?: CSSVariableValue
   'destructive-foreground'?: CSSVariableValue
+  'destructive-hover'?: CSSVariableValue
+  'destructive-active'?: CSSVariableValue
 
   warning?: CSSVariableValue
-  'warning-foreground'?: CSSVariableValue
-
   success?: CSSVariableValue
-  'success-foreground'?: CSSVariableValue
-
   error?: CSSVariableValue
-  'error-foreground'?: CSSVariableValue
 
   info?: CSSVariableValue
   'info-foreground'?: CSSVariableValue
+
+  link?: CSSVariableValue
+  'link-hover'?: CSSVariableValue
+  'link-active'?: CSSVariableValue
+
+  input?: CSSVariableValue
+  'input-hover'?: CSSVariableValue
 
   'chart-1'?: CSSVariableValue
   'chart-2'?: CSSVariableValue
@@ -57,5 +64,5 @@ export type ThemeColors = {
   'chart-5'?: CSSVariableValue
 
   border?: CSSVariableValue
-  input?: CSSVariableValue
+  ring?: CSSVariableValue
 }
