@@ -11,15 +11,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'in--bg-primary in--text-primary-foreground hover:in--bg-primary/90',
+          'in--bg-primary in--text-primary-foreground hover:in--bg-primary-hover active:in--bg-primary-active',
         destructive:
-          'in--bg-destructive in--text-destructive-foreground hover:in--bg-destructive/90',
+          'in--bg-destructive in--text-destructive-foreground hover:in--bg-destructive-hover active:in--bg-destructive-active',
         outline:
-          'in--border in--border-input in--bg-background hover:in--bg-accent hover:in--text-accent-foreground',
+          'in--border in--border-input in--bg-background hover:in--bg-secondary hover:in--text-secondary-foreground active:in--bg-secondary-active',
         secondary:
-          'in--bg-secondary in--text-secondary-foreground hover:in--bg-secondary/80',
-        ghost: 'hover:in--bg-accent hover:in--text-accent-foreground',
-        link: 'in--text-primary in--underline-offset-4 hover:in--underline',
+          'in--bg-secondary in--text-secondary-foreground hover:in--bg-secondary-hover active:in--bg-secondary-active',
+        ghost: 'hover:in--bg-secondary hover:in--text-secondary-foreground',
+        link: 'in--text-link in--underline-offset-4 hover:in--underline active:in--text-link-active',
       },
       size: {
         default: 'in--h-10 in--px-4 in--py-2',
@@ -45,74 +45,68 @@ export interface ButtonProps
   loader?: keyof typeof loaders
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      asChild = false,
-      loading,
-      startIcon,
-      endIcon,
-      children,
-      loader = 'PinWheel',
-      ...props
-    },
-    ref
-  ) => {
-    const Comp = asChild ? Slot : 'button'
-    const Loader = loaders[loader]
+const Button = ({
+  ref,
+  className,
+  variant,
+  size,
+  asChild = false,
+  loading,
+  startIcon,
+  endIcon,
+  children,
+  loader = 'PinWheel',
+  ...props
+}: ButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
+  const Comp = asChild ? Slot : 'button'
+  const Loader = loaders[loader]
 
-    let finalChildren = children
+  let finalChildren = children
 
-    if (startIcon || loading || endIcon) {
-      const elements: React.ReactNode[] = []
-      if (startIcon) {
-        elements.push(
-          <span key="start-icon" className={cn(!!children && 'in--mr-2')}>
-            {startIcon}
-          </span>
-        )
-      }
-      if (loading) {
-        elements.push(
-          <Loader
-            key="loader"
-            className={cn(
-              'in--h-4 in--w-4 in--animate-spin',
-              !!children && 'in--mr-2'
-            )}
-          />
-        )
-      }
-      if (children) {
-        elements.push(
-          <React.Fragment key="children">{children}</React.Fragment>
-        )
-      }
-      if (endIcon) {
-        elements.push(
-          <span key="end-icon" className={cn(!!children && 'in--ml-2')}>
-            {endIcon}
-          </span>
-        )
-      }
-      finalChildren = elements
+  if (startIcon || loading || endIcon) {
+    const elements: React.ReactNode[] = []
+    if (startIcon) {
+      elements.push(
+        <span key="start-icon" className={cn(!!children && 'in--mr-2')}>
+          {startIcon}
+        </span>
+      )
     }
-
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        disabled={loading}
-        {...props}
-      >
-        {finalChildren}
-      </Comp>
-    )
+    if (loading) {
+      elements.push(
+        <Loader
+          key="loader"
+          className={cn(
+            'in--h-4 in--w-4 in--animate-spin',
+            !!children && 'in--mr-2'
+          )}
+        />
+      )
+    }
+    if (children) {
+      elements.push(<React.Fragment key="children">{children}</React.Fragment>)
+    }
+    if (endIcon) {
+      elements.push(
+        <span key="end-icon" className={cn(!!children && 'in--ml-2')}>
+          {endIcon}
+        </span>
+      )
+    }
+    finalChildren = elements
   }
-)
+
+  return (
+    <Comp
+      className={cn(buttonVariants({ variant, size, className }))}
+      ref={ref}
+      disabled={loading}
+      {...props}
+    >
+      {finalChildren}
+    </Comp>
+  )
+}
 Button.displayName = 'Button'
 
 export { Button, buttonVariants }

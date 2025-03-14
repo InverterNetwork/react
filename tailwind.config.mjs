@@ -13,6 +13,7 @@ export default {
       },
       colors: {
         background: 'hsl(var(--in--background))',
+        'background-2': 'hsl(var(--in--background-2))',
         foreground: 'hsl(var(--in--foreground))',
         card: {
           DEFAULT: 'hsl(var(--in--card))',
@@ -25,10 +26,19 @@ export default {
         primary: {
           DEFAULT: 'hsl(var(--in--primary))',
           foreground: 'hsl(var(--in--primary-foreground))',
+          hover: 'hsl(var(--in--primary-hover))',
+          active: 'hsl(var(--in--primary-active))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--in--secondary))',
           foreground: 'hsl(var(--in--secondary-foreground))',
+          hover: 'hsl(var(--in--secondary-hover))',
+          active: 'hsl(var(--in--secondary-active))',
+        },
+        link: {
+          DEFAULT: 'hsl(var(--in--link))',
+          hover: 'hsl(var(--in--link-hover))',
+          active: 'hsl(var(--in--link-active))',
         },
         muted: {
           DEFAULT: 'hsl(var(--in--muted))',
@@ -41,9 +51,26 @@ export default {
         destructive: {
           DEFAULT: 'hsl(var(--in--destructive))',
           foreground: 'hsl(var(--in--destructive-foreground))',
+          hover: 'hsl(var(--in--destructive-hover))',
+          active: 'hsl(var(--in--destructive-active))',
+        },
+        error: {
+          DEFAULT: 'hsl(var(--in--error))',
+          foreground: 'hsl(var(--in--error-foreground))',
+        },
+        success: {
+          DEFAULT: 'hsl(var(--in--success))',
+          foreground: 'hsl(var(--in--success-foreground))',
+        },
+        warning: {
+          DEFAULT: 'hsl(var(--in--warning))',
+          foreground: 'hsl(var(--in--warning-foreground))',
         },
         border: 'hsl(var(--in--border))',
-        input: 'hsl(var(--in--input))',
+        input: {
+          DEFAULT: 'hsl(var(--in--input))',
+          hover: 'hsl(var(--in--input-hover))',
+        },
         ring: 'hsl(var(--in--ring))',
         chart: {
           1: 'hsl(var(--in--chart-1))',

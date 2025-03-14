@@ -1,35 +1,35 @@
 @layer base {
   :root {
     --in--radius: 0.5rem;
-    --in--ring: 207 100% 60%;
   }
 
   :root,
   [data-inverter-theme='light'] {
-    --in--primary: 90 4% 10%;
-    --in--primary-foreground: 60 6% 93%;
-
-    --in--secondary: 0 0 0% / 0.08;
-    --in--secondary-foreground: 90 4% 10%;
-
-    --in--accent: 0 0 0% / 0.05;
+    --in--accent: 0 0 0% / 0.03;
     --in--accent-foreground: 90 4% 10%;
 
     --in--background: 60 6% 93%;
-    --in--foreground: 90 4% 10%;
     --in--background-2: 60 6% 93%;
+    --in--foreground: 90 4% 10%;
 
     --in--card: 60 5% 96%;
     --in--card-foreground: 90 4% 10%;
 
     --in--destructive: 6 75% 47%;
+    --in--destructive-active: 6 75% 47%;
+
     --in--destructive-foreground: 0 0 100%;
+    --in--destructive-hover: 11 81% 57%;
 
     --in--error: 6 75% 47%;
     --in--error-foreground: 18 100% 98%;
 
-    --in--info: 224 84% 56%;
-    --in--info-foreground: 213 100% 98%;
+    --in--input: 60 1% 53%;
+    --in--input-hover: 60 1% 67%;
+
+    --in--link: 166 100% 25%;
+    --in--link-active: 166 100% 25%;
+    --in--link-hover: 166 100% 25%;
 
     --in--muted: 60 1% 35%;
     --in--muted-foreground: 90 4% 10%;
@@ -37,68 +37,88 @@
     --in--popover: 60 7% 97%;
     --in--popover-foreground: 90 4% 10%;
 
+    --in--primary: 166 100% 25%;
+    --in--primary-active: 166 100% 25%;
+    --in--primary-foreground: 0 0 100%;
+    --in--primary-hover: 165 90% 32%;
+
+    --in--secondary: 0 0 0% / 0.08;
+    --in--secondary-active: 0 0 0% / 0.08;
+    --in--secondary-foreground: 90 4% 10%;
+    --in--secondary-hover: 0 0 0% / 0.13;
+
     --in--success: 104 82% 28%;
     --in--success-foreground: 116 70% 96%;
 
     --in--warning: 35 77% 34%;
     --in--warning-foreground: 52 71% 96%;
 
+    --in--ring: 213 100% 98%;
+    --in--border: 60 3% 85%;
+
     --in--chart-1: 166 100% 25%;
     --in--chart-2: 60 1% 53%;
     --in--chart-3: 166 100% 25%;
     --in--chart-4: 6 75% 47%;
     --in--chart-5: 104 82% 28%;
-
-    --in--border: 60 3% 85%;
-    --in--input: 60 1% 53%;
   }
 
   [data-inverter-theme='dark'] {
-    --in--primary: 0 0 100%;
-    --in--primary-foreground: 300 2% 8%;
-
-    --in--accent: 0 0 100% / 0.05;
+    --in--accent: 0 0 100% / 0.03;
     --in--accent-foreground: 0 0 100%;
 
-    --in--background: 300 2% 8%;
+    --in--background: 220 9% 7%;
+    --in--background-2: 220 7% 9%;
     --in--foreground: 0 0 100%;
-    --in--background-2: 300 2% 11%;
 
-    --in--card: 300 2% 12%;
+    --in--card: 210 8% 10%;
     --in--card-foreground: 0 0 100%;
 
-    --in--destructive: 10 75% 56%;
-    --in--destructive-foreground: 300 2% 8%;
+    --in--destructive: 7 87% 56%;
+    --in--destructive-active: 7 87% 56%;
+    --in--destructive-foreground: 0 0 100%;
+    --in--destructive-hover: 10 100% 67%;
 
-    --in--error: 2 68% 45%;
-    --in--error-foreground: 357 71% 11%;
+    --in--error: 4 97% 11%;
+    --in--error-foreground: 10 100% 67%;
 
-    --in--info: 226 95% 66%;
-    --in--info-foreground: 238 44% 13%;
+    --in--input: 204 4% 26%;
+    --in--input-hover: 204 2% 39%;
 
-    --in--muted: 300 1% 62%;
+    --in--link: 237 73% 68%;
+    --in--link-active: 233 80% 74%;
+    --in--link-hover: 233 79% 81%;
+
+    --in--muted: 204 3% 61%;
     --in--muted-foreground: 0 0 100%;
 
-    --in--popover: 300 2% 8%;
+    --in--popover: 220 9% 7%;
     --in--popover-foreground: 0 0 100%;
 
-    --in--secondary: 0 0 100% / 0.1;
+    --in--primary: 0 0 100%;
+    --in--primary-active: 210 4% 69%;
+    --in--primary-foreground: 220 9% 7%;
+    --in--primary-hover: 200 17% 93%;
+
+    --in--secondary: 0 0 100% / 0.06;
+    --in--secondary-active: 0 0 100% / 0.04;
     --in--secondary-foreground: 0 0 100%;
+    --in--secondary-hover: 0 0 100% / 0.08;
 
-    --in--success: 102 69% 46%;
-    --in--success-foreground: 101 100% 5%;
+    --in--success: 124 94% 6%;
+    --in--success-foreground: 127 67% 42%;
 
-    --in--warning: 43 95% 41%;
-    --in--warning-foreground: 31 83% 7%;
+    --in--warning: 31 100% 8%;
+    --in--warning-foreground: 40 69% 47%;
 
-    --in--chart-1: 150 81% 54%;
-    --in--chart-2: 300 2% 25%;
-    --in--chart-3: 150 81% 54%;
-    --in--chart-4: 10 75% 56%;
-    --in--chart-5: 101 75% 40%;
+    --in--ring: 159 59% 48%;
+    --in--border: 204 4% 26%;
 
-    --in--border: 300 1% 17%;
-    --in--input: 300 2% 25%;
+    --in--chart-1: 155 78% 55%;
+    --in--chart-2: 204 4% 26%;
+    --in--chart-3: 155 78% 55%;
+    --in--chart-4: 7 87% 56%;
+    --in--chart-5: 127 67% 42%;
   }
 }
 

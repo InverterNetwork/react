@@ -24,40 +24,52 @@ const Tabs = ({
 }
 Tabs.displayName = TabsPrimitive.Root.displayName
 
-const TabsList = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
+const TabsList = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
+  ref?: React.RefObject<React.ComponentRef<typeof TabsPrimitive.List> | null>
+}) => (
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'in--inline-flex in--items-center in--justify-center in--rounded-md in--bg-muted in--p-1 in--text-muted-foreground',
+      'in--inline-flex in--items-center in--justify-center in--rounded-md in--bg-background in--p-1 in--text-muted-foreground in--border-input in--border',
       className
     )}
     {...props}
   />
-))
+)
 TabsList.displayName = TabsPrimitive.List.displayName
 
-const TabsTrigger = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...props }, ref) => (
+const TabsTrigger = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
+  ref?: React.RefObject<React.ComponentRef<typeof TabsPrimitive.Trigger> | null>
+}) => (
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'in--inline-flex in--items-center in--justify-center in--whitespace-nowrap in--rounded-sm in--px-3 in--py-1.5 in--text-sm in--font-medium in--ring-offset-background in--transition-all focus-visible:in--outline-none focus-visible:in--ring-2 focus-visible:in--ring-ring focus-visible:in--ring-offset-2 disabled:in--pointer-events-none disabled:in--opacity-50 data-[state=active]:in--bg-background data-[state=active]:in--text-foreground data-[state=active]:in--shadow-sm',
+      'in--inline-flex in--items-center in--justify-center in--whitespace-nowrap in--rounded-sm in--px-3 in--py-1.5 in--text-sm in--font-medium in--ring-offset-background in--transition-all focus-visible:in--outline-none focus-visible:in--ring-2 focus-visible:in--ring-ring focus-visible:in--ring-offset-2 disabled:in--pointer-events-none disabled:in--opacity-50',
+      'data-[state=active]:in--bg-secondary hover:data-[state=active]:in--bg-secondary-hover active:data-[state=active]:in--bg-secondary-active',
+      'data-[state=active]:in--text-secondary-foreground data-[state=active]:in--shadow-sm',
+      'in--text-muted hover:data-[state=inactive]:in--text-foreground',
       className
     )}
     {...props}
   />
-))
+)
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
-const TabsContent = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
+const TabsContent = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content> & {
+  ref?: React.RefObject<React.ComponentRef<typeof TabsPrimitive.Content> | null>
+}) => (
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
@@ -66,7 +78,7 @@ const TabsContent = React.forwardRef<
     )}
     {...props}
   />
-))
+)
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
 export { Tabs, TabsList, TabsTrigger, TabsContent }

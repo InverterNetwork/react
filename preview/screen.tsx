@@ -131,6 +131,14 @@ export function Preview() {
           <TabsTrigger value="password">Password</TabsTrigger>
         </TabsList>
 
+        <div className="in--flex in--flex-wrap in--gap-3 in--py-3">
+          <Button>Default</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="link">Link</Button>
+        </div>
+
         {/* Account Tab */}
         <TabsContent value="account">
           <Card>
