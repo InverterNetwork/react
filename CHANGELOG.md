@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.6](https://github.com/InverterNetwork/react/compare/v0.4.5...v0.4.6) (2025-03-14)
+
+
+### Features
+
+* **preview:** add Vite preview server and update configuration ([6c1b0cc](https://github.com/InverterNetwork/react/commit/6c1b0cc36b78396659bff9a9b2bce20bee69d748))
+* **theme:** add hover and active states to theme colors ([32e9ed6](https://github.com/InverterNetwork/react/commit/32e9ed6dad7aa5d8acb5a0235860641c1da70e1c))
+* **theme:** enhance color palette and button variants ([fff0d48](https://github.com/InverterNetwork/react/commit/fff0d48c7f701ad224d9e6df7ec4966f76cb808c))
+* **theme:** implement theme context and toggle functionality ([8dad830](https://github.com/InverterNetwork/react/commit/8dad830c7facd3bf352e252b89be4650d6b14134))
+* **ui:** improve SelectorAddressDialog layout and interaction ([1f480e3](https://github.com/InverterNetwork/react/commit/1f480e370b03fb512c1dbd28851e03a3f899bfc1))
+
 ### [0.4.5](https://github.com/InverterNetwork/react/compare/v0.4.4...v0.4.5) (2025-03-11)
 
 ### [0.4.4](https://github.com/InverterNetwork/react/compare/v0.4.3...v0.4.4) (2025-03-11)
