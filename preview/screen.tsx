@@ -107,9 +107,11 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react'
+import { useTheme } from './main'
 
 export function Preview() {
   // Hooks
+  const { theme, toggleTheme } = useTheme()
   const form = useForm()
   const [numberInputValue, setNumberInputValue] = React.useState('')
   const [_, setFormState] = React.useState({
@@ -121,6 +123,7 @@ export function Preview() {
 
   return (
     <div className="in--flex in--flex-col in--gap-3">
+      <Button onClick={toggleTheme}>Toggle Theme</Button>
       {/* ===== Account Management Section ===== */}
       <Tabs defaultValue="account" responsive>
         <TabsList className="in--mb-3">
