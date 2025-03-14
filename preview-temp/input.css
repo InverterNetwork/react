@@ -1,9 +1,0 @@
-
-    /* Import project styles */
-    @import '../src/styles/global.css';
-    
-    /* Add preview-only styles */
-    body {
-      padding: 2rem;
-    }
-  
