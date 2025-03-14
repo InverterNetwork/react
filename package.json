@@ -52,7 +52,8 @@
     "release:alpha": "standard-version -a --prerelease alpha --skip.changelog",
     "release:beta": "standard-version -a --prerelease beta --skip.changelog",
     "release:pub": "git push --follow-tags origin main",
-    "copy:dist": "bun run build && bun tools/copy-dist.js"
+    "copy:dist": "bun run build && bun tools/copy-dist.js",
+    "preview": "bun run preview/index.tsx"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
@@ -124,6 +125,7 @@
     "@types/lodash": "^4.17.13",
     "@types/react": "^18.0.0 || ^19.0.0",
     "@types/react-dom": "^18.0.0 || ^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "eslint-plugin-import-x": "^4.3.1",
     "eslint-plugin-prettier": "^5.2.1",
@@ -144,7 +146,8 @@
     "ts-add-js-extension": "^1.6.4",
     "tsc-alias": "^1.8.10",
     "tsc-files": "^1.1.4",
-    "typescript-eslint": "^8.8.1"
+    "typescript-eslint": "^8.8.1",
+    "vite": "^6.2.2"
   },
   "license": "LGPL-3.0",
   "homepage": "https://inverter.network",
