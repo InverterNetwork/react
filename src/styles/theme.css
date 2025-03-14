@@ -21,9 +21,6 @@
     --in--destructive-foreground: 0 0 100%;
     --in--destructive-hover: 11 81% 57%;
 
-    --in--error: 6 75% 47%;
-    --in--error-foreground: 18 100% 98%;
-
     --in--input: 60 1% 53%;
     --in--input-hover: 60 1% 67%;
 
@@ -47,11 +44,9 @@
     --in--secondary-foreground: 90 4% 10%;
     --in--secondary-hover: 0 0 0% / 0.13;
 
+    --in--error: 6 75% 47%;
     --in--success: 104 82% 28%;
-    --in--success-foreground: 116 70% 96%;
-
     --in--warning: 35 77% 34%;
-    --in--warning-foreground: 52 71% 96%;
 
     --in--ring: 213 100% 98%;
     --in--border: 60 3% 85%;
@@ -79,9 +74,6 @@
     --in--destructive-foreground: 0 0 100%;
     --in--destructive-hover: 10 100% 67%;
 
-    --in--error: 4 97% 11%;
-    --in--error-foreground: 10 100% 67%;
-
     --in--input: 204 4% 26%;
     --in--input-hover: 204 2% 39%;
 
@@ -105,13 +97,11 @@
     --in--secondary-foreground: 0 0 100%;
     --in--secondary-hover: 0 0 100% / 0.08;
 
-    --in--success: 124 94% 6%;
-    --in--success-foreground: 127 67% 42%;
+    --in--error: 10 100% 67%;
+    --in--success: 127 67% 42%;
+    --in--warning: 40 69% 47%;
 
-    --in--warning: 31 100% 8%;
-    --in--warning-foreground: 40 69% 47%;
-
-    --in--ring: 159 59% 48%;
+    --in--ring: 237 73% 68%;
     --in--border: 204 4% 26%;
 
     --in--chart-1: 155 78% 55%;

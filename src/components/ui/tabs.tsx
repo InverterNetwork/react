@@ -34,7 +34,7 @@ const TabsList = ({
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'in--inline-flex in--items-center in--justify-center in--rounded-md in--bg-background in--p-1 in--text-muted-foreground in--border-input in--border',
+      'in--inline-flex in--items-center in--justify-center in--rounded-lg in--bg-background in--p-1 in--text-muted-foreground in--border-input in--border',
       className
     )}
     {...props}

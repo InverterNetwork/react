@@ -54,18 +54,9 @@ export default {
           hover: 'hsl(var(--in--destructive-hover))',
           active: 'hsl(var(--in--destructive-active))',
         },
-        error: {
-          DEFAULT: 'hsl(var(--in--error))',
-          foreground: 'hsl(var(--in--error-foreground))',
-        },
-        success: {
-          DEFAULT: 'hsl(var(--in--success))',
-          foreground: 'hsl(var(--in--success-foreground))',
-        },
-        warning: {
-          DEFAULT: 'hsl(var(--in--warning))',
-          foreground: 'hsl(var(--in--warning-foreground))',
-        },
+        error: 'hsl(var(--in--error))',
+        success: 'hsl(var(--in--success))',
+        warning: 'hsl(var(--in--warning))',
         border: 'hsl(var(--in--border))',
         input: {
           DEFAULT: 'hsl(var(--in--input))',
