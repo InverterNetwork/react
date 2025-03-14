@@ -73,64 +73,67 @@ export interface MarketStatProps
   suffix?: string
 }
 
-const MarketStat = React.forwardRef<HTMLDivElement, MarketStatProps>(
-  (
-    { title, value, change, icon, className, prefix, suffix, size, ...props },
-    ref
-  ) => {
-    return (
-      <Card
-        ref={ref}
-        className={cn(
-          'in--bg-background in--border in--border-border',
-          className
-        )}
-        {...props}
-      >
-        <CardContent className={marketStatVariants({ size })}>
-          <div className="in--flex in--justify-between in--items-center in--mb-2">
-            <span className={titleVariants({ size })}>{title}</span>
-            {icon && <span className={iconVariants({ size })}>{icon}</span>}
-          </div>
-          <div className={valueVariants({ size })}>
-            {prefix && (
-              <span className="in--text-muted-foreground in--mr-1">
-                {prefix}
-              </span>
-            )}
-            {typeof value === 'number'
-              ? value.toLocaleString()
-              : toCompactNumber(value)}
-            {suffix && (
-              <span className="in--text-muted-foreground in--ml-1">
-                {suffix}
-              </span>
-            )}
-          </div>
-          {change !== undefined && (
-            <div className="in--flex in--items-center in--text-xs">
-              <span
-                className={cn(
-                  'in--flex in--items-center in--rounded-full in--px-1.5 in--py-0.5',
-                  change >= 0
-                    ? 'in--bg-green-500/20 in--text-green-500'
-                    : 'in--bg-red-500/20 in--text-red-500'
-                )}
-              >
-                {change >= 0 ? (
-                  <ArrowUpIcon className="in--h-3 in--w-3 in--mr-0.5" />
-                ) : (
-                  <ArrowDownIcon className="in--h-3 in--w-3 in--mr-0.5" />
-                )}
-                {Math.abs(change)}%
-              </span>
-            </div>
+const MarketStat = ({
+  ref,
+  title,
+  value,
+  change,
+  icon,
+  className,
+  prefix,
+  suffix,
+  size,
+  ...props
+}: MarketStatProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  return (
+    <Card
+      // @ts-ignore
+      ref={ref}
+      className={cn(
+        'in--bg-background in--border in--border-border',
+        className
+      )}
+      {...props}
+    >
+      <CardContent className={marketStatVariants({ size })}>
+        <div className="in--flex in--justify-between in--items-center in--mb-2">
+          <span className={titleVariants({ size })}>{title}</span>
+          {icon && <span className={iconVariants({ size })}>{icon}</span>}
+        </div>
+        <div className={valueVariants({ size })}>
+          {prefix && (
+            <span className="in--text-muted-foreground in--mr-1">{prefix}</span>
           )}
-        </CardContent>
-      </Card>
-    )
-  }
-)
+          {typeof value === 'number'
+            ? value.toLocaleString()
+            : toCompactNumber(value)}
+          {suffix && (
+            <span className="in--text-muted-foreground in--ml-1">{suffix}</span>
+          )}
+        </div>
+        {change !== undefined && (
+          <div className="in--flex in--items-center in--text-xs">
+            <span
+              className={cn(
+                'in--flex in--items-center in--rounded-full in--px-1.5 in--py-0.5',
+                change >= 0
+                  ? 'in--bg-green-500/20 in--text-green-500'
+                  : 'in--bg-red-500/20 in--text-red-500'
+              )}
+            >
+              {change >= 0 ? (
+                <ArrowUpIcon className="in--h-3 in--w-3 in--mr-0.5" />
+              ) : (
+                <ArrowDownIcon className="in--h-3 in--w-3 in--mr-0.5" />
+              )}
+              {Math.abs(change)}%
+            </span>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
 
 MarketStat.displayName = 'MarketStat'
 

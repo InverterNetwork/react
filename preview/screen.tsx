@@ -112,9 +112,11 @@ import { useTheme } from './main'
 
 export function Preview() {
   // Hooks
+  // @ts-ignore
   const { theme, toggleTheme } = useTheme()
   const form = useForm()
   const [numberInputValue, setNumberInputValue] = React.useState('')
+  // @ts-ignore
   const [_, setFormState] = React.useState({
     url: '',
     email: '',
@@ -347,6 +349,7 @@ export function Preview() {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
+                {/* @ts-ignore */}
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
               <FormDescription>
@@ -367,6 +370,7 @@ export function Preview() {
           const maxLength = 400
           const randomLength =
             Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength
+          // @ts-ignore
           const randomText = Array(randomLength)
             .fill(null)
             .map(() => Math.random().toString(36).charAt(2))

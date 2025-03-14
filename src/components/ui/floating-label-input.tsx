@@ -5,24 +5,30 @@ import { Input } from '@/components/ui/input'
 import type { InputProps } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-const FloatingInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <Input
-        placeholder=" "
-        className={cn('in--peer', className)}
-        ref={ref}
-        {...props}
-      />
-    )
-  }
-)
+const FloatingInput = ({
+  ref,
+  className,
+  ...props
+}: InputProps & { ref?: React.RefObject<HTMLInputElement | null> }) => {
+  return (
+    <Input
+      placeholder=" "
+      className={cn('in--peer', className)}
+      // @ts-ignore
+      ref={ref}
+      {...props}
+    />
+  )
+}
 FloatingInput.displayName = 'FloatingInput'
 
-const FloatingLabel = React.forwardRef<
-  React.ComponentRef<typeof Label>,
-  React.ComponentPropsWithoutRef<typeof Label>
->(({ className, ...props }, ref) => {
+const FloatingLabel = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof Label> & {
+  ref?: React.RefObject<React.ComponentRef<typeof Label> | null>
+}) => {
   return (
     <Label
       className={cn(
@@ -33,22 +39,26 @@ const FloatingLabel = React.forwardRef<
       {...props}
     />
   )
-})
+}
 FloatingLabel.displayName = 'FloatingLabel'
 
 type FloatingLabelInputProps = InputProps & { label?: string }
 
-const FloatingLabelInput = React.forwardRef<
-  React.ComponentRef<typeof FloatingInput>,
-  React.PropsWithoutRef<FloatingLabelInputProps>
->(({ id, label, ...props }, ref) => {
+const FloatingLabelInput = ({
+  ref,
+  id,
+  label,
+  ...props
+}: React.PropsWithoutRef<FloatingLabelInputProps> & {
+  ref?: React.RefObject<React.ComponentRef<typeof FloatingInput> | null>
+}) => {
   return (
     <div className="in--relative">
       <FloatingInput ref={ref} id={id} {...props} />
       <FloatingLabel htmlFor={id}>{label}</FloatingLabel>
     </div>
   )
-})
+}
 FloatingLabelInput.displayName = 'FloatingLabelInput'
 
 export { FloatingInput, FloatingLabel, FloatingLabelInput }
