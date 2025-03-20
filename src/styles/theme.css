@@ -5,57 +5,51 @@
 
   :root,
   [data-inverter-theme='light'] {
-    --in--accent: 0 0 0% / 0.03;
-    --in--accent-foreground: 90 4% 10%;
+    --in--background: 210 20% 98%;
+    --in--background-2: 210 8% 95%;
 
-    --in--background: 60 6% 93%;
-    --in--background-2: 60 6% 93%;
-    --in--foreground: 90 4% 10%;
+    --in--foreground: 222 9% 21%;
 
-    --in--card: 60 5% 96%;
-    --in--card-foreground: 90 4% 10%;
+    --in--accent: 220 18% 10% / 0.03;
+    --in--accent-foreground: 220 18% 10%;
 
-    --in--destructive: 6 75% 47%;
-    --in--destructive-active: 6 75% 47%;
+    --in--card: 0 0 100%;
+    --in--card-foreground: 220 18% 10%;
 
+    --in--destructive: 5 77% 47%;
+    --in--destructive-active: 5 77% 47%;
     --in--destructive-foreground: 0 0 100%;
-    --in--destructive-hover: 11 81% 57%;
+    --in--destructive-hover: 7 85% 60%;
 
-    --in--input: 60 1% 53%;
-    --in--input-hover: 60 1% 67%;
+    --in--input: 216 4% 74%;
+    --in--input-hover: 220 4% 44%;
 
-    --in--link: 166 100% 25%;
-    --in--link-active: 166 100% 25%;
-    --in--link-hover: 166 100% 25%;
+    --in--link: 240 92% 65%;
+    --in--link-active: 240 92% 65%;
+    --in--link-hover: 235 100% 72%;
 
-    --in--muted: 60 1% 35%;
-    --in--muted-foreground: 90 4% 10%;
+    --in--muted: 220 4% 44%;
+    --in--muted-foreground: 220 18% 10%;
 
-    --in--popover: 60 7% 97%;
-    --in--popover-foreground: 90 4% 10%;
+    --in--popover: 0 0 100%;
+    --in--popover-foreground: 220 18% 10%;
 
-    --in--primary: 166 100% 25%;
-    --in--primary-active: 166 100% 25%;
+    --in--primary: 220 18% 10%;
+    --in--primary-active: 220 18% 10%;
     --in--primary-foreground: 0 0 100%;
-    --in--primary-hover: 165 90% 32%;
+    --in--primary-hover: 222 9% 21%;
 
-    --in--secondary: 0 0 0% / 0.08;
-    --in--secondary-active: 0 0 0% / 0.08;
-    --in--secondary-foreground: 90 4% 10%;
-    --in--secondary-hover: 0 0 0% / 0.13;
+    --in--secondary: 220 18% 10% / 0.08;
+    --in--secondary-active: 220 18% 10% / 0.06;
+    --in--secondary-foreground: 220 18% 10%;
+    --in--secondary-hover: 220 18% 10% / 0.12;
 
-    --in--error: 6 75% 47%;
-    --in--success: 104 82% 28%;
-    --in--warning: 35 77% 34%;
+    --in--border: 210 4% 82%;
+    --in--ring: 235 100% 72%;
 
-    --in--ring: 213 100% 98%;
-    --in--border: 60 3% 85%;
-
-    --in--chart-1: 166 100% 25%;
-    --in--chart-2: 60 1% 53%;
-    --in--chart-3: 166 100% 25%;
-    --in--chart-4: 6 75% 47%;
-    --in--chart-5: 104 82% 28%;
+    --in--error: 5 77% 47%;
+    --in--success: 101 84% 27%;
+    --in--warning: 44 100% 28%;
   }
 
   [data-inverter-theme='dark'] {

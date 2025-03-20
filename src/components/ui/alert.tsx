@@ -5,16 +5,18 @@ import type { VariantProps } from 'class-variance-authority'
 import { cn } from '@/utils'
 
 const alertVariants = cva(
-  'in--relative in--w-full in--rounded-lg in--border in--p-4 [&>svg~*]:in--pl-7 [&>svg+div]:in--translate-y-[-3px] [&>svg]:in--absolute [&>svg]:in--left-4 [&>svg]:in--top-4 [&>svg]:in--text-foreground',
+  'in--relative in--w-full in--rounded-lg in--border in--border-border in--p-4 [&>svg~*]:in--pl-7 [&>svg+div]:in--translate-y-[-3px] [&>svg]:in--absolute [&>svg]:in--left-4 [&>svg]:in--top-4 [&>svg]:in--text-foreground',
   {
     variants: {
       variant: {
         default: 'in--bg-background in--text-foreground',
         destructive:
-          'in--border-destructive/50 in--text-destructive dark:in--border-destructive [&>svg]:in--text-destructive',
-        warning: 'in--border-warning in--text-warning [&>svg]:in--text-warning',
-        success: 'in--border-success in--text-success [&>svg]:in--text-success',
-        error: 'in--border-error in--text-error [&>svg]:in--text-error',
+          'in--border-destructive/50 in--text-destructive [&>svg]:in--text-destructive',
+        warning:
+          'in--border-warning/20 in--text-warning [&>svg]:in--text-warning',
+        success:
+          'in--border-success/20 in--text-success [&>svg]:in--text-success',
+        error: 'in--border-error/20 in--text-error [&>svg]:in--text-error',
       },
     },
     defaultVariants: {
