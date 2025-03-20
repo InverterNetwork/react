@@ -8,22 +8,31 @@ import { cn } from '@/utils'
 
 const Accordion = AccordionPrimitive.Root
 
-const AccordionItem = React.forwardRef<
-  React.ComponentRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => (
+const AccordionItem = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> & {
+  ref?: React.RefObject<React.ElementRef<typeof AccordionPrimitive.Item> | null>
+}) => (
   <AccordionPrimitive.Item
     ref={ref}
     className={cn('in--border-b', className)}
     {...props}
   />
-))
+)
 AccordionItem.displayName = 'AccordionItem'
 
-const AccordionTrigger = React.forwardRef<
-  React.ComponentRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+const AccordionTrigger = ({
+  ref,
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
+  ref?: React.RefObject<React.ElementRef<
+    typeof AccordionPrimitive.Trigger
+  > | null>
+}) => (
   <AccordionPrimitive.Header className="in--flex">
     <AccordionPrimitive.Trigger
       ref={ref}
@@ -37,13 +46,19 @@ const AccordionTrigger = React.forwardRef<
       <ChevronDown className="in--h-4 in--w-4 in--shrink-0 in--transition-transform in--duration-200" />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
-))
+)
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
-const AccordionContent = React.forwardRef<
-  React.ComponentRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+const AccordionContent = ({
+  ref,
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content> & {
+  ref?: React.RefObject<React.ElementRef<
+    typeof AccordionPrimitive.Content
+  > | null>
+}) => (
   <AccordionPrimitive.Content
     ref={ref}
     className="in--overflow-hidden in--text-sm in--transition-all data-[state=closed]:in--animate-accordion-up data-[state=open]:in--animate-accordion-down"
@@ -51,7 +66,7 @@ const AccordionContent = React.forwardRef<
   >
     <div className={cn('in--pb-4 in--pt-0', className)}>{children}</div>
   </AccordionPrimitive.Content>
-))
+)
 
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 

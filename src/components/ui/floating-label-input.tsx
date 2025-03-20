@@ -27,7 +27,7 @@ const FloatingLabel = ({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<typeof Label> & {
-  ref?: React.RefObject<React.ComponentRef<typeof Label> | null>
+  ref?: React.RefObject<React.ElementRef<typeof Label> | null>
 }) => {
   return (
     <Label
@@ -50,7 +50,7 @@ const FloatingLabelInput = ({
   label,
   ...props
 }: React.PropsWithoutRef<FloatingLabelInputProps> & {
-  ref?: React.RefObject<React.ComponentRef<typeof FloatingInput> | null>
+  ref?: React.RefObject<React.ElementRef<typeof FloatingInput> | null>
 }) => {
   return (
     <div className="in--relative">

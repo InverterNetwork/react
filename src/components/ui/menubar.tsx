@@ -21,7 +21,7 @@ const Menubar = ({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root> & {
-  ref?: React.RefObject<React.ComponentRef<typeof MenubarPrimitive.Root> | null>
+  ref?: React.RefObject<React.ElementRef<typeof MenubarPrimitive.Root> | null>
 }) => (
   <MenubarPrimitive.Root
     ref={ref}
@@ -39,7 +39,7 @@ const MenubarTrigger = ({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Trigger> & {
-  ref?: React.RefObject<React.ComponentRef<
+  ref?: React.RefObject<React.ElementRef<
     typeof MenubarPrimitive.Trigger
   > | null>
 }) => (
@@ -63,7 +63,7 @@ const MenubarSubTrigger = ({
 }: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger> & {
   inset?: boolean
 } & {
-  ref?: React.RefObject<React.ComponentRef<
+  ref?: React.RefObject<React.ElementRef<
     typeof MenubarPrimitive.SubTrigger
   > | null>
 }) => (
@@ -87,7 +87,7 @@ const MenubarSubContent = ({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubContent> & {
-  ref?: React.RefObject<React.ComponentRef<
+  ref?: React.RefObject<React.ElementRef<
     typeof MenubarPrimitive.SubContent
   > | null>
 }) => (
@@ -110,7 +110,7 @@ const MenubarContent = ({
   sideOffset = 8,
   ...props
 }: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content> & {
-  ref?: React.RefObject<React.ComponentRef<
+  ref?: React.RefObject<React.ElementRef<
     typeof MenubarPrimitive.Content
   > | null>
 }) => (
@@ -138,7 +138,7 @@ const MenubarItem = ({
 }: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Item> & {
   inset?: boolean
 } & {
-  ref?: React.RefObject<React.ComponentRef<typeof MenubarPrimitive.Item> | null>
+  ref?: React.RefObject<React.ElementRef<typeof MenubarPrimitive.Item> | null>
 }) => (
   <MenubarPrimitive.Item
     ref={ref}
@@ -159,7 +159,7 @@ const MenubarCheckboxItem = ({
   checked,
   ...props
 }: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.CheckboxItem> & {
-  ref?: React.RefObject<React.ComponentRef<
+  ref?: React.RefObject<React.ElementRef<
     typeof MenubarPrimitive.CheckboxItem
   > | null>
 }) => (
@@ -188,7 +188,7 @@ const MenubarRadioItem = ({
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioItem> & {
-  ref?: React.RefObject<React.ComponentRef<
+  ref?: React.RefObject<React.ElementRef<
     typeof MenubarPrimitive.RadioItem
   > | null>
 }) => (
@@ -218,9 +218,7 @@ const MenubarLabel = ({
 }: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Label> & {
   inset?: boolean
 } & {
-  ref?: React.RefObject<React.ComponentRef<
-    typeof MenubarPrimitive.Label
-  > | null>
+  ref?: React.RefObject<React.ElementRef<typeof MenubarPrimitive.Label> | null>
 }) => (
   <MenubarPrimitive.Label
     ref={ref}
@@ -239,7 +237,7 @@ const MenubarSeparator = ({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Separator> & {
-  ref?: React.RefObject<React.ComponentRef<
+  ref?: React.RefObject<React.ElementRef<
     typeof MenubarPrimitive.Separator
   > | null>
 }) => (
