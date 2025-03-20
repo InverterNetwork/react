@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.7](https://github.com/InverterNetwork/react/compare/v0.4.6...v0.4.7) (2025-03-20)
+
+
+### Features
+
+* **dependencies:** add @radix-ui/react-radio-group version 1.2.3 to package.json and bun.lock ([9cdac20](https://github.com/InverterNetwork/react/commit/9cdac2076638686daf06e7a17550e76a8abd5661))
+
 ### [0.4.6](https://github.com/InverterNetwork/react/compare/v0.4.5...v0.4.6) (2025-03-14)
 
 
