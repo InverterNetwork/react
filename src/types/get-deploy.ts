@@ -1,7 +1,6 @@
 import type {
-  FactoryType,
   GetDeployWorkflowArgs,
-  RequestedModules,
+  MixedRequestedModules,
 } from '@inverter-network/sdk'
 import type { ValueOf, PartialDeep } from 'type-fest-4'
 
@@ -9,7 +8,7 @@ import type { ValueOf, PartialDeep } from 'type-fest-4'
 export type PrepDeployWorkflowStep = 'Prepare' | 'Deploy'
 
 export type DeployWorkflowFormStep =
-  | Exclude<keyof RequestedModules, 'paymentProcessor'>
+  | Exclude<keyof MixedRequestedModules, 'paymentProcessor'>
   | 'orchestrator'
   | 'issuanceToken'
   | 'initialPurchaseAmount'
@@ -17,22 +16,17 @@ export type DeployWorkflowFormStep =
   | 'migrationConfig'
 
 export type DeployWorkflowFormUserArgs = PartialDeep<
-  GetDeployWorkflowArgs<
-    RequestedModules,
-    'default' | 'immutable-pim' | 'restricted-pim' | 'migrating-pim'
-  >
+  GetDeployWorkflowArgs<MixedRequestedModules>
 >
 
 export type DeployWorkflowStore = {
   // Prep Deploy Store
-  factoryType: FactoryType
-  requestedModules: RequestedModules<FactoryType> | {}
+  requestedModules: MixedRequestedModules | {}
   prepDeployWorkflowStep: PrepDeployWorkflowStep
   setPrepDeployWorkflowStep: (step: PrepDeployWorkflowStep) => void
-  setFactoryType: (factoryType: FactoryType) => void
   addRequestedModule: (
-    moduleType: keyof RequestedModules<FactoryType>,
-    module: ValueOf<RequestedModules<FactoryType>>
+    moduleType: keyof MixedRequestedModules,
+    module: ValueOf<MixedRequestedModules>
   ) => void
   resetRequestedModules: () => void
   // Deploy Form Store
@@ -57,18 +51,14 @@ export type UseDeployWorkflowOnSuccess = ({
   orchestratorAddress: `0x${string}`
 }) => void
 
-export type UseDeployWorkflowProps<
-  T extends RequestedModules<FT extends undefined ? 'default' : FT>,
-  FT extends FactoryType | undefined = undefined,
-> = {
+export type UseDeployWorkflowProps<T extends MixedRequestedModules> = {
   requestedModules: T
-  factoryType?: FT
   resetDeployWorkflowForm?: () => void
   onSuccess?: UseDeployWorkflowOnSuccess
   onError?: (error: Error) => void
 }
 
 export type UseDeployWorkflowFormProps = Omit<
-  UseDeployWorkflowProps<RequestedModules<FactoryType>, FactoryType>,
+  UseDeployWorkflowProps<MixedRequestedModules>,
   'resetDeployWorkflowForm' | 'requestedModules' | 'factoryType'
 >
