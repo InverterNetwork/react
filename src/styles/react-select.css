@@ -6,7 +6,7 @@
 }
 
 .in--react-select-container .react-select__option {
-  @apply in--text-foreground in--bg-background hover:in--bg-primary dark:hover:in--text-primary-foreground hover:in--text-foreground;
+  @apply in--text-foreground in--bg-background hover:in--bg-primary hover:in--text-primary-foreground;
 }
 
 .in--react-select-container .react-select__multi-value,
