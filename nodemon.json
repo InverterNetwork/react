@@ -2,5 +2,5 @@
   "watch": ["src/**/*.{ts,tsx,js,jsx,css}"],
   "ext": "ts,tsx,js,jsx,css",
   "ignore": ["dist/**/*"],
-  "exec": "bun run build:esm && bun run build:types && bun run build:css"
+  "exec": "bun run build:esm && bun run build:types"
 }

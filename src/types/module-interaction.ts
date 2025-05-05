@@ -1,4 +1,5 @@
-import type { InputProps } from '@/components/ui/input'
+import * as React from 'react'
+
 import type {
   ExtendedAbiParameter,
   NonTupleExtendedAbiParameter,
@@ -16,7 +17,7 @@ export type ModuleInputBaseProps = {
   arg: any
   updateArg: UpdateModuleMethodArg
   argIndex: number
-  inputProps?: InputProps
+  inputProps?: React.ComponentProps<'input'>
   containerProps?: React.HTMLAttributes<HTMLDivElement>
 }
 

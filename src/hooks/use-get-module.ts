@@ -1,7 +1,7 @@
 'use client'
 
 import type { ModuleName } from '@inverter-network/abis'
-import type { UseQueryOptions } from '@tanstack/react-query'
+import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import { ERC20_ABI } from '@inverter-network/sdk'
 import type {
@@ -23,7 +23,10 @@ export type UseGetModuleParams<T extends ModuleName> = {
   >
 }
 
-export type UseGetModuleReturnType = ReturnType<typeof useGetModule>
+export type UseGetModuleReturnType<T extends ModuleName> = UseQueryResult<
+  GetModuleReturnType<T, PopWalletClient> | undefined,
+  Error
+>
 
 export const useGetModule = <T extends ModuleName>({
   address,
@@ -33,7 +36,7 @@ export const useGetModule = <T extends ModuleName>({
     enabled: true,
   },
   dependencies = [],
-}: UseGetModuleParams<T>) => {
+}: UseGetModuleParams<T>): UseGetModuleReturnType<T> => {
   let { decimals, walletAddress, ...restTagConfig } = tagConfig || {}
   const inverter = useInverter()
   const zeroXAddress = address as `0x${string}`

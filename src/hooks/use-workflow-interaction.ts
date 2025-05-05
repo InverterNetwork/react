@@ -2,12 +2,22 @@
 
 import { useModuleInteractionStore } from '@/store'
 import type { UseWorkFlowReturnType } from './use-workflow'
-import type { SelectedModuleType } from '@/types'
+import type { ModuleInteractionMode, SelectedModuleType } from '@/types'
 import type { GetModuleReturnType } from '@inverter-network/sdk'
 
+export type UseWorkflowInteractionReturnType = {
+  selectedModule: GetModuleReturnType<any, any> | undefined
+  moduleInteractionMode: ModuleInteractionMode
+  selectedModuleType: SelectedModuleType
+  selectedOptionalModuleIndex: number
+  selectedOptionalModule: GetModuleReturnType<any, any> | undefined
+  optionalModulekeys: string[] | undefined
+  setOptionalModule: (index: number) => void
+}
+
 export const useWorkflowInteraction = (
-  workflow: UseWorkFlowReturnType<any>
-) => {
+  workflow: UseWorkFlowReturnType
+): UseWorkflowInteractionReturnType => {
   const {
     selectedModuleType,
     moduleInteractionMode,
@@ -78,7 +88,3 @@ export const useWorkflowInteraction = (
     setOptionalModule,
   }
 }
-
-export type UseWorkflowInteractionReturn = ReturnType<
-  typeof useWorkflowInteraction
->

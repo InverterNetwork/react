@@ -2,7 +2,7 @@
 
 import { Inverter } from '@inverter-network/sdk'
 import { useQuery } from '@tanstack/react-query'
-import type { UseQueryOptions } from '@tanstack/react-query'
+import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import { usePublicClient, useWalletClient } from 'wagmi'
 import type { PopWalletClient } from '@inverter-network/sdk'
 
@@ -14,7 +14,7 @@ export type UseInverterParams = {
   dependencies?: any[]
 }
 
-export type UseInverterReturnType = ReturnType<typeof useInverter>
+export type UseInverterReturnType = UseQueryResult<Inverter<PopWalletClient>>
 
 export const useInverter = ({
   options = {
@@ -22,7 +22,7 @@ export const useInverter = ({
     refetchOnWindowFocus: false,
   },
   dependencies = [],
-}: UseInverterParams = {}) => {
+}: UseInverterParams = {}): UseInverterReturnType => {
   const publicClient = usePublicClient()
   const walletClient = useWalletClient()
 
