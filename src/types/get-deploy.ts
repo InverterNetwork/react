@@ -10,10 +10,6 @@ export type PrepDeployWorkflowStep = 'Prepare' | 'Deploy'
 export type DeployWorkflowFormStep =
   | Exclude<keyof MixedRequestedModules, 'paymentProcessor'>
   | 'orchestrator'
-  | 'issuanceToken'
-  | 'initialPurchaseAmount'
-  | 'beneficiary'
-  | 'migrationConfig'
 
 export type DeployWorkflowFormUserArgs = PartialDeep<
   GetDeployWorkflowArgs<MixedRequestedModules>

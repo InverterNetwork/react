@@ -48,10 +48,6 @@ export const useDeployWorkflowForm = ({
     ).filter((key) => {
       if (key === 'optionalModules')
         return optionalModules.some((optItem) => !!optItem.inputs.length)
-      if (key === 'initialPurchaseAmount') return true
-      if (key === 'beneficiary') return true
-      if (key === 'issuanceToken') return true
-      if (key === 'migrationConfig') return true
 
       return !!rest[key]?.inputs?.length
     })

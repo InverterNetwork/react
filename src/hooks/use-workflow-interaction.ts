@@ -6,11 +6,11 @@ import type { ModuleInteractionMode, SelectedModuleType } from '@/types'
 import type { GetModuleReturnType } from '@inverter-network/sdk'
 
 export type UseWorkflowInteractionReturnType = {
-  selectedModule: GetModuleReturnType<any, any> | undefined
+  selectedModule: GetModuleReturnType<never, any, any> | undefined
   moduleInteractionMode: ModuleInteractionMode
   selectedModuleType: SelectedModuleType
   selectedOptionalModuleIndex: number
-  selectedOptionalModule: GetModuleReturnType<any, any> | undefined
+  selectedOptionalModule: GetModuleReturnType<never, any, any> | undefined
   optionalModulekeys: string[] | undefined
   setOptionalModule: (index: number) => void
 }
