@@ -9,8 +9,7 @@ import type {
 import { isDeployForm } from '@/utils'
 import type {
   GetDeployWorkflowInputs,
-  FactoryType,
-  RequestedModules,
+  MixedRequestedModules,
 } from '@inverter-network/sdk'
 
 export type UseDeployWorkflowFormReturnType = ReturnType<
@@ -24,7 +23,6 @@ export const useDeployWorkflowForm = ({
   // Get the deploy store
   const {
     requestedModules,
-    factoryType,
     deployWorkflowFormStep,
     setPrepDeployWorkflowStep,
     setDeployWorkflowFormStep,
@@ -35,7 +33,6 @@ export const useDeployWorkflowForm = ({
 
   const { prepDeployment, runDeployment } = useDeployWorkflow({
     requestedModules: requestedModules as Exclude<typeof requestedModules, {}>,
-    factoryType,
     onSuccess,
     onError,
   })
@@ -44,10 +41,7 @@ export const useDeployWorkflowForm = ({
   const availableFormSteps = (() => {
     if (!prepDeployment.data) return []
     const { optionalModules, ...rest } = prepDeployment.data
-      .inputs as unknown as GetDeployWorkflowInputs<
-      RequestedModules,
-      FactoryType
-    >
+      .inputs as unknown as GetDeployWorkflowInputs<MixedRequestedModules>
 
     const result = (
       Object.keys(prepDeployment.data.inputs) as DeployWorkflowFormStep[]
@@ -100,7 +94,6 @@ export const useDeployWorkflowForm = ({
     setPrepDeployWorkflowStep,
     prepDeployment,
     runDeployment,
-    factoryType,
     ...restUseDeployWorkflowStoreReturn,
   }
 }

@@ -4,9 +4,8 @@ import { useQuery } from '@tanstack/react-query'
 import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import { useInverter } from '.'
 import type {
-  FactoryType,
+  MixedRequestedModules,
   PopWalletClient,
-  RequestedModules,
   Workflow,
   WorkflowIssuanceToken,
   WorkflowToken,
@@ -14,7 +13,7 @@ import type {
 import type { Except } from 'type-fest-4'
 
 export type UseWorkFlowParams<
-  T extends RequestedModules<FactoryType> | undefined = undefined,
+  T extends MixedRequestedModules | undefined = undefined,
   FT extends WorkflowToken | undefined = undefined,
   IT extends WorkflowIssuanceToken | undefined = undefined,
 > = {
@@ -30,11 +29,11 @@ export type UseWorkFlowParams<
 }
 
 export type UseWorkFlowReturnType<
-  T extends RequestedModules<FactoryType> | undefined = undefined,
+  T extends MixedRequestedModules | undefined = undefined,
 > = ReturnType<typeof useWorkflow<T>>
 
 export function useWorkflow<
-  T extends RequestedModules<FactoryType> | undefined = undefined,
+  T extends MixedRequestedModules | undefined = undefined,
   FT extends WorkflowToken | undefined = undefined,
   IT extends WorkflowIssuanceToken | undefined = undefined,
 >({

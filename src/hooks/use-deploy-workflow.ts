@@ -4,28 +4,21 @@ import { useInverter } from '@/hooks'
 import { useSelectorStore } from '@/store'
 import type { UseDeployWorkflowProps } from '@/types'
 import type {
-  FactoryType,
   GetDeployWorkflowArgs,
-  RequestedModules,
+  MixedRequestedModules,
 } from '@inverter-network/sdk'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useRef } from 'react'
 
-export type UseDeployWorkflowReturnType<
-  T extends RequestedModules<FT extends undefined ? 'default' : FT>,
-  FT extends FactoryType | undefined = undefined,
-> = ReturnType<typeof useDeployWorkflow<T, FT>>
+export type UseDeployWorkflowReturnType<T extends MixedRequestedModules> =
+  ReturnType<typeof useDeployWorkflow<T>>
 
-export const useDeployWorkflow = <
-  T extends RequestedModules<FT extends undefined ? 'default' : FT>,
-  FT extends FactoryType | undefined = undefined,
->({
+export const useDeployWorkflow = <T extends MixedRequestedModules>({
   requestedModules,
-  factoryType,
   resetDeployWorkflowForm,
   onSuccess,
   onError,
-}: UseDeployWorkflowProps<T, FT>) => {
+}: UseDeployWorkflowProps<T>) => {
   // Get the orchestrator state store
   const { addAddress } = useSelectorStore()
 
@@ -39,7 +32,7 @@ export const useDeployWorkflow = <
 
   const prevGetRequestedModulesHash = useRef<string | null>(null)
 
-  const prepDeploymentQueryHash = `prep_deployment-${inverter.dataUpdatedAt}-${requestedModulesHash}-${factoryType}`
+  const prepDeploymentQueryHash = `prep_deployment-${inverter.dataUpdatedAt}-${requestedModulesHash}`
 
   // Prep the deployment
   const prepDeployment = useQuery({
@@ -66,7 +59,6 @@ export const useDeployWorkflow = <
 
       return await inverter.data.deployWorkflow({
         requestedModules,
-        factoryType,
       })
     },
     refetchOnWindowFocus: false,
@@ -78,7 +70,7 @@ export const useDeployWorkflow = <
       'paymentProcessor' in requestedModules,
   })
 
-  type Args = GetDeployWorkflowArgs<T, FT extends undefined ? 'default' : FT>
+  type Args = GetDeployWorkflowArgs<T>
 
   // Deploy the workflow
   const runDeployment = useMutation({

@@ -74,11 +74,6 @@ export const useDeployWorkflowStore = create<DeployWorkflowStore>()(
         state.prepDeployWorkflowStep = step
       })
     },
-    setFactoryType: (factoryType) => {
-      set((state) => {
-        state.factoryType = factoryType
-      })
-    },
     addRequestedModule: (moduleType, module) => {
       set((state) => {
         state.requestedModules = {
