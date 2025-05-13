@@ -4,6 +4,7 @@ import type { ModuleName } from '@inverter-network/abis'
 import { ERC20_ABI } from '@inverter-network/sdk'
 import type {
   GetModuleReturnType,
+  ModuleData,
   PopWalletClient,
   TagConfig,
 } from '@inverter-network/sdk'
@@ -13,31 +14,45 @@ import type { Except } from 'type-fest-4'
 
 import { useInverter } from './use-inverter'
 
-export type UseGetModuleParams<T extends ModuleName> = {
+export type UseGetModuleParams<
+  N extends MD extends ModuleData ? never : ModuleName,
+  MD extends ModuleData | undefined = undefined,
+> = {
+  name: N
+  moduleData?: MD
   address?: string | `0x${string}`
-  name: T
   tagConfig?: TagConfig
   dependencies?: any[]
   options?: Except<
-    UseQueryOptions<GetModuleReturnType<T, PopWalletClient> | undefined, Error>,
+    UseQueryOptions<
+      GetModuleReturnType<N, PopWalletClient, MD> | undefined,
+      Error
+    >,
     'queryKey' | 'queryFn'
   >
 }
 
-export type UseGetModuleReturnType<T extends ModuleName> = UseQueryResult<
-  GetModuleReturnType<T, PopWalletClient> | undefined,
+export type UseGetModuleReturnType<
+  N extends MD extends ModuleData ? never : ModuleName,
+  MD extends ModuleData | undefined = undefined,
+> = UseQueryResult<
+  GetModuleReturnType<N, PopWalletClient, MD> | undefined,
   Error
 >
 
-export const useGetModule = <T extends ModuleName>({
+export const useGetModule = <
+  N extends MD extends ModuleData ? never : ModuleName,
+  MD extends ModuleData | undefined = undefined,
+>({
   address,
   name,
+  moduleData,
   tagConfig,
   options = {
     enabled: true,
   },
   dependencies = [],
-}: UseGetModuleParams<T>): UseGetModuleReturnType<T> => {
+}: UseGetModuleParams<N, MD>): UseGetModuleReturnType<N, MD> => {
   let { decimals, walletAddress, ...restTagConfig } = tagConfig || {}
   const inverter = useInverter()
   const zeroXAddress = address as `0x${string}`
@@ -47,7 +62,7 @@ export const useGetModule = <T extends ModuleName>({
   const query = useQuery({
     queryKey: [
       'get-module',
-      name,
+      moduleData ? moduleData.name : name,
       address,
       inverter.data?.walletClient?.account?.address,
       ...dependencies,
@@ -109,15 +124,15 @@ export const useGetModule = <T extends ModuleName>({
         walletAddress = inverter.data.walletClient.account.address
       }
 
-      const data = inverter.data!.getModule({
-        name,
+      const data = inverter.data!.getModule<N, MD>({
+        ...(!moduleData ? { name } : { moduleData }),
         address: zeroXAddress,
         tagConfig: {
           decimals,
           defaultToken,
           ...restTagConfig,
         },
-      })
+      } as any)
 
       return data
     },
