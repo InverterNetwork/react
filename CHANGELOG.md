@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/InverterNetwork/react/compare/v0.5.0-alpha.3...v0.5.0) (2025-05-13)
+
 ## [0.5.0-alpha.0](https://github.com/InverterNetwork/react/compare/v0.4.8...v0.5.0-alpha.0) (2025-05-05)
 
 
