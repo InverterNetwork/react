@@ -6,6 +6,9 @@ import type {
   GraphQLSubscriptionArgs,
   SubscriptionResult,
 } from '@inverter-network/graphql'
+import d from 'debug'
+
+const debug = d('inverter:use-graphql-subscription')
 
 export type UseGraphQLSubscriptionParams<T extends GraphQLSubscriptionArgs> = {
   fields: T
@@ -26,7 +29,16 @@ export const useGraphQLSubscription = <T extends GraphQLSubscriptionArgs>({
   const [error, setError] = React.useState<string | null>(null)
 
   React.useEffect(() => {
-    if (!enabled) return () => {} // Return empty cleanup function
+    if (!enabled) {
+      setData(null) // Clear data if disabled
+      setError(null) // Clear error if disabled
+      return () => {} // Return empty cleanup function
+    }
+
+    // If enabled, (re)start subscription.
+    // Clear previous data/error to signify loading for the new/re-enabled subscription.
+    setData(null)
+    setError(null)
 
     try {
       const sub = subscription(fields)
@@ -38,16 +50,17 @@ export const useGraphQLSubscription = <T extends GraphQLSubscriptionArgs>({
       return () => {
         sub.removeCallback(callbackId)
       }
-    } catch (error: any) {
-      console.error(
-        'Error subscribing to fields',
-        error?.message ?? error?.cause ?? error
-      )
-      // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
-      setError(error?.message ?? error?.cause ?? 'Unknown error')
+    } catch (err: any) {
+      const errorMessage = err?.message ?? err?.cause ?? err
+
+      console.error('Error subscribing to fields', errorMessage)
+      debug('[FULL ERROR]', err)
+
+      setError(errorMessage)
+
       return () => {} // Add return for catch block
     }
   }, [JSON.stringify(fields), enabled])
 
-  return { data, error, isLoading: !data }
+  return { data, error, isLoading: enabled && !data && !error }
 }

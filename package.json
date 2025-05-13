@@ -77,6 +77,7 @@
     "@api3/logos": "^0.2.18",
     "@inverter-network/graphql": "^0.9.31",
     "@inverter-network/sdk": "0.5.0-alpha.2",
+    "debug": "^4.4.0",
     "immer": "^10.1.1",
     "zod": "^3.23.8",
     "zustand": "^5.0.0-rc.2"
