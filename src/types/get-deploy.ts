@@ -2,7 +2,7 @@ import type {
   GetDeployWorkflowArgs,
   MixedRequestedModules,
 } from '@inverter-network/sdk'
-import type { ValueOf, PartialDeep } from 'type-fest-4'
+import type { PartialDeep, ValueOf } from 'type-fest-4'
 
 // ===========STORE==============
 export type PrepDeployWorkflowStep = 'Prepare' | 'Deploy'

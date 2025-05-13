@@ -1,9 +1,10 @@
 'use client'
 
 import { useModuleInteractionStore } from '@/store'
-import type { UseWorkFlowReturnType } from './use-workflow'
 import type { ModuleInteractionMode, SelectedModuleType } from '@/types'
 import type { GetModuleReturnType } from '@inverter-network/sdk'
+
+import type { UseWorkFlowReturnType } from './use-workflow'
 
 export type UseWorkflowInteractionReturnType = {
   selectedModule: GetModuleReturnType<never, any, any> | undefined

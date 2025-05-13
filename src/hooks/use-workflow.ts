@@ -1,8 +1,5 @@
 'use-client'
 
-import { useQuery } from '@tanstack/react-query'
-import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
-import { useInverter } from '.'
 import type {
   MixedRequestedModules,
   PopWalletClient,
@@ -10,7 +7,11 @@ import type {
   WorkflowIssuanceToken,
   WorkflowToken,
 } from '@inverter-network/sdk'
+import { useQuery } from '@tanstack/react-query'
+import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import type { Except } from 'type-fest-4'
+
+import { useInverter } from '.'
 
 export type UseWorkFlowParams<
   T extends MixedRequestedModules | undefined = undefined,

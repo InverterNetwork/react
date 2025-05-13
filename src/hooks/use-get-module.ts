@@ -1,15 +1,16 @@
 'use client'
 
 import type { ModuleName } from '@inverter-network/abis'
-import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
-import { useQuery } from '@tanstack/react-query'
 import { ERC20_ABI } from '@inverter-network/sdk'
 import type {
-  TagConfig,
   GetModuleReturnType,
   PopWalletClient,
+  TagConfig,
 } from '@inverter-network/sdk'
+import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import type { Except } from 'type-fest-4'
+
 import { useInverter } from './use-inverter'
 
 export type UseGetModuleParams<T extends ModuleName> = {

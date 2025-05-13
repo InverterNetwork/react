@@ -1,5 +1,5 @@
 import * as React from 'react'
-
+import type { UserFacingModuleType } from '@inverter-network/abis'
 import type {
   ExtendedAbiParameter,
   NonTupleExtendedAbiParameter,
@@ -40,9 +40,6 @@ export type TupleModuleInputMapperProps = TupleModuleInputProps & {
 export type ModuleInputProps = ModuleInputBaseProps & {
   input: ExtendedAbiParameter
 }
-
-// Store
-import type { UserFacingModuleType } from '@inverter-network/abis'
 
 export type SelectedModuleType =
   | UserFacingModuleType

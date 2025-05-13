@@ -1,5 +1,6 @@
 'use client'
 
+import * as React from 'react'
 import { useInverter } from '@/hooks'
 import { useSelectorStore } from '@/store'
 import type { UseDeployWorkflowProps } from '@/types'
@@ -8,7 +9,6 @@ import type {
   MixedRequestedModules,
 } from '@inverter-network/sdk'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useRef } from 'react'
 
 export type UseDeployWorkflowReturnType<T extends MixedRequestedModules> =
   ReturnType<typeof useDeployWorkflow<T>>
@@ -30,7 +30,7 @@ export const useDeployWorkflow = <T extends MixedRequestedModules>({
     ''
   )
 
-  const prevGetRequestedModulesHash = useRef<string | null>(null)
+  const prevGetRequestedModulesHash = React.useRef<string | null>(null)
 
   const prepDeploymentQueryHash = `prep_deployment-${inverter.dataUpdatedAt}-${requestedModulesHash}`
 

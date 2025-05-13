@@ -1,8 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { pruneFile } from '@inverter-network/sdk'
+import { useQuery } from '@tanstack/react-query'
 
 export type UseFileUploadParams = {
   onError?: (error: string) => void

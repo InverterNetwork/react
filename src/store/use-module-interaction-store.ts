@@ -1,9 +1,9 @@
+import type {
+  ModuleInteractionMethodState,
+  ModuleInteractionStore,
+} from '@/types'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
-import type {
-  ModuleInteractionStore,
-  ModuleInteractionMethodState,
-} from '@/types'
 
 export const useModuleInteractionStore = create<ModuleInteractionStore>()(
   immer((set) => ({

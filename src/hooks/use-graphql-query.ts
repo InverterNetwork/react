@@ -1,13 +1,13 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
-import type { UseQueryOptions } from '@tanstack/react-query'
-import type { Except } from 'type-fest-4'
 import type {
   GraphQLQueryArgs,
   GraphQLQueryResult,
 } from '@inverter-network/graphql'
 import { query } from '@inverter-network/graphql'
+import { useQuery } from '@tanstack/react-query'
+import type { UseQueryOptions } from '@tanstack/react-query'
+import type { Except } from 'type-fest-4'
 
 export type UseGraphQLQueryParams<T extends GraphQLQueryArgs> = {
   fields: T

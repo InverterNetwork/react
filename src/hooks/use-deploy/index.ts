@@ -1,18 +1,18 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import * as React from 'react'
+import { useSelectorStore } from '@/store'
+import type { UseDeployOnSuccess } from '@/types'
+import { getModuleData } from '@inverter-network/abis'
 import type {
   DeployableContracts,
   GetDeployWorkflowModuleArg,
 } from '@inverter-network/sdk'
-import { useState } from 'react'
-import { getModuleData } from '@inverter-network/abis'
-import { useSelectorStore } from '@/store'
-import { useInverter } from '../use-inverter'
-
-import { initialStates } from './constants'
-import type { UseDeployOnSuccess } from '@/types'
+import { useMutation } from '@tanstack/react-query'
 import { useAccount } from 'wagmi'
+
+import { useInverter } from '../use-inverter'
+import { initialStates } from './constants'
 
 export const useDeploy = <T extends DeployableContracts>({
   name,
@@ -34,7 +34,7 @@ export const useDeploy = <T extends DeployableContracts>({
 
   const { addAddress } = useSelectorStore()
 
-  const [userArgs, setUserArgs] = useState(
+  const [userArgs, setUserArgs] = React.useState(
     // @ts-expect-error - not all modules have initial states
     (initialStates?.[name] || {}) as GetDeployWorkflowModuleArg<T>
   )
