@@ -13,30 +13,53 @@ import type { Except } from 'type-fest-4'
 
 import { useInverter } from '.'
 
+/**
+ * @description The parameters for the use workflow hook
+ * @template T - The requested modules
+ * @template TWorkflowToken - The funding token
+ * @template TWorkflowIssuanceToken - The issuance token
+ * @returns The use workflow hook
+ */
 export type UseWorkFlowParams<
   T extends MixedRequestedModules | undefined = undefined,
-  FT extends WorkflowToken | undefined = undefined,
-  IT extends WorkflowIssuanceToken | undefined = undefined,
+  TWorkflowToken extends WorkflowToken | undefined = undefined,
+  TWorkflowIssuanceToken extends WorkflowIssuanceToken | undefined = undefined,
 > = {
   orchestratorAddress?: `0x${string}`
   requestedModules?: T
-  issuanceTokenType?: IT
-  fundingTokenType?: FT
+  issuanceTokenType?: TWorkflowIssuanceToken
+  fundingTokenType?: TWorkflowToken
   options?: Except<
-    UseQueryOptions<Workflow<PopWalletClient, T, FT, IT> | undefined, Error>,
+    UseQueryOptions<
+      | Workflow<T, PopWalletClient, TWorkflowToken, TWorkflowIssuanceToken>
+      | undefined,
+      Error
+    >,
     'queryKey' | 'queryFn'
   >
   dependencies?: any[]
 }
 
+/**
+ * @description The return type of the use workflow hook
+ * @template T - The requested modules
+ * @returns The use workflow hook
+ */
 export type UseWorkFlowReturnType<
   T extends MixedRequestedModules | undefined = undefined,
 > = ReturnType<typeof useWorkflow<T>>
 
+/**
+ * @description The use workflow hook
+ * @template T - The requested modules
+ * @template TWorkflowToken - The funding token
+ * @template TWorkflowIssuanceToken - The issuance token
+ * @returns The use workflow hook
+ */
 export function useWorkflow<
   T extends MixedRequestedModules | undefined = undefined,
-  FT extends WorkflowToken | undefined = undefined,
-  IT extends WorkflowIssuanceToken | undefined = undefined,
+  TWorkflowToken extends WorkflowToken | undefined = undefined,
+  TWorkflowIssuanceToken extends WorkflowIssuanceToken | undefined = undefined,
 >({
   orchestratorAddress,
   requestedModules,
@@ -47,8 +70,12 @@ export function useWorkflow<
     refetchOnWindowFocus: false,
   },
   dependencies = [],
-}: UseWorkFlowParams<T, FT, IT>): UseQueryResult<
-  Workflow<PopWalletClient, T, FT, IT>
+}: UseWorkFlowParams<
+  T,
+  TWorkflowToken,
+  TWorkflowIssuanceToken
+>): UseQueryResult<
+  Workflow<T, PopWalletClient, TWorkflowToken, TWorkflowIssuanceToken>
 > {
   const inverter = useInverter()
 

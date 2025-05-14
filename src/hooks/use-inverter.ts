@@ -6,6 +6,12 @@ import { useQuery } from '@tanstack/react-query'
 import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import { usePublicClient, useWalletClient } from 'wagmi'
 
+/**
+ * @description The parameters for the use inverter hook
+ * @param options - The options for the use inverter hook
+ * @param dependencies - The dependencies for the use inverter hook
+ * @returns The use inverter hook
+ */
 export type UseInverterParams = {
   options?: Omit<
     UseQueryOptions<Inverter<PopWalletClient>>,
@@ -14,8 +20,18 @@ export type UseInverterParams = {
   dependencies?: any[]
 }
 
+/**
+ * @description The return type of the use inverter hook
+ * @returns The use inverter hook
+ */
 export type UseInverterReturnType = UseQueryResult<Inverter<PopWalletClient>>
 
+/**
+ * @description The use inverter hook
+ * @param options - The options for the use inverter hook
+ * @param dependencies - The dependencies for the use inverter hook
+ * @returns The use inverter hook
+ */
 export const useInverter = ({
   options = {
     enabled: true,

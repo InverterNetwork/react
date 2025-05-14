@@ -10,17 +10,34 @@ import d from 'debug'
 
 const debug = d('inverter:use-graphql-subscription')
 
+/**
+ * @description The parameters for the use graphql subscription hook
+ * @template T - The subscription args
+ * @param params - The parameters for the use graphql subscription hook
+ * @returns The use graphql subscription hook
+ */
 export type UseGraphQLSubscriptionParams<T extends GraphQLSubscriptionArgs> = {
   fields: T
   enabled?: boolean
 }
 
+/**
+ * @description The return type of the use graphql subscription hook
+ * @template T - The subscription args
+ * @returns The use graphql subscription hook
+ */
 export type UseGraphQLSubscriptionResult<T extends GraphQLSubscriptionArgs> = {
   data: SubscriptionResult<T> | null
   error: string | null
   isLoading: boolean
 }
 
+/**
+ * @description The use graphql subscription hook
+ * @template T - The subscription args
+ * @param params - The parameters for the use graphql subscription hook
+ * @returns The use graphql subscription hook
+ */
 export const useGraphQLSubscription = <T extends GraphQLSubscriptionArgs>({
   fields,
   enabled = true,

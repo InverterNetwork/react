@@ -14,35 +14,56 @@ import type { Except } from 'type-fest-4'
 
 import { useInverter } from './use-inverter'
 
+/**
+ * @description Use the use get module hook to get a module
+ * @template TModuleName - The name of the module
+ * @template TModuleData - The data of the module
+ * @param params - The parameters for the use get module hook
+ * @returns The use get module hook
+ */
 export type UseGetModuleParams<
-  N extends MD extends ModuleData ? never : ModuleName,
-  MD extends ModuleData | undefined = undefined,
+  TModuleName extends TModuleData extends ModuleData ? never : ModuleName,
+  TModuleData extends ModuleData | undefined = undefined,
 > = {
-  name: N
-  moduleData?: MD
+  name: TModuleName
+  moduleData?: TModuleData
   address?: string | `0x${string}`
   tagConfig?: TagConfig
   dependencies?: any[]
   options?: Except<
     UseQueryOptions<
-      GetModuleReturnType<N, PopWalletClient, MD> | undefined,
+      | GetModuleReturnType<TModuleName, PopWalletClient, TModuleData>
+      | undefined,
       Error
     >,
     'queryKey' | 'queryFn'
   >
 }
 
+/**
+ * @description The return type of the use get module hook
+ * @template TModuleName - The name of the module
+ * @template TModuleData - The data of the module
+ * @returns The use get module hook
+ */
 export type UseGetModuleReturnType<
-  N extends MD extends ModuleData ? never : ModuleName,
-  MD extends ModuleData | undefined = undefined,
+  TModuleName extends TModuleData extends ModuleData ? never : ModuleName,
+  TModuleData extends ModuleData | undefined = undefined,
 > = UseQueryResult<
-  GetModuleReturnType<N, PopWalletClient, MD> | undefined,
+  GetModuleReturnType<TModuleName, PopWalletClient, TModuleData> | undefined,
   Error
 >
 
+/**
+ * @description Use the use get module hook to get a module
+ * @template TModuleName - The name of the module
+ * @template TModuleData - The data of the module
+ * @param params - The parameters for the use get module hook
+ * @returns The use get module hook
+ */
 export const useGetModule = <
-  N extends MD extends ModuleData ? never : ModuleName,
-  MD extends ModuleData | undefined = undefined,
+  TModuleName extends TModuleData extends ModuleData ? never : ModuleName,
+  TModuleData extends ModuleData | undefined = undefined,
 >({
   address,
   name,
@@ -52,7 +73,10 @@ export const useGetModule = <
     enabled: true,
   },
   dependencies = [],
-}: UseGetModuleParams<N, MD>): UseGetModuleReturnType<N, MD> => {
+}: UseGetModuleParams<TModuleName, TModuleData>): UseGetModuleReturnType<
+  TModuleName,
+  TModuleData
+> => {
   let { decimals, walletAddress, ...restTagConfig } = tagConfig || {}
   const inverter = useInverter()
   const zeroXAddress = address as `0x${string}`
@@ -124,7 +148,7 @@ export const useGetModule = <
         walletAddress = inverter.data.walletClient.account.address
       }
 
-      const data = inverter.data!.getModule<N, MD>({
+      const data = inverter.data!.getModule<TModuleName, TModuleData>({
         ...(!moduleData ? { name } : { moduleData }),
         address: zeroXAddress,
         tagConfig: {

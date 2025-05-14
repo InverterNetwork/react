@@ -19,6 +19,10 @@ export const getIconSrc = (chainId?: number) => {
 
 export type UseChainSpecsReturnType = ReturnType<typeof useChainSpecs>
 
+/**
+ * @description Use the chain specs hook to get the chain specs
+ * @returns The chain specs
+ */
 export const useChainSpecs = () => {
   const { address, isConnected, chain } = useAccount() // Wagmi's useAccount for wallet address and connection status
   const chains = useChains() // Wagmi's useNetwork for network details

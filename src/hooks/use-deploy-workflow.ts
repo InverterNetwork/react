@@ -10,9 +10,21 @@ import type {
 } from '@inverter-network/sdk'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
+/**
+ * @description Use the deploy workflow hook to deploy a workflow
+ * @template T - The requested modules
+ * @param params - The parameters for the deploy workflow
+ * @returns The deploy workflow hook
+ */
 export type UseDeployWorkflowReturnType<T extends MixedRequestedModules> =
   ReturnType<typeof useDeployWorkflow<T>>
 
+/**
+ * @description Use the deploy workflow hook to deploy a workflow
+ * @template T - The requested modules
+ * @param params - The parameters for the deploy workflow
+ * @returns The deploy workflow hook
+ */
 export const useDeployWorkflow = <T extends MixedRequestedModules>({
   requestedModules,
   resetDeployWorkflowForm,

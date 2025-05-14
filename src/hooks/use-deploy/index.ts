@@ -14,6 +14,12 @@ import { useAccount } from 'wagmi'
 import { useInverter } from '../use-inverter'
 import { initialStates } from './constants'
 
+/**
+ * @description Use the deploy hook to deploy a contract
+ * @template T - The deployable contract
+ * @param params - The parameters for the deploy
+ * @returns The deploy hook
+ */
 export const useDeploy = <T extends DeployableContracts>({
   name,
   onError,

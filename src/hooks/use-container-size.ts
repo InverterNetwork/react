@@ -2,6 +2,11 @@
 
 import * as React from 'react'
 
+/**
+ * @description Use the container size hook to get the size of a container
+ * @param ref - The ref of the container
+ * @returns The size of the container
+ */
 export const useContainerSize = (
   ref: React.RefObject<HTMLDivElement | null>
 ) => {
