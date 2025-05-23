@@ -15,23 +15,28 @@ import { useInverter } from '.'
 
 /**
  * @description The parameters for the use workflow hook
- * @template T - The requested modules
+ * @template TRequestedModules - The requested modules
  * @template TWorkflowToken - The funding token
  * @template TWorkflowIssuanceToken - The issuance token
- * @returns The use workflow hook
+ * @returns The use workflow hook parameters
  */
 export type UseWorkFlowParams<
-  T extends MixedRequestedModules | undefined = undefined,
+  TRequestedModules extends MixedRequestedModules | undefined = undefined,
   TWorkflowToken extends WorkflowToken | undefined = undefined,
   TWorkflowIssuanceToken extends WorkflowIssuanceToken | undefined = undefined,
 > = {
   orchestratorAddress?: `0x${string}`
-  requestedModules?: T
+  requestedModules?: TRequestedModules
   issuanceTokenType?: TWorkflowIssuanceToken
   fundingTokenType?: TWorkflowToken
   options?: Except<
     UseQueryOptions<
-      | Workflow<T, PopWalletClient, TWorkflowToken, TWorkflowIssuanceToken>
+      | Workflow<
+          TRequestedModules,
+          PopWalletClient,
+          TWorkflowToken,
+          TWorkflowIssuanceToken
+        >
       | undefined,
       Error
     >,
@@ -42,22 +47,22 @@ export type UseWorkFlowParams<
 
 /**
  * @description The return type of the use workflow hook
- * @template T - The requested modules
- * @returns The use workflow hook
+ * @template TRequestedModules - The requested modules
+ * @returns The use workflow hook query
  */
 export type UseWorkFlowReturnType<
-  T extends MixedRequestedModules | undefined = undefined,
-> = ReturnType<typeof useWorkflow<T>>
+  TRequestedModules extends MixedRequestedModules | undefined = undefined,
+> = ReturnType<typeof useWorkflow<TRequestedModules>>
 
 /**
  * @description The use workflow hook
- * @template T - The requested modules
+ * @template TRequestedModules - The requested modules
  * @template TWorkflowToken - The funding token
  * @template TWorkflowIssuanceToken - The issuance token
  * @returns The use workflow hook
  */
 export function useWorkflow<
-  T extends MixedRequestedModules | undefined = undefined,
+  TRequestedModules extends MixedRequestedModules | undefined = undefined,
   TWorkflowToken extends WorkflowToken | undefined = undefined,
   TWorkflowIssuanceToken extends WorkflowIssuanceToken | undefined = undefined,
 >({
@@ -71,11 +76,16 @@ export function useWorkflow<
   },
   dependencies = [],
 }: UseWorkFlowParams<
-  T,
+  TRequestedModules,
   TWorkflowToken,
   TWorkflowIssuanceToken
 >): UseQueryResult<
-  Workflow<T, PopWalletClient, TWorkflowToken, TWorkflowIssuanceToken>
+  Workflow<
+    TRequestedModules,
+    PopWalletClient,
+    TWorkflowToken,
+    TWorkflowIssuanceToken
+  >
 > {
   const inverter = useInverter()
 

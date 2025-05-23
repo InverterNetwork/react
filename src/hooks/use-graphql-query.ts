@@ -11,41 +11,41 @@ import type { Except } from 'type-fest-4'
 
 /**
  * @description Use the use graphql query hook to query a graphql query
- * @template T - The query args
+ * @template TQueryArgs - The query args
  * @param params - The parameters for the use graphql query hook
  * @returns The use graphql query hook
  */
-export type UseGraphQLQueryParams<T extends GraphQLQueryArgs> = {
-  fields: T
+export type UseGraphQLQueryParams<TQueryArgs extends GraphQLQueryArgs> = {
+  fields: TQueryArgs
   dependencies?: any[]
   options?: Except<
-    UseQueryOptions<GraphQLQueryResult<T> | undefined, Error>,
+    UseQueryOptions<GraphQLQueryResult<TQueryArgs> | undefined, Error>,
     'queryKey' | 'queryFn'
   >
 }
 
 /**
  * @description The return type of the use graphql query hook
- * @template T - The query args
+ * @template TQueryArgs - The query args
  * @returns The use graphql query hook
  */
 export type UseGraphQLQueryReturnType<
-  T extends GraphQLQueryArgs = GraphQLQueryArgs,
-> = ReturnType<typeof useGraphQLQuery<T>>
+  TQueryArgs extends GraphQLQueryArgs = GraphQLQueryArgs,
+> = ReturnType<typeof useGraphQLQuery<TQueryArgs>>
 
 /**
  * @description The use graphql query hook
- * @template T - The query args
+ * @template TQueryArgs - The query args
  * @param params - The parameters for the use graphql query hook
  * @returns The use graphql query hook
  */
-export const useGraphQLQuery = <T extends GraphQLQueryArgs>({
+export const useGraphQLQuery = <TQueryArgs extends GraphQLQueryArgs>({
   fields,
   dependencies = [],
   options = {
     enabled: true,
   },
-}: UseGraphQLQueryParams<T>) => {
+}: UseGraphQLQueryParams<TQueryArgs>) => {
   const queryResult = useQuery({
     queryKey: ['graphql-query', fields, ...dependencies],
     queryFn: () => query(fields),

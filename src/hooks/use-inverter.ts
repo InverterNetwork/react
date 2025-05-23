@@ -22,7 +22,7 @@ export type UseInverterParams = {
 
 /**
  * @description The return type of the use inverter hook
- * @returns The use inverter hook
+ * @returns The use inverter hook query
  */
 export type UseInverterReturnType = UseQueryResult<Inverter<PopWalletClient>>
 

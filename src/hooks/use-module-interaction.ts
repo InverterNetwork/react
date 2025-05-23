@@ -3,6 +3,19 @@
 import { useModuleInteractionStore } from '@/store'
 import type { GetModuleReturnType } from '@inverter-network/sdk'
 
+/**
+ * @description The return type of the use module interaction hook
+ * @returns The use module interaction hook
+ */
+export type UseModuleInteractionReturnType = ReturnType<
+  typeof useModuleInteraction
+>
+
+/**
+ * @description The use module interaction hook
+ * @param selectedModule - The selected module
+ * @returns The use module interaction hook
+ */
 export const useModuleInteraction = (
   selectedModule: GetModuleReturnType<any, any> | undefined
 ) => {
@@ -39,5 +52,3 @@ export const useModuleInteraction = (
     ...rest,
   }
 }
-
-export type UseModuleInteractionReturn = ReturnType<typeof useModuleInteraction>

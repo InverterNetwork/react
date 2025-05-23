@@ -6,6 +6,10 @@ import type { GetModuleReturnType } from '@inverter-network/sdk'
 
 import type { UseWorkFlowReturnType } from './use-workflow'
 
+/**
+ * @description The return type of the use workflow interaction hook
+ * @returns The use workflow interaction hook
+ */
 export type UseWorkflowInteractionReturnType = {
   selectedModule: GetModuleReturnType<never, any, any> | undefined
   moduleInteractionMode: ModuleInteractionMode
@@ -16,6 +20,11 @@ export type UseWorkflowInteractionReturnType = {
   setOptionalModule: (index: number) => void
 }
 
+/**
+ * @description The use workflow interaction hook
+ * @param workflow - The workflow
+ * @returns The use workflow interaction hook
+ */
 export const useWorkflowInteraction = (
   workflow: UseWorkFlowReturnType
 ): UseWorkflowInteractionReturnType => {

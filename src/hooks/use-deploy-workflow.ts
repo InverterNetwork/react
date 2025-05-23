@@ -12,25 +12,28 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 
 /**
  * @description Use the deploy workflow hook to deploy a workflow
- * @template T - The requested modules
+ * @template TRequestedModules - The requested modules
  * @param params - The parameters for the deploy workflow
  * @returns The deploy workflow hook
  */
-export type UseDeployWorkflowReturnType<T extends MixedRequestedModules> =
-  ReturnType<typeof useDeployWorkflow<T>>
+export type UseDeployWorkflowReturnType<
+  TRequestedModules extends MixedRequestedModules,
+> = ReturnType<typeof useDeployWorkflow<TRequestedModules>>
 
 /**
  * @description Use the deploy workflow hook to deploy a workflow
- * @template T - The requested modules
+ * @template TRequestedModules - The requested modules
  * @param params - The parameters for the deploy workflow
  * @returns The deploy workflow hook
  */
-export const useDeployWorkflow = <T extends MixedRequestedModules>({
+export const useDeployWorkflow = <
+  TRequestedModules extends MixedRequestedModules,
+>({
   requestedModules,
   resetDeployWorkflowForm,
   onSuccess,
   onError,
-}: UseDeployWorkflowProps<T>) => {
+}: UseDeployWorkflowProps<TRequestedModules>) => {
   // Get the orchestrator state store
   const { addAddress } = useSelectorStore()
 
@@ -82,7 +85,7 @@ export const useDeployWorkflow = <T extends MixedRequestedModules>({
       'paymentProcessor' in requestedModules,
   })
 
-  type Args = GetDeployWorkflowArgs<T>
+  type Args = GetDeployWorkflowArgs<TRequestedModules>
 
   // Deploy the workflow
   const runDeployment = useMutation({

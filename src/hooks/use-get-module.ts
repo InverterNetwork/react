@@ -19,7 +19,7 @@ import { useInverter } from './use-inverter'
  * @template TModuleName - The name of the module
  * @template TModuleData - The data of the module
  * @param params - The parameters for the use get module hook
- * @returns The use get module hook
+ * @returns The use get module hook query
  */
 export type UseGetModuleParams<
   TModuleName extends TModuleData extends ModuleData ? never : ModuleName,

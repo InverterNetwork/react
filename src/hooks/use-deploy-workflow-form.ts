@@ -12,13 +12,18 @@ import type {
   MixedRequestedModules,
 } from '@inverter-network/sdk'
 
+/**
+ * @description The return type of the use deploy workflow form hook
+ * @returns The use deploy workflow form hook
+ */
 export type UseDeployWorkflowFormReturnType = ReturnType<
   typeof useDeployWorkflowForm
 >
 
 /**
  * @description Use the deploy workflow form hook to deploy a workflow via step by step form
- * @param params - The parameters for the deploy workflow form
+ * @param params.onSuccess - The success callback
+ * @param params.onError - The error callback
  * @returns The deploy workflow form hook
  */
 export const useDeployWorkflowForm = ({

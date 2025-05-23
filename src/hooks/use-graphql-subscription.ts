@@ -12,37 +12,44 @@ const debug = d('inverter:use-graphql-subscription')
 
 /**
  * @description The parameters for the use graphql subscription hook
- * @template T - The subscription args
+ * @template TSubscriptionArgs - The subscription args
  * @param params - The parameters for the use graphql subscription hook
  * @returns The use graphql subscription hook
  */
-export type UseGraphQLSubscriptionParams<T extends GraphQLSubscriptionArgs> = {
-  fields: T
+export type UseGraphQLSubscriptionParams<
+  TSubscriptionArgs extends GraphQLSubscriptionArgs,
+> = {
+  fields: TSubscriptionArgs
   enabled?: boolean
 }
 
 /**
  * @description The return type of the use graphql subscription hook
- * @template T - The subscription args
+ * @template TSubscriptionArgs - The subscription args
  * @returns The use graphql subscription hook
  */
-export type UseGraphQLSubscriptionResult<T extends GraphQLSubscriptionArgs> = {
-  data: SubscriptionResult<T> | null
+export type UseGraphQLSubscriptionResult<
+  TSubscriptionArgs extends GraphQLSubscriptionArgs,
+> = {
+  data: SubscriptionResult<TSubscriptionArgs> | null
   error: string | null
   isLoading: boolean
 }
 
 /**
  * @description The use graphql subscription hook
- * @template T - The subscription args
+ * @template TSubscriptionArgs - The subscription args
  * @param params - The parameters for the use graphql subscription hook
- * @returns The use graphql subscription hook
+ * @returns The use graphql subscription hook query
  */
-export const useGraphQLSubscription = <T extends GraphQLSubscriptionArgs>({
+export const useGraphQLSubscription = <
+  TSubscriptionArgs extends GraphQLSubscriptionArgs,
+>({
   fields,
   enabled = true,
-}: UseGraphQLSubscriptionParams<T>): UseGraphQLSubscriptionResult<T> => {
-  const [data, setData] = React.useState<SubscriptionResult<T> | null>(null)
+}: UseGraphQLSubscriptionParams<TSubscriptionArgs>): UseGraphQLSubscriptionResult<TSubscriptionArgs> => {
+  const [data, setData] =
+    React.useState<SubscriptionResult<TSubscriptionArgs> | null>(null)
   const [error, setError] = React.useState<string | null>(null)
 
   React.useEffect(() => {
