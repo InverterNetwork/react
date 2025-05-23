@@ -3,12 +3,31 @@
 import * as React from 'react'
 import { useInverter } from '@/hooks'
 import { useSelectorStore } from '@/store'
-import type { UseDeployWorkflowProps } from '@/types'
 import type {
   GetDeployWorkflowArgs,
   MixedRequestedModules,
 } from '@inverter-network/sdk'
 import { useMutation, useQuery } from '@tanstack/react-query'
+
+export type UseDeployWorkflowOnSuccess = ({
+  transactionHash,
+  orchestratorAddress,
+}: {
+  transactionHash: `0x${string}`
+  orchestratorAddress: `0x${string}`
+}) => void
+
+export type UseDeployWorkflowProps<T extends MixedRequestedModules> = {
+  requestedModules: T
+  resetDeployWorkflowForm?: () => void
+  onSuccess?: UseDeployWorkflowOnSuccess
+  onError?: (error: Error) => void
+}
+
+export type UseDeployWorkflowFormProps = Omit<
+  UseDeployWorkflowProps<MixedRequestedModules>,
+  'resetDeployWorkflowForm' | 'requestedModules' | 'factoryType'
+>
 
 /**
  * @description Use the deploy workflow hook to deploy a workflow

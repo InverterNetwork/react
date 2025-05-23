@@ -2,15 +2,14 @@
 
 import { useDeployWorkflow } from '@/hooks'
 import { useDeployWorkflowStore } from '@/store'
-import type {
-  DeployWorkflowFormStep,
-  UseDeployWorkflowFormProps,
-} from '@/types'
+import type { DeployWorkflowFormStep } from '@/types'
 import { isDeployForm } from '@/utils'
 import type {
   GetDeployWorkflowInputs,
   MixedRequestedModules,
 } from '@inverter-network/sdk'
+
+import type { UseDeployWorkflowFormProps } from '@/hooks/use-deploy-workflow'
 
 /**
  * @description The return type of the use deploy workflow form hook

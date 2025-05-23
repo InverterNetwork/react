@@ -9,6 +9,7 @@ import type {
   DeployWriteReturnType,
   GetDeployWorkflowModuleArg,
   GetModuleConfigData,
+  MethodOptions,
 } from '@inverter-network/sdk'
 import { useMutation } from '@tanstack/react-query'
 import type { UseMutationResult } from '@tanstack/react-query'
@@ -74,11 +75,24 @@ export type UseDeployReturnType<
 > = {
   inputs: GetModuleConfigData<T>
   userArgs: GetDeployWorkflowModuleArg<T>
-  mutate: UseMutationResult<
-    UseDeployMutateData<TMethodKind>,
-    Error,
-    TMethodKind extends 'write' ? void : `0x${string}`[]
-  >
+  mutate: Omit<
+    UseMutationResult<
+      UseDeployMutateData<TMethodKind>,
+      Error,
+      TMethodKind extends 'write' ? [] : [`0x${string}`[]]
+    >,
+    'mutate' | 'mutateAsync'
+  > & {
+    mutate: TMethodKind extends 'write'
+      ? (calls: `0x${string}`[], options?: MethodOptions) => void
+      : (calls: `0x${string}`[]) => void
+    mutateAsync: TMethodKind extends 'write'
+      ? (
+          calls: `0x${string}`[],
+          options?: MethodOptions
+        ) => Promise<UseDeployMutateData<TMethodKind>>
+      : (calls: `0x${string}`[]) => Promise<UseDeployMutateData<TMethodKind>>
+  }
   handleSetUserArgs: (name: string, value: any) => void
 }
 
@@ -94,7 +108,7 @@ export const useDeploy = <
   TMethodKind extends 'write' | 'bytecode' = 'write',
 >({
   name,
-  kind,
+  kind = 'write' as TMethodKind,
   onError,
   onSuccess,
 }: UseDeployParams<T, TMethodKind>): UseDeployReturnType<T, TMethodKind> => {
@@ -124,9 +138,11 @@ export const useDeploy = <
 
   const inverter = useInverter()
 
-  const mutate = useMutation({
+  const mutation = useMutation({
     mutationFn: async (
-      calls: TMethodKind extends 'write' ? void : `0x${string}`[]
+      params: TMethodKind extends 'write'
+        ? [calls: `0x${string}`[], options?: MethodOptions]
+        : [`0x${string}`[]]
     ): Promise<UseDeployMutateData<TMethodKind>> => {
       if (!inverter.data) throw new Error('Inverter not initialized')
 
@@ -138,7 +154,8 @@ export const useDeploy = <
         bytecode: DeployBytecodeReturnType
       }[TMethodKind]
 
-      if ('run' in response && calls) {
+      if ('run' in response && params.length > 0) {
+        const [calls] = params as [`0x${string}`[]]
         const bytecode = await response.run(calls)
 
         return {
@@ -176,6 +193,31 @@ export const useDeploy = <
       onError?.(error)
     },
   })
+
+  // Create wrapped mutate functions that accept spread parameters
+  const wrappedMutate =
+    kind === 'write'
+      ? (calls: `0x${string}`[], options?: MethodOptions) => {
+          mutation.mutate([calls, options] as any)
+        }
+      : (calls: `0x${string}`[]) => {
+          mutation.mutate([calls] as any)
+        }
+
+  const wrappedMutateAsync =
+    kind === 'write'
+      ? async (calls: `0x${string}`[], options?: MethodOptions) => {
+          return await mutation.mutateAsync([calls, options] as any)
+        }
+      : async (calls: `0x${string}`[]) => {
+          return await mutation.mutateAsync([calls] as any)
+        }
+
+  const mutate = {
+    ...mutation,
+    mutate: wrappedMutate,
+    mutateAsync: wrappedMutateAsync,
+  } as UseDeployReturnType<T, TMethodKind>['mutate']
 
   return {
     inputs,

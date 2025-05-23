@@ -37,24 +37,3 @@ export type DeployWorkflowStore = {
   ) => void
   resetDeployWorkflowForm: () => void
 }
-
-// ===========HOOKS==============
-export type UseDeployWorkflowOnSuccess = ({
-  transactionHash,
-  orchestratorAddress,
-}: {
-  transactionHash: `0x${string}`
-  orchestratorAddress: `0x${string}`
-}) => void
-
-export type UseDeployWorkflowProps<T extends MixedRequestedModules> = {
-  requestedModules: T
-  resetDeployWorkflowForm?: () => void
-  onSuccess?: UseDeployWorkflowOnSuccess
-  onError?: (error: Error) => void
-}
-
-export type UseDeployWorkflowFormProps = Omit<
-  UseDeployWorkflowProps<MixedRequestedModules>,
-  'resetDeployWorkflowForm' | 'requestedModules' | 'factoryType'
->
