@@ -2,33 +2,102 @@
 
 import * as React from 'react'
 import { useSelectorStore } from '@/store'
-import type { UseDeployOnSuccess } from '@/types'
 import { getModuleData } from '@inverter-network/abis'
 import type {
   DeployableContracts,
+  DeployBytecodeReturnType,
+  DeployWriteReturnType,
   GetDeployWorkflowModuleArg,
+  GetModuleConfigData,
 } from '@inverter-network/sdk'
 import { useMutation } from '@tanstack/react-query'
+import type { UseMutationResult } from '@tanstack/react-query'
 import { useAccount } from 'wagmi'
 
 import { useInverter } from '../use-inverter'
 import { initialStates } from './constants'
 
+export type UseDeployOnSuccess<TMethodKind extends 'write' | 'bytecode'> =
+  TMethodKind extends 'write'
+    ? ({
+        contractAddress,
+        transactionHash,
+      }: {
+        contractAddress: `0x${string}`
+        transactionHash: `0x${string}`
+      }) => void
+    : ({
+        contractAddress,
+        factoryAddress,
+        bytecode,
+      }: {
+        contractAddress: `0x${string}`
+        factoryAddress: `0x${string}`
+        bytecode: `0x${string}`
+      }) => void
+
+/**
+ * @description The parameters for the deploy hook
+ * @template T - The deployable contract
+ * @template TMethodKind - The method kind
+ * @param name - The name of the contract
+ * @param kind - The method kind
+ * @param onError - The error handler
+ * @param onSuccess - The success handler
+ */
+export type UseDeployParams<
+  T extends DeployableContracts,
+  TMethodKind extends 'write' | 'bytecode' = 'write',
+> = {
+  name: T
+  kind: TMethodKind
+  onError?: (error: Error) => void
+  onSuccess?: UseDeployOnSuccess<TMethodKind>
+}
+
+export type UseDeployMutateData<TMethodKind extends 'write' | 'bytecode'> = {
+  write: DeployWriteReturnType
+  bytecode: Omit<DeployBytecodeReturnType, 'run'> & {
+    bytecode: `0x${string}`
+  }
+}[TMethodKind]
+
+/**
+ * @description The return type for the deploy hook
+ * @template T - The deployable contract
+ * @template TMethodKind - The method kind
+ * @returns The return type for the deploy hook
+ */
+export type UseDeployReturnType<
+  T extends DeployableContracts,
+  TMethodKind extends 'write' | 'bytecode' = 'write',
+> = {
+  inputs: GetModuleConfigData<T>
+  userArgs: GetDeployWorkflowModuleArg<T>
+  mutate: UseMutationResult<
+    UseDeployMutateData<TMethodKind>,
+    Error,
+    TMethodKind extends 'write' ? void : `0x${string}`[]
+  >
+  handleSetUserArgs: (name: string, value: any) => void
+}
+
 /**
  * @description Use the deploy hook to deploy a contract
  * @template T - The deployable contract
+ * @template TMethodKind - The method kind
  * @param params - The parameters for the deploy
  * @returns The deploy hook
  */
-export const useDeploy = <T extends DeployableContracts>({
+export const useDeploy = <
+  T extends DeployableContracts,
+  TMethodKind extends 'write' | 'bytecode' = 'write',
+>({
   name,
+  kind,
   onError,
   onSuccess,
-}: {
-  name: T
-  onError?: (error: Error) => void
-  onSuccess?: UseDeployOnSuccess
-}) => {
+}: UseDeployParams<T, TMethodKind>): UseDeployReturnType<T, TMethodKind> => {
   const moduleData = getModuleData(name)
   const { chainId } = useAccount()
 
@@ -36,7 +105,8 @@ export const useDeploy = <T extends DeployableContracts>({
     throw new Error('Module does not support deployment')
   }
 
-  const inputs = moduleData.deploymentInputs.configData
+  const inputs = moduleData.deploymentInputs
+    .configData as GetModuleConfigData<T>
 
   const { addAddress } = useSelectorStore()
 
@@ -55,28 +125,52 @@ export const useDeploy = <T extends DeployableContracts>({
   const inverter = useInverter()
 
   const mutate = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (
+      calls: TMethodKind extends 'write' ? void : `0x${string}`[]
+    ): Promise<UseDeployMutateData<TMethodKind>> => {
       if (!inverter.data) throw new Error('Inverter not initialized')
 
-      const data = await inverter.data.deploy({
+      const response = (await inverter.data.deploy[kind]({
         name,
         args: userArgs,
-      })
-      return data
+      })) as {
+        write: DeployWriteReturnType
+        bytecode: DeployBytecodeReturnType
+      }[TMethodKind]
+
+      if ('run' in response && calls) {
+        const bytecode = await response.run(calls)
+
+        return {
+          bytecode,
+          ...response,
+        } as unknown as UseDeployMutateData<TMethodKind>
+      }
+
+      return response as unknown as UseDeployMutateData<TMethodKind>
     },
-    onSuccess: async ({ contractAddress, transactionHash }) => {
-      await inverter.data!.publicClient.waitForTransactionReceipt({
-        hash: transactionHash,
-      })
+    onSuccess: async (response) => {
+      if ('transactionHash' in response) {
+        const { contractAddress, transactionHash } = response
+        addAddress({
+          title: name,
+          address: contractAddress,
+          type: 'contract',
+          chainId,
+        })
+        ;(onSuccess as UseDeployOnSuccess<'write'>)?.({
+          contractAddress,
+          transactionHash,
+        })
+      } else {
+        const { contractAddress, factoryAddress, bytecode } = response
 
-      addAddress({
-        title: name,
-        address: contractAddress,
-        type: 'contract',
-        chainId,
-      })
-
-      onSuccess?.({ contractAddress, transactionHash })
+        ;(onSuccess as UseDeployOnSuccess<'bytecode'>)?.({
+          contractAddress,
+          factoryAddress,
+          bytecode,
+        })
+      }
     },
     onError: (error) => {
       onError?.(error)
