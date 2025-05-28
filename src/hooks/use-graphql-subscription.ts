@@ -28,7 +28,7 @@ export type UseGraphQLSubscriptionParams<
  * @template TSubscriptionArgs - The subscription args
  * @returns The use graphql subscription hook
  */
-export type UseGraphQLSubscriptionResult<
+export type UseGraphQLSubscriptionReturnType<
   TSubscriptionArgs extends GraphQLSubscriptionArgs,
 > = {
   data: SubscriptionResult<TSubscriptionArgs> | null
@@ -47,7 +47,7 @@ export const useGraphQLSubscription = <
 >({
   fields,
   enabled = true,
-}: UseGraphQLSubscriptionParams<TSubscriptionArgs>): UseGraphQLSubscriptionResult<TSubscriptionArgs> => {
+}: UseGraphQLSubscriptionParams<TSubscriptionArgs>): UseGraphQLSubscriptionReturnType<TSubscriptionArgs> => {
   const [data, setData] =
     React.useState<SubscriptionResult<TSubscriptionArgs> | null>(null)
   const [error, setError] = React.useState<string | null>(null)

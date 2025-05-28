@@ -17,17 +17,12 @@ export type UseDeployWorkflowOnSuccess = ({
   orchestratorAddress: `0x${string}`
 }) => void
 
-export type UseDeployWorkflowProps<T extends MixedRequestedModules> = {
+export type UseDeployWorkflowParams<T extends MixedRequestedModules> = {
   requestedModules: T
   resetDeployWorkflowForm?: () => void
   onSuccess?: UseDeployWorkflowOnSuccess
   onError?: (error: Error) => void
 }
-
-export type UseDeployWorkflowFormProps = Omit<
-  UseDeployWorkflowProps<MixedRequestedModules>,
-  'resetDeployWorkflowForm' | 'requestedModules' | 'factoryType'
->
 
 /**
  * @description Use the deploy workflow hook to deploy a workflow
@@ -52,7 +47,7 @@ export const useDeployWorkflow = <
   resetDeployWorkflowForm,
   onSuccess,
   onError,
-}: UseDeployWorkflowProps<TRequestedModules>) => {
+}: UseDeployWorkflowParams<TRequestedModules>) => {
   // Get the orchestrator state store
   const { addAddress } = useSelectorStore()
 

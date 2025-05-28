@@ -9,7 +9,12 @@ import type {
   MixedRequestedModules,
 } from '@inverter-network/sdk'
 
-import type { UseDeployWorkflowFormProps } from '@/hooks/use-deploy-workflow'
+import type { UseDeployWorkflowParams } from '@/hooks/use-deploy-workflow'
+
+export type UseDeployWorkflowFormParams = Omit<
+  UseDeployWorkflowParams<MixedRequestedModules>,
+  'resetDeployWorkflowForm' | 'requestedModules' | 'factoryType'
+>
 
 /**
  * @description The return type of the use deploy workflow form hook
@@ -28,7 +33,7 @@ export type UseDeployWorkflowFormReturnType = ReturnType<
 export const useDeployWorkflowForm = ({
   onSuccess,
   onError,
-}: UseDeployWorkflowFormProps = {}) => {
+}: UseDeployWorkflowFormParams = {}) => {
   // Get the deploy store
   const {
     requestedModules,

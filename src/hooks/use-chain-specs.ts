@@ -1,21 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import { ChainLogo } from '@api3/logos'
+import { getChainIconSrc } from '@/utils'
 import { useAccount, useChains } from 'wagmi'
-
-export const getIconSrc = (chainId?: number) => {
-  const fallback = (ChainLogo('1') as any)?.src || ChainLogo('1')
-
-  if (!chainId) return fallback
-
-  const available =
-    (ChainLogo(chainId.toString()) as any)?.src || ChainLogo(chainId.toString())
-
-  if (available) return available
-
-  return fallback
-}
 
 export type UseChainSpecsReturnType = ReturnType<typeof useChainSpecs>
 
@@ -32,7 +19,7 @@ export const useChainSpecs = () => {
   const evmNetwork = chains.find(({ id }) => id === chainId)
 
   // Icon URL for the current chain
-  const iconSrc = getIconSrc(chainId)
+  const iconSrc = getChainIconSrc(chainId)
 
   // Determine if the chain is unsupported
   const isUnsupportedChain = !!isConnected && !evmNetwork
