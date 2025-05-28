@@ -15,27 +15,33 @@ import { useMutation } from '@tanstack/react-query'
 import type { UseMutationResult } from '@tanstack/react-query'
 import { useAccount } from 'wagmi'
 
-import { useInverter } from '../use-inverter'
+import { useInverter } from '@/hooks/use-inverter'
+
 import { initialStates } from './constants'
 
-export type UseDeployOnSuccess<TMethodKind extends 'write' | 'bytecode'> =
-  TMethodKind extends 'write'
-    ? ({
-        contractAddress,
-        transactionHash,
-      }: {
-        contractAddress: `0x${string}`
-        transactionHash: `0x${string}`
-      }) => void
-    : ({
-        contractAddress,
-        factoryAddress,
-        bytecode,
-      }: {
-        contractAddress: `0x${string}`
-        factoryAddress: `0x${string}`
-        bytecode: `0x${string}`
-      }) => void
+/**
+ * @description The onSuccess callback type for the deploy hook
+ * @template TMethodKind - The method kind
+ * @returns The onSuccess callback type for the deploy hook
+ */
+export type UseDeployOnSuccess<TMethodKind extends 'write' | 'bytecode'> = {
+  write: ({
+    contractAddress,
+    transactionHash,
+  }: {
+    contractAddress: `0x${string}`
+    transactionHash: `0x${string}`
+  }) => void
+  bytecode: ({
+    contractAddress,
+    factoryAddress,
+    bytecode,
+  }: {
+    contractAddress: `0x${string}`
+    factoryAddress: `0x${string}`
+    bytecode: `0x${string}`
+  }) => void
+}[TMethodKind]
 
 /**
  * @description The parameters for the deploy hook
@@ -56,6 +62,11 @@ export type UseDeployParams<
   onSuccess?: UseDeployOnSuccess<TMethodKind>
 }
 
+/**
+ * @description The mutate data type for the deploy hook
+ * @template TMethodKind - The method kind
+ * @returns The mutate data type for the deploy hook
+ */
 export type UseDeployMutateData<TMethodKind extends 'write' | 'bytecode'> = {
   write: DeployWriteReturnType
   bytecode: Omit<DeployBytecodeReturnType, 'run'> & {
@@ -75,26 +86,20 @@ export type UseDeployReturnType<
 > = {
   inputs: GetModuleConfigData<T>
   userArgs: GetDeployWorkflowModuleArg<T>
-  mutate: Omit<
-    UseMutationResult<
-      UseDeployMutateData<TMethodKind>,
-      Error,
-      TMethodKind extends 'write' ? [] : [`0x${string}`[]]
-    >,
-    'mutate' | 'mutateAsync'
-  > & {
-    mutate: TMethodKind extends 'write'
-      ? (calls: `0x${string}`[], options?: MethodOptions) => void
-      : (calls: `0x${string}`[]) => void
-    mutateAsync: TMethodKind extends 'write'
-      ? (
-          calls: `0x${string}`[],
-          options?: MethodOptions
-        ) => Promise<UseDeployMutateData<TMethodKind>>
-      : (calls: `0x${string}`[]) => Promise<UseDeployMutateData<TMethodKind>>
-  }
   handleSetUserArgs: (name: string, value: any) => void
-}
+} & UseMutationResult<
+  UseDeployMutateData<TMethodKind>,
+  Error,
+  {
+    write: {
+      calls?: `0x${string}`[]
+      options?: MethodOptions
+    }
+    bytecode: {
+      calls?: `0x${string}`[]
+    }
+  }[TMethodKind]
+>
 
 /**
  * @description Use the deploy hook to deploy a contract
@@ -138,24 +143,34 @@ export const useDeploy = <
 
   const inverter = useInverter()
 
-  const mutation = useMutation({
-    mutationFn: async (
-      params: TMethodKind extends 'write'
-        ? [calls: `0x${string}`[], options?: MethodOptions]
-        : [`0x${string}`[]]
-    ): Promise<UseDeployMutateData<TMethodKind>> => {
+  const mutation = useMutation<
+    UseDeployMutateData<TMethodKind>,
+    Error,
+    {
+      write: {
+        calls?: `0x${string}`[]
+        options?: MethodOptions
+      }
+      bytecode: {
+        calls?: `0x${string}`[]
+      }
+    }[TMethodKind]
+  >({
+    mutationFn: async (params) => {
       if (!inverter.data) throw new Error('Inverter not initialized')
 
-      const response = (await inverter.data.deploy[kind]({
-        name,
-        args: userArgs,
-      })) as {
-        write: DeployWriteReturnType
-        bytecode: DeployBytecodeReturnType
-      }[TMethodKind]
+      const response = await inverter.data.deploy[kind](
+        {
+          name,
+          args: userArgs,
+        },
+        // if the params has options, use them, otherwise use undefined
+        'options' in params ? params.options : undefined
+      )
 
-      if ('run' in response && params.length > 0) {
-        const [calls] = params as [`0x${string}`[]]
+      if ('run' in response) {
+        const { calls } = params
+
         const bytecode = await response.run(calls)
 
         return {
@@ -167,6 +182,7 @@ export const useDeploy = <
       return response as unknown as UseDeployMutateData<TMethodKind>
     },
     onSuccess: async (response) => {
+      // if the response has a transaction hash, it is a write call
       if ('transactionHash' in response) {
         const { contractAddress, transactionHash } = response
         addAddress({
@@ -179,7 +195,9 @@ export const useDeploy = <
           contractAddress,
           transactionHash,
         })
-      } else {
+      }
+      // if the response did not have a transaction hash, it is a bytecode call
+      else {
         const { contractAddress, factoryAddress, bytecode } = response
 
         ;(onSuccess as UseDeployOnSuccess<'bytecode'>)?.({
@@ -194,34 +212,9 @@ export const useDeploy = <
     },
   })
 
-  // Create wrapped mutate functions that accept spread parameters
-  const wrappedMutate =
-    kind === 'write'
-      ? (calls: `0x${string}`[], options?: MethodOptions) => {
-          mutation.mutate([calls, options] as any)
-        }
-      : (calls: `0x${string}`[]) => {
-          mutation.mutate([calls] as any)
-        }
-
-  const wrappedMutateAsync =
-    kind === 'write'
-      ? async (calls: `0x${string}`[], options?: MethodOptions) => {
-          return await mutation.mutateAsync([calls, options] as any)
-        }
-      : async (calls: `0x${string}`[]) => {
-          return await mutation.mutateAsync([calls] as any)
-        }
-
-  const mutate = {
-    ...mutation,
-    mutate: wrappedMutate,
-    mutateAsync: wrappedMutateAsync,
-  } as UseDeployReturnType<T, TMethodKind>['mutate']
-
   return {
+    ...mutation,
     inputs,
-    mutate,
     userArgs,
     handleSetUserArgs,
   }

@@ -4,7 +4,7 @@ import { useModuleInteractionStore } from '@/store'
 import type { ModuleInteractionMode, SelectedModuleType } from '@/types'
 import type { GetModuleReturnType } from '@inverter-network/sdk'
 
-import type { UseWorkFlowReturnType } from './use-workflow'
+import type { UseWorkFlowReturnType } from '@/hooks/use-workflow'
 
 /**
  * @description The return type of the use workflow interaction hook

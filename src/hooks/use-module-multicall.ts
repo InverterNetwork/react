@@ -9,7 +9,6 @@ import type {
   UseMutationResult,
 } from '@tanstack/react-query'
 import { useMutation } from '@tanstack/react-query'
-import type { Except } from 'type-fest-4'
 
 import { useInverter } from '@/hooks/use-inverter'
 
@@ -27,19 +26,17 @@ export type UseModuleMulticallParams<
 > = {
   kind: TMethodKind
   dependencies?: any[]
-  options?: Except<
-    UseMutationOptions<
-      | {
-          write: ModuleMulticallWriteReturnType
-          simulate: ModuleMulticallSimulateReturnType
-        }[TMethodKind]
-      | undefined,
-      Error,
-      TMethodKind extends 'write'
-        ? [call: ModuleMulticallCall, options?: MethodOptions]
-        : [call: ModuleMulticallCall]
-    >,
-    'mutationFn' | 'mutationKey'
+  options?: UseMutationOptions<
+    | {
+        write: ModuleMulticallWriteReturnType
+        simulate: ModuleMulticallSimulateReturnType
+      }[TMethodKind]
+    | undefined,
+    Error,
+    {
+      write: { call: ModuleMulticallCall; options?: MethodOptions }
+      simulate: { call: ModuleMulticallCall }
+    }[TMethodKind]
   >
 } & (
   | {
@@ -57,46 +54,28 @@ export type UseModuleMulticallParams<
  */
 export type UseModuleMulticallReturnType<
   TMethodKind extends 'write' | 'simulate' = 'write',
-> = Omit<
-  UseMutationResult<
-    | {
-        write: ModuleMulticallWriteReturnType
-        simulate: ModuleMulticallSimulateReturnType
-      }[TMethodKind]
-    | undefined,
-    Error,
-    TMethodKind extends 'write'
-      ? [call: ModuleMulticallCall, options?: MethodOptions]
-      : [call: ModuleMulticallCall],
-    unknown
-  >,
-  'mutate' | 'mutateAsync'
-> & {
-  mutate: TMethodKind extends 'write'
-    ? (call: ModuleMulticallCall, options?: MethodOptions) => void
-    : (call: ModuleMulticallCall) => void
-  mutateAsync: TMethodKind extends 'write'
-    ? (
-        call: ModuleMulticallCall,
-        options?: MethodOptions
-      ) => Promise<
-        | {
-            write: ModuleMulticallWriteReturnType
-            simulate: ModuleMulticallSimulateReturnType
-          }[TMethodKind]
-        | undefined
-      >
-    : (call: ModuleMulticallCall) => Promise<
-        | {
-            write: ModuleMulticallWriteReturnType
-            simulate: ModuleMulticallSimulateReturnType
-          }[TMethodKind]
-        | undefined
-      >
-}
+> = UseMutationResult<
+  | {
+      write: ModuleMulticallWriteReturnType
+      simulate: ModuleMulticallSimulateReturnType
+    }[TMethodKind]
+  | undefined,
+  Error,
+  {
+    write: { call: ModuleMulticallCall; options?: MethodOptions }
+    simulate: { call: ModuleMulticallCall }
+  }[TMethodKind]
+>
 
 /**
  * @description The use module multicall hook, which allows you to make a write or simulate a multicall using inverter module methods
+ * @template TMethodKind - The method kind
+ * @param params.kind - The method kind
+ * @param params.dependencies - The dependencies for the hook
+ * @param params.options - The options for the hook
+ * @param params.trustedForwarderAddress - The trusted forwarder address ( either this or orchestratorAddress is required )
+ * @param params.orchestratorAddress - The orchestrator address ( either this or trustedForwarderAddress is required )
+ * @returns The use module multicall mutation hook
  */
 export function useModuleMulticall<
   TMethodKind extends 'write' | 'simulate' = 'write',
@@ -113,7 +92,7 @@ export function useModuleMulticall<
       ? rest.trustedForwarderAddress
       : rest.orchestratorAddress
 
-  const query = useMutation({
+  const mutation = useMutation({
     mutationKey: [
       'module-multicall',
       inverter.dataUpdatedAt,
@@ -121,37 +100,16 @@ export function useModuleMulticall<
       upstreamAddress,
       ...dependencies,
     ],
-    mutationFn: async (
-      params: TMethodKind extends 'write'
-        ? [call: ModuleMulticallCall, options?: MethodOptions]
-        : [call: ModuleMulticallCall]
-    ) => {
+    mutationFn: async (params) => {
       if (!inverter.data) throw new Error('Inverter sdk not initialized')
 
-      const actions = {
-        write: async () => {
-          const [call, options] = params as [
-            ModuleMulticallCall,
-            MethodOptions?,
-          ]
-          return await inverter.data!.moduleMulticall.write(
-            {
-              ...rest,
-              call,
-            },
-            options
-          )
+      return (await inverter.data!.moduleMulticall[kind](
+        {
+          ...rest,
+          call: params.call,
         },
-        simulate: async () => {
-          const [call] = params as [ModuleMulticallCall]
-          return await inverter.data!.moduleMulticall.simulate({
-            ...rest,
-            call,
-          })
-        },
-      }
-
-      return (await actions[kind]()) as {
+        ...('options' in params ? [params.options] : [])
+      )) as {
         write: ModuleMulticallWriteReturnType
         simulate: ModuleMulticallSimulateReturnType
       }[TMethodKind]
@@ -160,28 +118,5 @@ export function useModuleMulticall<
     ...options,
   })
 
-  // Create wrapped mutate functions that accept spread parameters
-  const wrappedMutate =
-    kind === 'write'
-      ? (call: ModuleMulticallCall, options?: MethodOptions) => {
-          query.mutate([call, options] as any)
-        }
-      : (call: ModuleMulticallCall) => {
-          query.mutate([call] as any)
-        }
-
-  const wrappedMutateAsync =
-    kind === 'write'
-      ? async (call: ModuleMulticallCall, options?: MethodOptions) => {
-          return await query.mutateAsync([call, options] as any)
-        }
-      : async (call: ModuleMulticallCall) => {
-          return await query.mutateAsync([call] as any)
-        }
-
-  return {
-    ...query,
-    mutate: wrappedMutate,
-    mutateAsync: wrappedMutateAsync,
-  } as UseModuleMulticallReturnType<TMethodKind>
+  return mutation
 }

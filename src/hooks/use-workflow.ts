@@ -29,6 +29,7 @@ export type UseWorkFlowParams<
   requestedModules?: TRequestedModules
   issuanceTokenType?: TWorkflowIssuanceToken
   fundingTokenType?: TWorkflowToken
+  dependencies?: any[]
   options?: Except<
     UseQueryOptions<
       | Workflow<
@@ -42,17 +43,29 @@ export type UseWorkFlowParams<
     >,
     'queryKey' | 'queryFn'
   >
-  dependencies?: any[]
 }
 
 /**
  * @description The return type of the use workflow hook
  * @template TRequestedModules - The requested modules
+ * @template TWorkflowToken - The funding token
+ * @template TWorkflowIssuanceToken - The issuance token
  * @returns The use workflow hook query
  */
 export type UseWorkFlowReturnType<
   TRequestedModules extends MixedRequestedModules | undefined = undefined,
-> = ReturnType<typeof useWorkflow<TRequestedModules>>
+  TWorkflowToken extends WorkflowToken | undefined = undefined,
+  TWorkflowIssuanceToken extends WorkflowIssuanceToken | undefined = undefined,
+> = UseQueryResult<
+  | Workflow<
+      TRequestedModules,
+      PopWalletClient,
+      TWorkflowToken,
+      TWorkflowIssuanceToken
+    >
+  | undefined,
+  Error
+>
 
 /**
  * @description The use workflow hook
@@ -79,13 +92,10 @@ export function useWorkflow<
   TRequestedModules,
   TWorkflowToken,
   TWorkflowIssuanceToken
->): UseQueryResult<
-  Workflow<
-    TRequestedModules,
-    PopWalletClient,
-    TWorkflowToken,
-    TWorkflowIssuanceToken
-  >
+>): UseWorkFlowReturnType<
+  TRequestedModules,
+  TWorkflowToken,
+  TWorkflowIssuanceToken
 > {
   const inverter = useInverter()
 
@@ -104,10 +114,10 @@ export function useWorkflow<
         issuanceTokenType,
         fundingTokenType,
         requestedModules,
-      }) as any,
+      }),
     ...options,
     enabled,
   })
 
-  return query as any
+  return query
 }
