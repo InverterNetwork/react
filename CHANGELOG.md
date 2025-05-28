@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/InverterNetwork/react/compare/v0.5.1...v0.5.2) (2025-05-28)
+
+
+### Features
+
+* add useGetSimulatedWorkflow hook and enhance existing hooks with improved JSDoc comments ([8c2e311](https://github.com/InverterNetwork/react/commit/8c2e311d6090cf0ef73c0f272dae9243339ad1ff))
+* enhance useDeploy and useModuleMulticall hooks with improved type definitions and wrapped mutate functions ([7ded163](https://github.com/InverterNetwork/react/commit/7ded163c43404b6d36edf72917dc7a2089ac0181))
+* refactor chain icon handling and improve type definitions in deploy workflow hooks ([0abb970](https://github.com/InverterNetwork/react/commit/0abb9707320d4e1db13c6e5f769182eaf2d480e6))
+* refine useModuleMulticall and useWorkflow hooks with improved type definitions and JSDoc comments ([55d91a2](https://github.com/InverterNetwork/react/commit/55d91a294a67639530af4d8e017fc13f19867ce2))
+
 ### [0.5.1](https://github.com/InverterNetwork/react/compare/v0.5.0...v0.5.1) (2025-05-14)
 
 ## [0.5.0](https://github.com/InverterNetwork/react/compare/v0.5.0-alpha.3...v0.5.0) (2025-05-13)

@@ -1,7 +1,7 @@
 {
   "name": "@inverter-network/react",
   "description": "INVERTER react",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
@@ -50,7 +50,7 @@
     "release": "standard-version -a",
     "release:alpha": "standard-version -a --prerelease alpha --skip.changelog",
     "release:beta": "standard-version -a --prerelease beta --skip.changelog",
-    "release:pub": "git push --follow-tags origin main",
+    "release:pub": "git push --follow-tags origin $(git rev-parse --abbrev-ref HEAD)",
     "copy:dist": "bun run build && bun tools/copy-dist.js"
   },
   "lint-staged": {
