@@ -1,8 +1,8 @@
 import type {
   MethodOptions,
-  ModuleMulticallCall,
   ModuleMulticallSimulateReturnType,
   ModuleMulticallWriteReturnType,
+  SingleModuleCall,
 } from '@inverter-network/sdk'
 import type {
   UseMutationOptions,
@@ -34,8 +34,8 @@ export type UseModuleMulticallParams<
     | undefined,
     Error,
     {
-      write: { call: ModuleMulticallCall; options?: MethodOptions }
-      simulate: { call: ModuleMulticallCall }
+      write: { calls: SingleModuleCall[]; options?: MethodOptions }
+      simulate: { calls: SingleModuleCall[] }
     }[TMethodKind]
   >
 } & (
@@ -62,8 +62,8 @@ export type UseModuleMulticallReturnType<
   | undefined,
   Error,
   {
-    write: { call: ModuleMulticallCall; options?: MethodOptions }
-    simulate: { call: ModuleMulticallCall }
+    write: { calls: SingleModuleCall[]; options?: MethodOptions }
+    simulate: { calls: SingleModuleCall[] }
   }[TMethodKind]
 >
 
@@ -106,7 +106,7 @@ export function useModuleMulticall<
       return (await inverter.data!.moduleMulticall[kind](
         {
           ...rest,
-          call: params.call,
+          calls: params.calls,
         },
         ...('options' in params ? [params.options] : [])
       )) as {
