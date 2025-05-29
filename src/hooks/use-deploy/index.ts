@@ -90,15 +90,16 @@ export type UseDeployReturnType<
 } & UseMutationResult<
   UseDeployMutateData<TMethodKind>,
   Error,
-  {
-    write: {
-      calls?: `0x${string}`[]
-      options?: MethodOptions
-    }
-    bytecode: {
-      calls?: `0x${string}`[]
-    }
-  }[TMethodKind]
+  | {
+      write: {
+        calls?: `0x${string}`[]
+        options?: MethodOptions
+      }
+      bytecode: {
+        calls?: `0x${string}`[]
+      }
+    }[TMethodKind]
+  | void
 >
 
 /**
@@ -146,15 +147,16 @@ export const useDeploy = <
   const mutation = useMutation<
     UseDeployMutateData<TMethodKind>,
     Error,
-    {
-      write: {
-        calls?: `0x${string}`[]
-        options?: MethodOptions
-      }
-      bytecode: {
-        calls?: `0x${string}`[]
-      }
-    }[TMethodKind]
+    | {
+        write: {
+          calls?: `0x${string}`[]
+          options?: MethodOptions
+        }
+        bytecode: {
+          calls?: `0x${string}`[]
+        }
+      }[TMethodKind]
+    | void
   >({
     mutationFn: async (params) => {
       if (!inverter.data) throw new Error('Inverter not initialized')
@@ -165,11 +167,11 @@ export const useDeploy = <
           args: userArgs,
         },
         // if the params has options, use them, otherwise use undefined
-        'options' in params ? params.options : undefined
+        params && 'options' in params ? params.options : undefined
       )
 
       if ('run' in response) {
-        const { calls } = params
+        const { calls } = params || {}
 
         const bytecode = await response.run(calls)
 
