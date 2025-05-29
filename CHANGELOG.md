@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.3](https://github.com/InverterNetwork/react/compare/v0.5.2...v0.5.3) (2025-05-29)
+
+
+### Bug Fixes
+
+* update type definitions in useDeploy hook to include void return type ([85b0dda](https://github.com/InverterNetwork/react/commit/85b0dda1140eb93bb40420a460fb0cacd68196f5))
+
 ### [0.5.2](https://github.com/InverterNetwork/react/compare/v0.5.1...v0.5.2) (2025-05-28)
 
 
