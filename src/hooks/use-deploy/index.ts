@@ -49,6 +49,7 @@ export type UseDeployOnSuccess<TMethodKind extends 'write' | 'bytecode'> = {
  * @template TMethodKind - The method kind
  * @param name - The name of the contract
  * @param kind - The method kind
+ * @param initialUserArgs - The initial user args (optional)
  * @param onError - The error handler
  * @param onSuccess - The success handler
  */
@@ -58,6 +59,7 @@ export type UseDeployParams<
 > = {
   name: T
   kind: TMethodKind
+  initialUserArgs?: GetDeployWorkflowModuleArg<T>
   onError?: (error: Error) => void
   onSuccess?: UseDeployOnSuccess<TMethodKind>
 }
@@ -115,6 +117,7 @@ export const useDeploy = <
 >({
   name,
   kind = 'write' as TMethodKind,
+  initialUserArgs,
   onError,
   onSuccess,
 }: UseDeployParams<T, TMethodKind>): UseDeployReturnType<T, TMethodKind> => {
@@ -131,8 +134,9 @@ export const useDeploy = <
   const { addAddress } = useSelectorStore()
 
   const [userArgs, setUserArgs] = React.useState(
-    // @ts-expect-error - not all modules have initial states
-    (initialStates?.[name] || {}) as GetDeployWorkflowModuleArg<T>
+    (initialUserArgs ||
+      initialStates?.[name as keyof typeof initialStates] ||
+      {}) as GetDeployWorkflowModuleArg<T>
   )
 
   const handleSetUserArgs = (name: string, value: any) => {
