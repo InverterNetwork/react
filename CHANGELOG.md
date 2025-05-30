@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.4](https://github.com/InverterNetwork/react/compare/v0.5.3...v0.5.4) (2025-05-30)
+
+
+### Features
+
+* add initialUserArgs parameter to useDeploy hook and export use-module-multicall ([441ebb7](https://github.com/InverterNetwork/react/commit/441ebb7bf7898336ed20e0411951346b655bad83))
+
 ### [0.5.3](https://github.com/InverterNetwork/react/compare/v0.5.2...v0.5.3) (2025-05-29)
 
 
