@@ -17,7 +17,17 @@ export type UseDeployWorkflowOnSuccess = ({
   orchestratorAddress: `0x${string}`
 }) => void
 
-export type UseDeployWorkflowParams<T extends MixedRequestedModules> = {
+/**
+ * @description The parameters for the deploy workflow hook
+ * @template TRequestedModules - The requested modules
+ * @template TUseTags - Whether to use tags
+ * @returns The parameters for the deploy workflow hook
+ */
+export type UseDeployWorkflowParams<
+  T extends MixedRequestedModules,
+  TUseTags extends boolean = true,
+> = {
+  useTags?: TUseTags
   requestedModules: T
   resetDeployWorkflowForm?: () => void
   onSuccess?: UseDeployWorkflowOnSuccess
@@ -27,27 +37,32 @@ export type UseDeployWorkflowParams<T extends MixedRequestedModules> = {
 /**
  * @description Use the deploy workflow hook to deploy a workflow
  * @template TRequestedModules - The requested modules
+ * @template TUseTags - Whether to use tags
  * @param params - The parameters for the deploy workflow
  * @returns The deploy workflow hook
  */
 export type UseDeployWorkflowReturnType<
   TRequestedModules extends MixedRequestedModules,
-> = ReturnType<typeof useDeployWorkflow<TRequestedModules>>
+  TUseTags extends boolean = true,
+> = ReturnType<typeof useDeployWorkflow<TRequestedModules, TUseTags>>
 
 /**
  * @description Use the deploy workflow hook to deploy a workflow
  * @template TRequestedModules - The requested modules
+ * @template TUseTags - Whether to use tags
  * @param params - The parameters for the deploy workflow
  * @returns The deploy workflow hook
  */
 export const useDeployWorkflow = <
   TRequestedModules extends MixedRequestedModules,
+  TUseTags extends boolean = true,
 >({
   requestedModules,
   resetDeployWorkflowForm,
   onSuccess,
   onError,
-}: UseDeployWorkflowParams<TRequestedModules>) => {
+  useTags,
+}: UseDeployWorkflowParams<TRequestedModules, TUseTags>) => {
   // Get the orchestrator state store
   const { addAddress } = useSelectorStore()
 
@@ -61,7 +76,7 @@ export const useDeployWorkflow = <
 
   const prevGetRequestedModulesHash = React.useRef<string | null>(null)
 
-  const prepDeploymentQueryHash = `prep_deployment-${inverter.dataUpdatedAt}-${requestedModulesHash}`
+  const prepDeploymentQueryHash = `prep_deployment-${inverter.dataUpdatedAt}-${requestedModulesHash}-${useTags}`
 
   // Prep the deployment
   const prepDeployment = useQuery({
@@ -88,6 +103,7 @@ export const useDeployWorkflow = <
 
       return await inverter.data.deployWorkflow({
         requestedModules,
+        useTags,
       })
     },
     refetchOnWindowFocus: false,
@@ -99,7 +115,7 @@ export const useDeployWorkflow = <
       'paymentProcessor' in requestedModules,
   })
 
-  type Args = GetDeployWorkflowArgs<TRequestedModules>
+  type Args = GetDeployWorkflowArgs<TRequestedModules, TUseTags>
 
   // Deploy the workflow
   const runDeployment = useMutation({

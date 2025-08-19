@@ -17,7 +17,7 @@ import { useAccount } from 'wagmi'
 
 import { useInverter } from '@/hooks/use-inverter'
 
-import { initialStates } from './constants'
+import { getInitialStates } from './constants'
 
 /**
  * @description The onSuccess callback type for the deploy hook
@@ -56,12 +56,14 @@ export type UseDeployOnSuccess<TMethodKind extends 'write' | 'bytecode'> = {
 export type UseDeployParams<
   T extends DeployableContracts,
   TMethodKind extends 'write' | 'bytecode' = 'write',
+  TUseTags extends boolean = true,
 > = {
   name: T
   kind: TMethodKind
-  initialUserArgs?: GetDeployWorkflowModuleArg<T>
+  initialUserArgs?: GetDeployWorkflowModuleArg<T, TUseTags>
   onError?: (error: Error) => void
   onSuccess?: UseDeployOnSuccess<TMethodKind>
+  useTags?: TUseTags
 }
 
 /**
@@ -85,9 +87,10 @@ export type UseDeployMutateData<TMethodKind extends 'write' | 'bytecode'> = {
 export type UseDeployReturnType<
   T extends DeployableContracts,
   TMethodKind extends 'write' | 'bytecode' = 'write',
+  TUseTags extends boolean = true,
 > = {
   inputs: GetModuleConfigData<T>
-  userArgs: GetDeployWorkflowModuleArg<T>
+  userArgs: GetDeployWorkflowModuleArg<T, TUseTags>
   handleSetUserArgs: (name: string, value: any) => void
 } & UseMutationResult<
   UseDeployMutateData<TMethodKind>,
@@ -114,13 +117,19 @@ export type UseDeployReturnType<
 export const useDeploy = <
   T extends DeployableContracts,
   TMethodKind extends 'write' | 'bytecode' = 'write',
+  TUseTags extends boolean = true,
 >({
   name,
   kind = 'write' as TMethodKind,
   initialUserArgs,
   onError,
   onSuccess,
-}: UseDeployParams<T, TMethodKind>): UseDeployReturnType<T, TMethodKind> => {
+  useTags = true as TUseTags,
+}: UseDeployParams<T, TMethodKind, TUseTags>): UseDeployReturnType<
+  T,
+  TMethodKind,
+  TUseTags
+> => {
   const moduleData = getModuleData(name)
   const { chainId } = useAccount()
 
@@ -133,10 +142,12 @@ export const useDeploy = <
 
   const { addAddress } = useSelectorStore()
 
+  const initialStates = getInitialStates(useTags)
+
   const [userArgs, setUserArgs] = React.useState(
     (initialUserArgs ||
       initialStates?.[name as keyof typeof initialStates] ||
-      {}) as GetDeployWorkflowModuleArg<T>
+      {}) as GetDeployWorkflowModuleArg<T, TUseTags>
   )
 
   const handleSetUserArgs = (name: string, value: any) => {
@@ -168,6 +179,7 @@ export const useDeploy = <
       const response = await inverter.data.deploy[kind](
         {
           name,
+          useTags,
           args: userArgs,
         },
         // if the params has options, use them, otherwise use undefined

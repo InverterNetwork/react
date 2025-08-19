@@ -17,17 +17,23 @@ import { useInverter } from '@/hooks/use-inverter'
  * @template TRequestedModules - The requested modules
  * @template TDeployWorkflowArgs - The arguments for the workflow deployment
  * @template TTokenBytecode - The bytecode of the token
+ * @template TUseTags - Whether to use tags
  * @param params - The parameters for the use get simulated workflow hook
  */
 export type UseGetSimulatedWorkflowParams<
   TRequestedModules extends MixedRequestedModules,
-  TDeployWorkflowArgs extends GetDeployWorkflowArgs<TRequestedModules>,
+  TDeployWorkflowArgs extends GetDeployWorkflowArgs<
+    TRequestedModules,
+    TUseTags
+  >,
   TTokenBytecode extends DeployBytecodeReturnType | undefined = undefined,
+  TUseTags extends boolean = true,
 > = {
   requestedModules: TRequestedModules
   args: TDeployWorkflowArgs
   tagConfig?: TagConfig
   tokenBytecode?: TTokenBytecode
+  useTags?: TUseTags
   dependencies?: any[]
   options?: Except<
     UseQueryOptions<GetSimulatedWorkflowReturnType | undefined, Error>,
@@ -39,7 +45,7 @@ export type UseGetSimulatedWorkflowParams<
  * @description The return type of the use get simulated workflow hook
  * @template TRequestedModules - The requested modules
  * @template TDeployWorkflowArgs - The arguments for the workflow deployment
- * @template TTokenBytecode - The bytecode of the token
+ * @template TUseTags - Whether to use tags
  * @returns The use get simulated workflow hook type
  */
 export type UseGetSimulatedWorkflowReturnType = UseQueryResult<
@@ -52,18 +58,24 @@ export type UseGetSimulatedWorkflowReturnType = UseQueryResult<
  * @template TRequestedModules - The requested modules
  * @template TDeployWorkflowArgs - The arguments for the workflow deployment
  * @template TTokenBytecode - The bytecode of the token
+ * @template TUseTags - Whether to use tags
  * @param params - The parameters for the use get simulated workflow hook
  * @returns The use get simulated workflow query result
  */
 export function useGetSimulatedWorkflow<
   TRequestedModules extends MixedRequestedModules,
-  TDeployWorkflowArgs extends GetDeployWorkflowArgs<TRequestedModules>,
+  TDeployWorkflowArgs extends GetDeployWorkflowArgs<
+    TRequestedModules,
+    TUseTags
+  >,
   TTokenBytecode extends DeployBytecodeReturnType | undefined = undefined,
+  TUseTags extends boolean = true,
 >({
   requestedModules,
   args,
   tagConfig,
   tokenBytecode,
+  useTags,
   options = {
     enabled: true,
     refetchOnWindowFocus: false,
@@ -72,7 +84,8 @@ export function useGetSimulatedWorkflow<
 }: UseGetSimulatedWorkflowParams<
   TRequestedModules,
   TDeployWorkflowArgs,
-  TTokenBytecode
+  TTokenBytecode,
+  TUseTags
 >): UseGetSimulatedWorkflowReturnType {
   const inverter = useInverter()
 
@@ -88,6 +101,7 @@ export function useGetSimulatedWorkflow<
       requestedModulesDependencies,
       args,
       tokenBytecode?.contractAddress,
+      useTags,
       ...dependencies,
     ],
     queryFn: () =>
@@ -96,6 +110,7 @@ export function useGetSimulatedWorkflow<
         args,
         tagConfig,
         tokenBytecode,
+        useTags,
       }),
 
     ...options,

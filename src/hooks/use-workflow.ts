@@ -24,11 +24,13 @@ export type UseWorkFlowParams<
   TRequestedModules extends MixedRequestedModules | undefined = undefined,
   TWorkflowToken extends WorkflowToken | undefined = undefined,
   TWorkflowIssuanceToken extends WorkflowIssuanceToken | undefined = undefined,
+  TUseTags extends boolean = true,
 > = {
   orchestratorAddress?: `0x${string}`
   requestedModules?: TRequestedModules
   issuanceTokenType?: TWorkflowIssuanceToken
   fundingTokenType?: TWorkflowToken
+  useTags?: TUseTags
   dependencies?: any[]
   options?: Except<
     UseQueryOptions<
@@ -36,7 +38,8 @@ export type UseWorkFlowParams<
           TRequestedModules,
           PopWalletClient,
           TWorkflowToken,
-          TWorkflowIssuanceToken
+          TWorkflowIssuanceToken,
+          TUseTags
         >
       | undefined,
       Error
@@ -56,12 +59,14 @@ export type UseWorkFlowReturnType<
   TRequestedModules extends MixedRequestedModules | undefined = undefined,
   TWorkflowToken extends WorkflowToken | undefined = undefined,
   TWorkflowIssuanceToken extends WorkflowIssuanceToken | undefined = undefined,
+  TUseTags extends boolean = true,
 > = UseQueryResult<
   | Workflow<
       TRequestedModules,
       PopWalletClient,
       TWorkflowToken,
-      TWorkflowIssuanceToken
+      TWorkflowIssuanceToken,
+      TUseTags
     >
   | undefined,
   Error
@@ -78,11 +83,13 @@ export function useWorkflow<
   TRequestedModules extends MixedRequestedModules | undefined = undefined,
   TWorkflowToken extends WorkflowToken | undefined = undefined,
   TWorkflowIssuanceToken extends WorkflowIssuanceToken | undefined = undefined,
+  TUseTags extends boolean = true,
 >({
   orchestratorAddress,
   requestedModules,
   issuanceTokenType,
   fundingTokenType,
+  useTags,
   options = {
     enabled: true,
     refetchOnWindowFocus: false,
@@ -91,11 +98,13 @@ export function useWorkflow<
 }: UseWorkFlowParams<
   TRequestedModules,
   TWorkflowToken,
-  TWorkflowIssuanceToken
+  TWorkflowIssuanceToken,
+  TUseTags
 >): UseWorkFlowReturnType<
   TRequestedModules,
   TWorkflowToken,
-  TWorkflowIssuanceToken
+  TWorkflowIssuanceToken,
+  TUseTags
 > {
   const inverter = useInverter()
 
@@ -106,6 +115,7 @@ export function useWorkflow<
       'workflow',
       inverter.dataUpdatedAt,
       orchestratorAddress,
+      useTags,
       ...dependencies,
     ],
     queryFn: () =>
@@ -114,6 +124,7 @@ export function useWorkflow<
         issuanceTokenType,
         fundingTokenType,
         requestedModules,
+        useTags,
       }),
     ...options,
     enabled,
