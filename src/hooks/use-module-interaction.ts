@@ -16,8 +16,8 @@ export type UseModuleInteractionReturnType = ReturnType<
  * @param selectedModule - The selected module
  * @returns The use module interaction hook
  */
-export const useModuleInteraction = (
-  selectedModule: GetModuleReturnType<any, any> | undefined
+export const useModuleInteraction = <TUseTags extends boolean = true>(
+  selectedModule: GetModuleReturnType<any, any, any, TUseTags> | undefined
 ) => {
   const {
     moduleInteractionMode,

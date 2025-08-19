@@ -47,6 +47,7 @@ export type UseDeployOnSuccess<TMethodKind extends 'write' | 'bytecode'> = {
  * @description The parameters for the deploy hook
  * @template T - The deployable contract
  * @template TMethodKind - The method kind
+ * @template TUseTags - Whether to use tags
  * @param name - The name of the contract
  * @param kind - The method kind
  * @param initialUserArgs - The initial user args (optional)
