@@ -11,6 +11,8 @@ import { useQuery } from '@tanstack/react-query'
 import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import type { Except } from 'type-fest-4'
 
+import { createSerializableQueryKey } from '@/utils/serializer'
+
 import { useInverter } from '.'
 
 /**
@@ -111,13 +113,15 @@ export function useWorkflow<
   const enabled = !!inverter.data && !!orchestratorAddress && options.enabled
 
   const query = useQuery({
-    queryKey: [
-      'workflow',
-      inverter.dataUpdatedAt,
+    queryKey: createSerializableQueryKey('workflow', {
+      inverterDataUpdatedAt: inverter.dataUpdatedAt,
       orchestratorAddress,
+      requestedModules,
+      fundingTokenType,
+      issuanceTokenType,
       useTags,
-      ...dependencies,
-    ],
+      dependencies,
+    }),
     queryFn: () =>
       inverter.data!.getWorkflow({
         orchestratorAddress: orchestratorAddress!,

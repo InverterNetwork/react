@@ -1,13 +1,17 @@
 // @ts-check
 
-import tseslint from 'typescript-eslint'
-import prettier from 'eslint-plugin-prettier'
 import react from '@eslint-react/eslint-plugin'
 import importX from 'eslint-plugin-import-x'
+import prettier from 'eslint-plugin-prettier'
+import tseslint from 'typescript-eslint'
 
 export default tseslint.config({
   files: ['**/*.{mjs,cjs,js,jsx,ts,tsx}'],
-  ignores: ['**/*.{config,test}.{mjs,cjs,js,jsx,ts,tsx}', '.*.mjs'],
+  ignores: [
+    '**/*.{config,test}.{mjs,cjs,js,jsx,ts,tsx}',
+    '.*.mjs',
+    'happydom.ts',
+  ],
   settings: {
     ...react.configs.recommended.settings,
   },

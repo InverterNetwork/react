@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query'
 import type { Except } from 'type-fest-4'
 
 import { getRequestedModulesString } from '@/utils/helpers'
+import { createSerializableQueryKey } from '@/utils/serializer'
 import { useInverter } from '@/hooks/use-inverter'
 
 /**
@@ -95,15 +96,14 @@ export function useGetSimulatedWorkflow<
     getRequestedModulesString(requestedModules)
 
   const query = useQuery({
-    queryKey: [
-      'simulated-workflow',
-      inverter.dataUpdatedAt,
-      requestedModulesDependencies,
+    queryKey: createSerializableQueryKey('simulated-workflow', {
+      inverterDataUpdatedAt: inverter.dataUpdatedAt,
+      requestedModules: requestedModulesDependencies,
       args,
-      tokenBytecode?.contractAddress,
+      tokenBytecodeAddress: tokenBytecode?.contractAddress,
       useTags,
-      ...dependencies,
-    ],
+      dependencies,
+    }),
     queryFn: () =>
       inverter.data!.getSimulatedWorkflow({
         requestedModules,

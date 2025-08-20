@@ -12,6 +12,8 @@ import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import type { Except } from 'type-fest-4'
 
+import { createSerializableQueryKey } from '@/utils/serializer'
+
 import { useInverter } from './use-inverter'
 
 /**
@@ -98,14 +100,13 @@ export const useGetModule = <
     | undefined,
     Error
   >({
-    queryKey: [
-      'get-module',
-      moduleData ? moduleData.name : name,
+    queryKey: createSerializableQueryKey('get-module', {
+      moduleName: moduleData ? moduleData.name : name,
       address,
-      inverter.data?.walletClient?.account?.address,
+      walletAddress: inverter.data?.walletClient?.account?.address,
       useTags,
-      ...dependencies,
-    ],
+      dependencies,
+    }),
     queryFn: async (): Promise<
       GetModuleReturnType<TModuleName, PopWalletClient, TModuleData, TUseTags>
     > => {
