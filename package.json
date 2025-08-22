@@ -4,30 +4,28 @@
   "version": "0.9.0",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/cjs/index.js"
+      "types": "./dist/src/index.d.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts",
+      "production": {
+        "types": "./dist/types/index.d.ts",
+        "import": "./dist/esm/index.js",
+        "default": "./dist/cjs/index.js"
+      }
     },
     "./client": {
-      "types": "./dist/types/client.d.ts",
-      "import": "./dist/esm/client.js",
-      "default": "./dist/cjs/client.js"
-    },
-    "./styles": {
-      "import": "./dist/esm/styles/global.css",
-      "default": "./dist/cjs/styles/global.css"
+      "types": "./dist/src/client.d.ts",
+      "import": "./src/client.ts",
+      "default": "./src/client.ts",
+      "production": {
+        "types": "./dist/types/client.d.ts",
+        "import": "./dist/esm/client.js",
+        "default": "./dist/cjs/client.js"
+      }
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
-  "typings": "./dist/types/index.d.ts",
   "sideEffects": false,
-  "directories": {
-    "tool": "tools",
-    "test": "tests"
-  },
   "files": [
     "dist"
   ],
@@ -35,8 +33,7 @@
     "access": "public"
   },
   "scripts": {
-    "dev": "nodemon",
-    "watch": "tsc -w",
+    "watch": "bun scripts/watch-with-alias.js",
     "type-check": "tsc-files --pretty --project ./tsconfig.build.json --noEmit --module ESNext --declaration",
     "build": "bun clean && bun build:cjs && bun build:esm && bun build:types",
     "build:cjs": "tsc --project ./tsconfig.build.json --module commonjs --moduleResolution node --outDir ./dist/cjs --removeComments --verbatimModuleSyntax false && printf '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json && tsc-alias --outDir ./dist/cjs && ts-add-js-extension --dir=dist/cjs --showchanges=false",
@@ -50,8 +47,7 @@
     "release": "standard-version -a",
     "release:alpha": "standard-version -a --prerelease alpha --skip.changelog",
     "release:beta": "standard-version -a --prerelease beta --skip.changelog",
-    "release:pub": "git push --follow-tags origin $(git rev-parse --abbrev-ref HEAD)",
-    "copy:dist": "bun run build && bun tools/copy-dist.js"
+    "release:pub": "git push --follow-tags origin $(git rev-parse --abbrev-ref HEAD)"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
@@ -98,7 +94,6 @@
     "eslint-plugin-prettier": "^5.2.1",
     "husky": "^9.1.5",
     "lint-staged": "^15.2.10",
-    "nodemon": "^3.1.7",
     "pinst": "^3.0.0",
     "prettier": "^3.3.3",
     "standard-version": "^9.5.0",
