@@ -1,20 +1,6 @@
 // Chain ID to icon mapping for common chains
-const CHAIN_ICONS: Record<string, string> = {
+const CHAIN_ICONS: Record<'1', string> = {
   '1': 'https://etherscan.io/images/svg/brands/ethereum-original.svg',
-  '5': 'https://etherscan.io/images/svg/brands/ethereum-original.svg',
-  '11155111': 'https://etherscan.io/images/svg/brands/ethereum-original.svg',
-  '137': 'https://etherscan.io/images/svg/brands/polygon.svg',
-  '80001': 'https://etherscan.io/images/svg/brands/polygon.svg',
-  '56': 'https://etherscan.io/images/svg/brands/bnb.svg',
-  '97': 'https://etherscan.io/images/svg/brands/bnb.svg',
-  '43114': 'https://etherscan.io/images/svg/brands/avalanche.svg',
-  '43113': 'https://etherscan.io/images/svg/brands/avalanche.svg',
-  '42161': 'https://etherscan.io/images/svg/brands/arbitrum.svg',
-  '42170': 'https://etherscan.io/images/svg/brands/arbitrum.svg',
-  '10': 'https://etherscan.io/images/svg/brands/optimism.svg',
-  '420': 'https://etherscan.io/images/svg/brands/optimism.svg',
-  '8453': 'https://etherscan.io/images/svg/brands/base.svg',
-  '84532': 'https://etherscan.io/images/svg/brands/base.svg',
 }
 
 // Environment-aware ChainLogo usage
@@ -68,5 +54,5 @@ export const getChainIconSrc = (chainId?: number): string => {
   }
 
   // Fallback to predefined icons
-  return CHAIN_ICONS[chainIdStr] || CHAIN_ICONS['1']
+  return CHAIN_ICONS['1']
 }
