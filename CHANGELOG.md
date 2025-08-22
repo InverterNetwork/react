@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/InverterNetwork/react/compare/v0.5.6...v0.9.0) (2025-08-22)
+
+
+### Features
+
+* add testing-library dependencies and implement integration tests for hooks ([4dae2f4](https://github.com/InverterNetwork/react/commit/4dae2f462e3a309d697529ad6906f3fa17c9f41c))
+* enhance deploy and module hooks with useTags parameter for improved flexibility ([51d70fd](https://github.com/InverterNetwork/react/commit/51d70fd6019e7e76fc9b53da0377a4e47ad32c62))
+* update useModuleInteraction and useDeploy hooks to support generic type for improved type safety ([4e907ef](https://github.com/InverterNetwork/react/commit/4e907efaf2126d186d5601f88d6fd60b2f20c040))
+
 ### [0.5.6](https://github.com/InverterNetwork/react/compare/v0.5.5...v0.5.6) (2025-07-31)
 
 ### [0.5.5](https://github.com/InverterNetwork/react/compare/v0.5.4...v0.5.5) (2025-06-20)
