@@ -1,19 +1,30 @@
-// Chain ID to icon mapping for common chains
-const CHAIN_ICONS: Record<'1', string> = {
-  '1': 'https://etherscan.io/images/svg/brands/ethereum-original.svg',
+let chainLogoFunction: ((id: string, light?: boolean) => string | null) | null =
+  null
+
+if (process.env.NODE_ENV !== 'test') {
+  import('@api3/logos')
+    .then((module) => {
+      chainLogoFunction = module.ChainLogo
+    })
+    .catch(() => {
+      // Handle import failure gracefully
+      chainLogoFunction = null
+    })
 }
+
+// Chain ID to icon mapping for common chains
+const ETH_SRC = 'https://etherscan.io/images/svg/brands/ethereum-original.svg'
 
 // Environment-aware ChainLogo usage
 const getChainLogoSafely = (chainId: string): string | null => {
   // In test environment, avoid using ChainLogo to prevent SVG parsing issues
-  if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
+  if (!chainLogoFunction) {
     return null
   }
 
   // In development/production, try to use ChainLogo
   try {
-    const { ChainLogo } = require('@api3/logos')
-    const result = ChainLogo(chainId)
+    const result = chainLogoFunction(chainId)
 
     // Handle different return types from ChainLogo
     if (typeof result === 'object' && result && 'src' in result) {
@@ -42,7 +53,7 @@ export const getChainIconSrc = (chainId?: number): string => {
   if (!chainId) {
     // Try ChainLogo first, then fallback
     const chainLogoResult = getChainLogoSafely('1')
-    return chainLogoResult || CHAIN_ICONS['1']
+    return chainLogoResult || ETH_SRC
   }
 
   const chainIdStr = chainId.toString()
@@ -54,5 +65,5 @@ export const getChainIconSrc = (chainId?: number): string => {
   }
 
   // Fallback to predefined icons
-  return CHAIN_ICONS['1']
+  return ETH_SRC
 }
