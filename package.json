@@ -74,7 +74,7 @@
     "@tanstack/react-query": "^5.59.0"
   },
   "dependencies": {
-    "@api3/logos": "^0.2.18",
+    "@api3/logos": "^1.0.0",
     "@inverter-network/graphql": "^0.9.31",
     "@inverter-network/sdk": "0.9.1",
     "debug": "^4.4.0",

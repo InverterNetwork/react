@@ -113,7 +113,7 @@ export const useGetModule = <
       if (!inverter) throw new Error('No inverter')
       if (!address) throw new Error('No address')
 
-      if (!useTags) {
+      if (useTags === false) {
         const data = inverter.data!.getModule<
           TModuleName,
           TModuleData,
